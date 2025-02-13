@@ -2,8 +2,8 @@
 
 The project some sample files to get you started:
 - [sample plist](Examples/sample-com.jamf.setupmanager.plist) for Jamf Pro
-- [sample plist](Examples/sample-waitForUserEntry) for Jamf Pro with [two phase workflow](Docs/JamfPro-TwoPhase.md)
-- [configuration profile](Example/sample-jamfschool.mobileconfig) for Jamf School
+- [sample plist](Examples/sample-waitForUserEntry.plist) for Jamf Pro with [two phase workflow](Docs/JamfPro-TwoPhase.md)
+- [configuration profile](Examples/sample-jamfschool.mobileconfig) for Jamf School
 
 
 ## Top-level keys
@@ -12,11 +12,11 @@ The project some sample files to get you started:
 
 (Boolean, default: `false`)
 
-When this is set to `true` any steps that actually change software on the disk will not be performed. This will also allow you to launch Setup Manager by double-clicking as the user. This can be useful to test a profile, or to take screen shots for documentation.
+When this is set to `true` any steps that actually change software on the disk will not be performed. This will also allow you to launch Setup Manager by double-clicking as the user. This can be useful to test a profile, or to take screenshots for documentation.
 
 These behaviors change in debug mode: 
 - checks for the existence of the Jamf binary and keychain are skipped
-- Jamf Setup manager will accept enrollmentActions from a non-managed preference file
+- Jamf Setup Manager will accept enrollmentActions from a non-managed preference file
 - `policy`, `recon`, and `shell` actions that require root are replaced with a delay (and will always complete successfully)
 - `watchPath` and `wait` actions timeout and fail after 10 seconds
 
@@ -37,13 +37,13 @@ Example:
 
 #### `icon`
 
-(String, default: `name:AppIcon`, localized)
+(String, default: `name:AppIcon`, localized, dark mode)
 
-The icon shown at the top center of the window. There are many options to define icons, described in the [Icon Sources](#icon-sources) section later.
+The icon shown at the top center of the window. There are many options to define icons, described in the [Icon Sources](#icon-sources) section later. Images will be scaled to fit a size of 700x128 pixels (or 1400x256 @2x).
 
 #### `message`
 
-(String, default: `Setup Manager is configuring your Mac…`, localized, substitutions)
+(String, default: `Setup Manager is configuring your Mac…`, localized, substitutions, markdown)
 
 The message shown below the title.
 
@@ -54,7 +54,7 @@ Example:
 <string>Please wait a few moments while we install essential software…</string>
 ```
 
-The message can use [substitutions](#substitution):
+The message can use [substitutions](#substitution).
 
 Example:
 
@@ -63,9 +63,20 @@ Example:
 <string>Preparing your new %model%. Please be patient.</string>
 ```
 
+Markdown formatting options in the message field will be translated into rich text:
+
+Example:
+
+```xml
+<key>message</key>
+<string>Preparing your new %model%. **Please be patient.**</string>
+```
+
+`Please be patient.` will be bold. More detail on [Markdown here](#markdown).
+
 #### `background`
 
-(String, optional, localized)
+(String, optional, localized, dark mode)
 
 When this key is set, Setup Manager treats it as an image/[icon source](#icon-sources) and displays the image in a screen covering background.
 
@@ -73,11 +84,11 @@ When this key is set, Setup Manager treats it as an image/[icon source](#icon-so
 
 (String, optional, default: `enrollment`)
 
-**Beta:** We believe the run at login window feature may require more testing, especially in some edge cases. When, after thorough testing, you believe this works in your workflow, feel free to deploy it, and please let us know about success or any issues you might encounter.
+**Beta:** We believe the run at login window feature may require more testing, especially in some edge cases. When, after thorough testing, you believe this works in your workflow, feel free to deploy it, and please let us know about your success or any issues you might encounter.
 
-This value determines when Setup Manager should launch. There are two values: `enrollment` (default) and `loginwindow`. When set to `enrollment` Setup Manager will launch immediately when the pkg is installed. This is the setting to use for automated device enrollment (without AutoAdvance) and user-initiated enrollment.
+This value determines when Setup Manager should launch. There are two values: `enrollment` (default) and `loginwindow`. When set to `enrollment` Setup Manager will launch immediately when the pkg is installed. This is the setting to use for automated device enrollment (without Auto Advance) and user-initiated enrollment.
 
-When the `runAt` value is set to `loginwindow` Setup Manager will launch only when the login window is shown. This is useful for fully automated enrollments using AutoAdvance.
+When the `runAt` value is set to `loginwindow` Setup Manager will launch only when the login window is shown. This is useful for fully automated enrollments using Auto Advance.
 
 A setting of `loginwindow` will only work with enrollment setups that eventually end on the login window (i.e. a user has to be created automatically, the device is bound to a directory, etc).
 
@@ -108,7 +119,7 @@ When this key exists, Setup Manager will show a "Help" button (a circled questio
 
 #### `accentColor`
 
-(String, optional, default: system blue)
+(String or Dict, optional, default: system blue, dark mode)
 
 Sets the accent color for buttons, progress bar, SF Symbol icons, and other UI elements. You can use this to match branding. Color is encoded as a six digit hex code, e.g. `#FF0088`.
 
@@ -116,7 +127,21 @@ Example:
 
 ```xml
 <key>accentColor</key>
-<string>#FF0088</string>
+<string>#FF00AA</string>
+```
+
+If you want different accent colors depending on whether the system is in light or dark mode, provide a `dict` with two keys, for `light` and `dark` mode:
+
+Example:
+
+```xml
+<key>accentColor</key>
+<dict>
+  <key>dark</key>
+  <string>#FF00AA</string>
+  <key>light</key>
+  <string>#AA0055</string>
+</dict>
 ```
 
 #### `finalCountdown`
@@ -125,14 +150,14 @@ Example:
 
 This key changes the duration (in seconds) of the "final countdown" before the app automatically performs the `finalAction` (continue or shut down). Set to `-1` (or any negative number) to disable automated execution.
 
-Examples:
+Example:
 
 ```xml
 <key>finalCountdown</key>
 <integer>30</integer>
 ```
 
-Disable the 
+Disable the countdown: 
 
 ```xml
 <key>finalCountdown</key>
@@ -143,30 +168,24 @@ Disable the
 
 (String, optional, default: `continue`)
 
-This key sets the action and label for the button shown when Setup Manger has completed. When this key is set to `shutdown` (no space!) it will shut down the computer, other wise it will just quit Setup Manager ("continue"). This is also the action that is performed when the `finalCountdown` timer runs out.
+This key sets the action and label for the button shown when Setup Manger has completed. 
 
-When the `DEBUG` preference is set, shutdown will merely quit/continue.
+There are three options:
+- `continue`: (default) merely quits Setup Manager and allows the user to continue (probably Setup Assistant or login window)
+- `restart`: restarts the Mac
+- `shut down`: (no space!) shuts down the Mac
+
+**Warning:** `restart` and `shutdown` options will force their action immediately. If a user is logged in (after user-initiated enrollment), they may lose data from open, unsaved documents.
+
+This is also the action that is performed when the `finalCountdown` timer runs out.
+
+When the `DEBUG` preference is set, `shutdown` or `restart` will merely quit/continue.
 
 Example:
 
 ```xml
 <key>finalAction</key>
 <string>shutdown</string>
-```
-
-#### `showBothButtons`
-
-(Bool, optional default: `false`)
-
-This key determines whether both the 'Shutdown' and 'Continue' are shown or just the button set in the `finalAction` key.
-
-**Warning:** this key is deprecated and will be removed in a future version of Setup Manager
-
-Example:
-
-```xml
-<key>showBothButtons</key>
-<true/>
 ```
 
 #### `totalDownloadBytes`
@@ -186,7 +205,7 @@ Example:
 
 (String, Jamf Pro only)
 
-Set this to `$JSSID` in the configuration profile and Setup Manager will be aware of its computer's id in Jamf Pro. It will be displayed in the 'About this Mac…' popup.
+Set this to `$JSSID` in the configuration profile and Setup Manager will be aware of its computer's id in Jamf Pro. It will be displayed in the 'About this Mac…' popup, when clicked with the option key.
 
 Example:
 
@@ -229,7 +248,7 @@ This will set the computer name to `Mac-DEF456` where `DEF456` are the center si
 
 (String, optional)
 
-When set, the "About this Mac" info window will show this value instead of the real serial number. This is useful when making screen shots or recordings for documentation or presentations where you do not want to expose real serial numbers.
+When set, the "About this Mac" info window will show this value instead of the real serial number. This is useful when making screenshots or recordings for documentation or presentations where you do not want to expose real serial numbers.
 
 Note: This is for display only. [Substitutions](#substitution) will still use the real serial number.
 
@@ -284,9 +303,9 @@ The label is used as the name of the action in display.
 
 #### `icon`
 
-(String, optional, localized)
+(String, optional, localized, dark mode)
 
-The icon source string used for the display of the label. Different types of actions will have different default icons, which is used when no `icon` key is present.
+The [icon source](#icon-sources) used for the display of the label. Different types of actions will have different default icons, which are used when no `icon` key is present. The icons will be scaled to fit 64x64 pixels (or 128x128 @2x).
 
 There are several different types of actions, and these are defined by additional keys. These keys will be on the same level as the keys above.
 
@@ -308,7 +327,7 @@ When the command given in `shell` requires arguments they are listed here, one i
 
 (Bool, default: `false`, optional)
 
-When this key is set to `true` Setup Manager will only run this when itself is running as root. Otherwise it will fail the action. When `DEBUG` is enabled, it will replace the action with a delay instead.
+When this key is set to `true`, Setup Manager will only run this when itself is running as root. Otherwise, it will fail the action. When `DEBUG` is enabled, it will replace the action with a delay instead.
 
 Example:
 
@@ -336,7 +355,13 @@ Example:
 
 (String, Jamf Pro only)
 
-This will run the jamf policy or polices with the given trigger name. This is the equivalent of running `jamf policy -event <triggername>`
+This will run the Jamf Pro policy or polices with the given trigger name. This is the equivalent of running 
+
+```
+jamf policy -event <triggername> -verbose -forceNoRecon -doNotRestart -noInteraction
+```
+
+Note: Jamf Pro policies can do a lot of different things and fail in many different ways. Setup Manager does _not_ check for all possible failure modes. It only checks for failed installer pkgs and policy scripts that return non-zero exit codes, which should cover most uses of policies for initial deployment.
 
 Example:
 
@@ -386,7 +411,7 @@ Example:
 </dict>
 ```
 
-Note: This is intended to check if app are installed from the Mac App Store or Jamf App Installers. In my experience, these installation methods are quite unreliable, hence the timeout. Since you cannot anticipate the order in which these apps may be installed, it is best to put the `watchPath` actions at the end. For large installations (Xcode) you want to set a large timeout.
+Note: This is intended to check if an app is installed from the Mac App Store or by Jamf App Installers. In my experience, these installation methods are quite unreliable during enrollment, hence the timeout. Since you cannot anticipate the order in which these apps may be installed, it is best to put the `watchPath` actions at the end. For large installations, such as Xcode, or Adobe apps, you want to set a large timeout.
 
 ### Wait
 
@@ -415,7 +440,7 @@ Example:
 
 If Setup Manager reaches this action before the user entry has been completed, it will wait until the user entry is completed and the user has clicked 'Save.'
 
-When the user entry is saved and this action is reached, it will set the computer name, according to the `computerNameTemplate` or what was entered by the user and run a recon/Update Inventory which submits the user data. It will also save the data from the user entry to the [user data file](Docs/Extras.md#user-data-file)
+When the user entry is saved and this action is reached, it will set the computer name, according to the `computerNameTemplate` or what was entered by the user and run a recon/Update Inventory which submits the user data. It will also save the data from the user entry to the [user data file](Docs/Extras.md#user-data-file).
 
 This action allows for "two phase" installation workflows where the policies in the second phase are scoped to data from the user entry. After this action, smart groups in Jamf Pro should reflect the data entered and you can use scoping in subsequent policies to choose which policies should or should not run on this device.
 
@@ -438,7 +463,7 @@ Regardless of whether there is a `waitForUserEntry` action or not, Setup Manager
 
 This will run a Jamf Inventory update.
 
-You should usually not need to add a recon step. By default Setup Manager will automatically run an inventory update before and after running the enrollment actions.
+This action exists mainly for troubleshooting. You should generally not need to add a recon step. By default, Setup Manager will automatically run an inventory update before and after running the enrollment actions. If you have a `waitForUserEntry` action configured, this will also run a recon/inventory update.
 
 Example:
 
@@ -527,7 +552,7 @@ When the icon source starts with `name:`, Setup Manager will get the icon with t
 
 ### SF Symbols:
 
-When the icon source starts with `symbol:`, Setup Manager will create the icon using that symbols name. You can look up symbol names using the [SF Symbols](https://developer.apple.com/sf-symbols/) app.
+When the icon source starts with `symbol:`, Setup Manager will create the icon using that symbol's name. You can look up symbol names using the [SF Symbols](https://developer.apple.com/sf-symbols/) app.
 
 Note that the availability and appearance of SF Symbols may vary with the OS version and language/region.
 
@@ -536,11 +561,37 @@ Note that the availability and appearance of SF Symbols may vary with the OS ver
 <string>symbol:clock</string>
 ```
 
+### Dark Mode
+
+Note: after enrollment, over Setup Assistant, the system is always in light mode. This is only relevant when you use Setup Manager after user-initiated enrollment 
+
+To provide alternative images for dark or light mode, change the `string` defining the image to a dictionary with a `dark` and a `light` key. This works with the `background`, `icon`, and each action's `icon`. This also works with the `accentColor` key.
+
+Note that Setup Manager does _not_ monitor the appearance mode, so if it changes _while_ Setup Manager is running, things will not update consistently.
+
+Example: 
+
+```xml
+<key>icon</key>
+<dict>
+  <key>dark</key>
+  <string>name:Jamf_white</string>
+  <key>light</key>
+  <string>name:Jamf_blue</string>
+</dict>
+```
+
+
 ## User Entry
 
 You can enable user entry for the following keys:
 
 - `userID`
+- `email`
+- `endUsername` (shown as 'Account Name')
+- `realname` (shown as 'Full Name')
+- `position`
+- `phone`
 - `department`
 - `building`
 - `room`
@@ -548,6 +599,9 @@ You can enable user entry for the following keys:
 - `computerName`
 
 Any of the fields will only be shown when its key exists. If you were to create an empty `userEntry` dict, you get an empty user input screen with a 'Save' button - not a good user experience.
+
+`userID` and `email` can be somewhat confusing and depending on which Cloud directory you have configured in Jamf Pro, you may need one or the other or both. Because of this Setup Manager 1.1 and older would only prompt for 'User email' and set both `userID` and `email` from that value. To maintain compatibility with this behavior, Setup Manager will continue to set _both_ `userID` and `email` when only one of the two values is requested and entered. If you request both fields, both will be set individually in the recon.
+
 
 ### User Data file
 
@@ -557,7 +611,7 @@ Data from user entry is written, together with some other data to a file when Se
 
 (String, localized)
 
-Provide a default value in two ways:
+Provide a default value in one of two ways:
 
 Example:
 
@@ -675,11 +729,37 @@ The default validation message will show the regular expression the value is not
 </dict>
 ```
 
+#### `label`
+
+(String, localized, optional)
+
+Many Jamf Pro admins use the standard fields in ways that don't match their built-in label. For this purpose you can override the default label shown for a field in the user entry.
+
+Note that the text label in the [User Data file](Docs/Extras.md#user-data-file) will _not_ be changed.
+
+Example:
+
+```xml
+<key>room</key>
+<dict>
+  <key>label</key>
+  <string>Site</string>
+  <key>options</key>
+  <array>
+    <string>London</string>
+    <string>Paris</string>
+    <string>Amsterdam</string>
+  </array>
+</dict>
+```
+
+In this example, the 'Room' field will be shown in Setup Manager with the label 'Site.' The choice will be submitted  to the 'room' field in Jamf Pro inventory and written with the 'room' label to the [User data file](Docs/Extras.md#user-data-file). You can then pick up the data in policy scripts after Setup Manager is finished or the `waitForUserEntry` action and process it accordingly.
+
 ### Conditionally show the user entry for certain users
 
-You can configure Setup Manager to only show the user entry section when specified users have authentication in enrollment customization. This enables workflows, where certain users (techs and admins) gets the option to re-assign the device to another user, but other users don't see the option.
+You can configure Setup Manager to only show the user entry section when specified users have authenticated in enrollment customization. This enables workflows, where certain users (techs and admins) get the option to re-assign the device to another user, but other users don't see the option.
 
-For this, you need to setup the top-level `userID` to receive the `$EMAIL` variable. This will communicate the user who logged in with customized enrollment back into  Setup Manager. Then you add key `showForUserIDs` with an array of user emails to the `userEntry` dict. When both `userID` and `userEntry.showForUserIDs` are set, the user entry UI will only show for the listed users.
+For this, you need to setup the top-level `userID` to receive the `$EMAIL` variable. This will communicate to SetupManager the user who logged in with customized enrollment. Then you add key `showForUserIDs` with an array of user emails to the `userEntry` dict. When both `userID` and `userEntry.showForUserIDs` are set, the user entry UI will only show for the listed users.
 
 #### `showForUserIDs`
 
@@ -718,7 +798,7 @@ When you provide a top-level `help` key with a dictionary a help button (with a 
 
 #### `message`
 
-(String, optional, localized)
+(String, optional, localized, markdown)
 
 #### `url`: 
 
@@ -740,9 +820,13 @@ Example:
 </dict>
 ```
 
+## Webhooks
+
+Setup Manager can send web hooks to servers and services to trigger workflows there. You can read [details on how to configure and use WebHooks here](Docs/Webhooks.md).
+
 ## Localization
 
-The app will pick up the user choice of the UI language for the interface elements. (Table of currently available languages below) The app will fall back to English for other language choices.
+The app will pick up the user choice of the UI language for the interface elements. (Table of currently available languages below.) The app will fall back to English for other language choices.
 
 You can provide localizations for the custom texts given in the configuration profile. 
 
@@ -794,6 +878,7 @@ The following keys can be localized:
 - `default`
 - `placeholder`
 - `validationMessage`
+- `label`
 
 ### Help
 
@@ -848,3 +933,21 @@ These keys can use substitutions:
 - `message`
 - `computerNameTemplate`
 - actions: `label`
+
+## Markdown
+
+In some fields, markdown formatting can be used to generate rich, formatted text. For example:
+
+```xml
+<key>message</key>
+<string>Preparing your new Mac. **Please be patient.**</string>
+```
+
+The `Please be patient.` text will be shown bolded. You can find details on markdown formatting in the [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/).
+
+Note that while you _can_ embed links to websites in the markdown using the `[…](…)` syntax they will not work while running over Setup Assistant or Login Window.
+
+These keys can use markdown:
+
+- `message`
+- Help: `message`

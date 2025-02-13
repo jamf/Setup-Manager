@@ -19,7 +19,7 @@ Note that the custom schema can become confused when you switch between enrollme
 
 ## Quit
 
-The command-Q keyboard short cut to quit the app is disabled. Use `shift-control-command-E` instead. This should only be used when debugging and trouble-shooting, as it will leave the client in an undetermined state when installations are aborted.
+The command-Q keyboard shortcut to quit the app is disabled. Use `shift-control-command-E` instead. This should only be used when debugging and troubleshooting, as it will leave the client in an undetermined state when installations are aborted.
 
 ## Logging
 
@@ -73,7 +73,6 @@ computerName: MacBook-M7WGMK
 submit: 2024-08-14T13:54:37Z
 duration: 101
 ```
-
 Start time (`start`) and finish/submission time (`submit`) are given in ISO8601 format, universal time (UTC). Duration is given in seconds.
 
 Fields that were not set in user entry will not be shown at all. You can use this file in scripts or extension attributes. One possible way is to parse it with `awk`, e.g.
@@ -82,9 +81,26 @@ Fields that were not set in user entry will not be shown at all. You can use thi
 duration=$(awk -F ': ' '/duration: / {print $2}' /private/var/db/SetupManagerUserData.txt)
 ```
 
+Starting with Setup Manager 1.2, the User Data file contains a list of actions with their status:
+
+```
+enrollmentActions:
+ -action 0: finished - Microsoft 365
+ -action 1: finished - Google Chrome
+ -action 2: finished - Jamf Connect
+```
+
+The status can be `finished` or `failed`.
+
 ## "About This Mac…" window
 
 When you hold the option key when clicking on "About This Mac…" you will see more information.
+
+## Scannable Serial Number Barcode
+
+Hitting the space bar while Setup Manager is the Active window will open a window with a scannable barcode of the serial number. Hitting the space bar again will dismiss the window.
+
+Note that Setup Manager does not automatically get Key Window when it launches, while running over Setup Assistant, so you may have to click in the Setup Manager window, before hitting the space bar.
 
 ## Uninstall Setup Manager
 

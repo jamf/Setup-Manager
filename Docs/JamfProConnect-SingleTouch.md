@@ -16,7 +16,9 @@ You can use a combination of Jamf Pro, Setup Manager and Jamf Connector, to get 
 
 Customized Enrollment with SSO is not _required_ for this workflow. The assignment to the final user is set from the email entered in Setup Manager. Nevertheless, customized enrollment with SSO is useful in this context since restricts Mac enrollment to a group of authorized accounts.
 
-You should have Jamf Pro and Jamf Connect configured with the required SSO integrations and thoroughly tested before configuring this workflow.
+You should have Jamf Pro and Jamf Connect configured with the required SSO integrations and thoroughly tested before configuring this workflow. 
+
+Verify that "Collect User and Location information from Directory Service" is **enabled** in Settings > Computer management > Inventory collection.
 
 ## Configure Setup Manager
 
@@ -85,6 +87,8 @@ fi
 Then create a Smart Group named "Setup Manager Done" with the criteria `"Setup Manager Done" is "done"`.
 
 ## Pre-set user for Jamf Connect
+
+Note: this step only works with Entra ID as the Identity Provider.
 
 Jamf Connect Login allows pre-configuring the user. Create a configuration profile named "Jamf Connect Enrollment User" to the preference domain `com.jamf.connect.login` with the following property list:
 
