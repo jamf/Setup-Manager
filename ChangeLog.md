@@ -1,10 +1,14 @@
 #  Setup Manager - Change Log
 
+v1.2beta2
+(2025-02-26)
+
 ### New Features
 - Setup Manager can send [webhooks](Docs/Webhooks.md) on start and finish, (#70)
+  - (beta2) added [a specific webhook to send a message to Microsoft Teams](Docs/WebHooks.md#Microsoft-Teams)
 - User Entry:
-  - `email`, `endUsername`, `realname`, `position` and  `phone` fields added. These will be submitted to Jamf Pro when Setup Manager finishes and during a `waitForUserEntry` action (#24)
-  - you can set custom and localized labels for user entry fields in the profile with a `label` key (#40)
+  - `email`, `endUsername`, `realname`, `position` and  `phone` fields added. These will be submitted to Jamf Pro when Setup Manager finishes and during a `waitForUserEntry` action
+  - you can set custom and localized labels for user entry fields in the profile with a `label` key
 - [User Data file](Docs/Extras.md#user-data-file) now contains a list of enrollmentActions
 - added 'restart' option to ['finalAction'](ConfigurationProfile.md#finalAction) (#38, #58)
 - [icon sources](ConfigurationProfile.md#icon-source) and [`accentColor`](ConfigurationProfile.md#accentColor) can now have [a dark mode alternative defined in the profile](ConfigurationProfile.md#dark-mode) (#61)
@@ -12,23 +16,28 @@
 - `message` and help:`message` now interpret [markdown formatting](ConfigurationProfile.md#markdown) (#46)
 
 ### Fixes and Improvements
+- (beta2) an empty `userEntry` dictionary in the profile no longer chokes the UI (#85)
+- (beta2) MDM check more resilient to certain profile configs (#87)
+- (beta2) the `name` field in WebHook data was shortened from `SetupManagerFinished` and `SetupManagerStarted` to `Finished` and `Started`
+- (beta2) early log entry when debug mode is enabled
 - icon for `waitForUserEntry` can be changed from the profile
-- shell actions correctly show success or failure, depending on their exit code (#39)
+- shell actions correctly show success or failure, depending on their exit code#39)
 - Jamf Pro policy actions show success or failure in most situations. Note that there are many things a policy can potentially do. Not all failures are caught. This registers failed pkg installations and policy scripts that return a non-zero exit code, which should cover most situations. Note also, these checks will only work on macOS 13 and higher. On macOS 12, Jamf policies will always be reported as success.
 - read enrollment actions data from profile after user-initiated enrollments more reliably
 - now tries for 15 seconds to reload images with local file paths, this should help in situations were the resources file are installed after Setup Manager
 - many other fixes and improvements
+- updated included Installomator to 10.7
 - user data file will contain the enrollment user when the `userID` key is set
 - battery warning threshold is now different for Intel (%50) and Apple silicon (%20) Macs. This matches Apple's warnings before applying software updates
 
 ### Deprecations and Removals
 - the minimum macOS requirement for Setup Manager will be raised to macOS 13 soon
-- `showBothButtons` option removed and non-functional, there will always be just one final action button displayed (#180)
+- `showBothButtons` option removed and non-functional, there will always be just one final action button displayed
 - the method for providing localized texts in the configuration profile changed in version 1.1. The previous method (by appending the two letter language code to the key) is considered deprecated. It will continue to work for the time being but will be removed in a future release. It is _strongly_ recommended to change to the [new dictionary-based solution](ConfigurationProfile.md#localization).
 
 ### Beta Features
 
-Even though we are confident that the 1.2 release is overall stable and ready to be used in production, we believe this feature may require more testing. When, after thorough testing in your environment, you conclude this works for your workflow, please let us know about success or any issues you might encounter.
+Even though we are confident that the release is overall stable and ready to be used in production, we believe this feature may require more testing. When, after thorough testing in your environment, you conclude this works for your workflow, please let us know about success or any issues you might encounter.
 
 - Setup Manager can now run over Login Window, instead of immediately after installation. This also allows Setup Manager to work with AutoAdvance. Use [the new `runAt` key](ConfigurationProfile.md#runAt) in the profile to determine when Setup Manager runs
 

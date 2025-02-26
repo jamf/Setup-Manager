@@ -48,7 +48,7 @@ For the `started` webhook, Setup Manager attaches this data:
 
 ```json
 {
-  "name": "SetupManagerStarted",         // string
+  "name": "Started",                     // string
   "timestamp": "2025-01-14T15:11:28Z",   // time setup manager started, date as string, iso8601
   "started": "2025-01-14T15:11:27Z",     // time webhook was sent, date as string, iso8601 
   "modelName": "MacBook Air",            // string
@@ -66,13 +66,13 @@ The data for the `finished` webhook includes the same as above, with some additi
 
 ```json
 {
-  "name": "SetupManagerStarted",         // string
+  "name": "Finished",                    // string
   "duration": 53,                        // integer
   "finished": "2025-01-14T15:12:20Z",    // time Setup Manager finished, date as string, iso8601
   "computerName": "Mac-123456"           // computer name, only when set through Setup Manager
   "userEntry": {                         // data entered by the user
     "department": "IT",
-    "computerName": "IT-M7WGMK",
+    "computerName": "IT-ABC123",
     "userID": "a.b@example.,com",
     "assetTag": "abc54321"
   },
@@ -93,5 +93,17 @@ The data for the `finished` webhook includes the same as above, with some additi
 }
 ```
 
+### Microsoft Teams
 
+When you set up [an incoming webhook workflow with Microsoft Teams](https://support.microsoft.com/en-us/office/create-incoming-webhooks-with-workflows-for-microsoft-teams-8ae491c7-0394-4861-ba59-055e33f75498) the json payload is expected in a certain format. Use this webhook format in the Setup Manager profile:
 
+```xml
+<dict>
+  <key>kind</key>
+  <string>teams</string>
+  <key>url</key>
+  <string>--insert url from Teams Workflows here--</string>
+</dict>
+```
+
+This `dict` replaces the simple `string` syntax.
