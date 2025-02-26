@@ -95,7 +95,11 @@ The data for the `finished` webhook includes the same as above, with some additi
 
 ### Microsoft Teams
 
-When you set up [an incoming webhook workflow with Microsoft Teams](https://support.microsoft.com/en-us/office/create-incoming-webhooks-with-workflows-for-microsoft-teams-8ae491c7-0394-4861-ba59-055e33f75498) the json payload is expected in a certain format. Use this webhook format in the Setup Manager profile:
+When you set up [an incoming webhook workflow with Microsoft Teams](https://support.microsoft.com/en-us/office/create-incoming-webhooks-with-workflows-for-microsoft-teams-8ae491c7-0394-4861-ba59-055e33f75498) the json payload is expected in a certain format. 
+
+**Important Note:** _The Teams Workflow Webhook URL will contain ampersands `&`. Since configuration profiles are XML files, you need to escape/replace all ampersands in the URL with the XML escape sequence `&amp;`._
+
+Use this webhook format in the Setup Manager profile:
 
 ```xml
 <dict>
