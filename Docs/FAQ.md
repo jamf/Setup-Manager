@@ -20,7 +20,7 @@ There can be many causes for this. A few common causes are:
 
 No.
 
-Setup Manager will run fine without Jamf Connect. You can even build 'single-touch' style workflows with Setup Manager without Jamf Connect. Some features, such as pre-assigning a device to a specific user require Jamf Connect, though.
+Setup Manager will run fine without Jamf Connect. You can even build 'single-touch' style workflows with Setup Manager without Jamf Connect. Some workflows, such as pre-assigning a device to a specific user require Jamf Connect, though.
 
 ## How can I use the icon for an app before the app is installed?
 

@@ -32,8 +32,8 @@ Setup Manager provides:
   - user initiated enrollment
   - handsfree deployment with AutoAdvance (beta)
 - customized branding
-- localized interface and custom text
-- support for Jamf Pro and Jamf School
+- localized interface and localizable custom text
+- works with Jamf Pro and Jamf School
 
 ## Installation and Configuration
 
@@ -63,7 +63,6 @@ Setup Manager requires macOS 12.0.0 or higher. It will work only with Jamf Pro o
 - Setup Manager will **_not_** launch at enrollment with Auto-Advance enabled, use the option to run at login window
 - Setup Manager may **_not_** launch or launch and quit quickly when you disable _all_ Setup Assistant screens, leave at least one Setup Assistant option enabled, or use the option to run at login window
 - Policies that are triggered by `enrollmentComplete` may delay or even disrupt Setup Manager running from Prestage/Automated Device Enrollment. Disable or unscope policies triggered by `enrollmentComplete` on devices using Setup Manager.
-- In some deployments, Setup Manager attempts to start while Jamf Pro is still installing. Try adding a 30-60 second `wait` action as the first action.
 
 ---
 

@@ -48,17 +48,18 @@ For the `started` webhook, Setup Manager attaches this data:
 
 ```json
 {
-  "name": "Started",                     // string
-  "timestamp": "2025-01-14T15:11:28Z",   // time setup manager started, date as string, iso8601
-  "started": "2025-01-14T15:11:27Z",     // time webhook was sent, date as string, iso8601 
-  "modelName": "MacBook Air",            // string
-  "modelIdentifier": "Mac14,2",          // string
-  "macOSBuild": "24C101",                // string
-  "macOSVersion": "15.2.0",              // string
-  "serialNumber": "ABCD1234DE",          // string
-  "setupManagerVersion": "1.2"           // string
-  "jamfProVersion": "11.13.0"            // optional, only for Jamf Pro, string
-  "jssID": 1234                          // optional, only when `jssID` is set in profile, string
+  "name": "Started",                       // string
+  "event": "com.jamf.setupmanager.started" // string
+  "timestamp": "2025-01-14T15:11:28Z",     // time setup manager started, date as string, iso8601
+  "started": "2025-01-14T15:11:27Z",       // time webhook was sent, date as string, iso8601 
+  "modelName": "MacBook Air",              // string
+  "modelIdentifier": "Mac14,2",            // string
+  "macOSBuild": "24C101",                  // string
+  "macOSVersion": "15.2.0",                // string
+  "serialNumber": "ABCD1234DE",            // string
+  "setupManagerVersion": "1.2"             // string
+  "jamfProVersion": "11.13.0"              // optional, only for Jamf Pro, string
+  "jssID": 1234                            // optional, only when `jssID` is set in profile, string
 }
 ```
 
@@ -66,20 +67,21 @@ The data for the `finished` webhook includes the same as above, with some additi
 
 ```json
 {
-  "name": "Finished",                    // string
-  "duration": 53,                        // integer
-  "finished": "2025-01-14T15:12:20Z",    // time Setup Manager finished, date as string, iso8601
-  "computerName": "Mac-123456"           // computer name, only when set through Setup Manager
-  "userEntry": {                         // data entered by the user
+  "name": "Finished",                       // string
+  "event": "com.jamf.setupmanager.finished" // string
+  "duration": 53,                           // integer
+  "finished": "2025-01-14T15:12:20Z",       // time Setup Manager finished, date as string, iso8601
+  "computerName": "Mac-123456"              // computer name, only when set through Setup Manager
+  "userEntry": {                            // data entered by the user
     "department": "IT",
     "computerName": "IT-ABC123",
     "userID": "a.b@example.,com",
     "assetTag": "abc54321"
   },
-  "enrollmentActions": [                 // array of enrollmentActions with status
+  "enrollmentActions": [                    // array of enrollmentActions with status
     {
       "label": "Microsoft 365",
-      "status": "finished"               // status: "finished" or "failed"
+      "status": "finished"                  // status: "finished" or "failed"
     },
     {
       "label": "Google Chrome",
