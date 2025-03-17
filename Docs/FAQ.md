@@ -52,3 +52,6 @@ With Jamf Pro, you can set the Setup Manager pkg to install at the `login` trigg
 
 This is not, however, the primary workflow for Setup Manager and not something that we will test or verify. We believe running right after enrollment over Setup Assistant is the preferable deployment.
 
+## Installer or Policy Script is failing with access errors
+
+For some policy scripts or installers it may be necessary to give the Setup Manager app Full Disk Access or some other exemptions with a PPPC Profile. 

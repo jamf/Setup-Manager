@@ -1,7 +1,7 @@
 #  Setup Manager - Change Log
 
-v1.2beta3
-(2025-03-05)
+v1.2
+(2025-03-17)
 
 ### New Features
 - Setup Manager can send [webhooks](Docs/Webhooks.md) on start and finish, (#70)
@@ -16,7 +16,7 @@ v1.2beta3
 - `message` and help:`message` now interpret [markdown formatting](ConfigurationProfile.md#markdown) (#46)
 
 ### Fixes and Improvements
-- (beta3) return key connected to button in Setup Manager interface, (#93)
+- (beta3 and release) return key connected to final action and save buttons (#93)
 - (beta3) added an `event` field to standard webhook data, (#94)
 - (beta3) "facts" in Teams message are no longer in random order
 - (beta3) improved reliablity of running at login window (#77)
