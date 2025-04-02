@@ -1,5 +1,14 @@
 #  Setup Manager - Change Log
 
+## v1.2.1
+(2025-04-02)
+
+- updated included Installomator script to [v10.8](https://github.com/Installomator/Installomator/releases/tag/v10.8)
+- now tries for 15 seconds to reload local `background` image file (#105), this should help in situations where the image file is installed after Setup Manager
+- improved monitoring of Jamf Pro enrollment process and completion during the "Getting Ready" phase
+- minor documentation fixes (#106)
+
+
 v1.2
 (2025-03-17)
 

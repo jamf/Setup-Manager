@@ -115,7 +115,7 @@ When this key exists, Setup Manager will prompt for user data while the enrollme
 
 (Dict of Strings, optional)
 
-When this key exists, Setup Manager will show a "Help" button (a circled question mark) in the lower right corner while it is running. You can add sub-keys with content for the help, which are described in [Help](#help). When Setup Manager has completed, the "Help" button will be replaced with the "Continue" and/or "Shutdown" button.
+When this key exists, Setup Manager will show a "Help" button (a circled question mark) in the lower right corner while it is running. You can add sub-keys with content for the help, which are described in [Help](#help-1). When Setup Manager has completed, the "Help" button will be replaced with the "Continue" and/or "Shutdown" button.
 
 #### `accentColor`
 
