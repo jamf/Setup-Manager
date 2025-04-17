@@ -1,5 +1,13 @@
 #  Setup Manager - Change Log
 
+## v1.2.2
+(2025-04-17)
+- signed a helper script that could lead to unexpected background item prompts
+- disabled command-W keystroke
+- fixed a stall in `waitForUserEntry` with Jamf School
+- fixed link to computer record in Teams message (#110)
+- minor documentation fixes
+
 ## v1.2.1
 (2025-04-02)
 

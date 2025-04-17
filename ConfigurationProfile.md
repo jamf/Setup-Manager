@@ -148,7 +148,7 @@ Example:
 
 (Number/integer, optional, default: `60`)
 
-This key changes the duration (in seconds) of the "final countdown" before the app automatically performs the `finalAction` (continue or shut down). Set to `-1` (or any negative number) to disable automated execution.
+This key changes the duration (in seconds) of the "final countdown" before the app automatically performs the `finalAction`. Set to `-1` to disable automated execution.
 
 Example:
 
@@ -173,7 +173,7 @@ This key sets the action and label for the button shown when Setup Manger has co
 There are three options:
 - `continue`: (default) merely quits Setup Manager and allows the user to continue (probably Setup Assistant or login window)
 - `restart`: restarts the Mac
-- `shut down`: (no space!) shuts down the Mac
+- `shutdown`: (no space!) shuts down the Mac
 
 **Warning:** `restart` and `shutdown` options will force their action immediately. If a user is logged in (after user-initiated enrollment), they may lose data from open, unsaved documents.
 
@@ -218,7 +218,7 @@ Example:
 
 (String, Jamf Pro only)
 
-Set this to `$EMAIL` in the configuration profile. This communicates the user who logged in to customized enrollment to Setup Manager. This can be used together with the `userEntry.showForUserIDs` key to control which users see the user entry UI.
+Set this to `$EMAIL` in the configuration profile. This communicates the user who logged in to customized enrollment to Setup Manager. This can be used together with the [`userEntry.showForUserIDs`](#conditionally-show-the-user-entry-for-certain-users) key to control which users see the user entry UI.
 
 Example:
 
@@ -478,7 +478,7 @@ Example:
 
 This will run [Installomator](https://github.com/Installomator/Installomator) to install a given label.
 
-Note: by default, Setup manager will add `NOTIFY=silent` to the arguments to suppress notfications. You can override this in the `arguments`.
+Note: by default, Setup manager will add `NOTIFY=silent` to the arguments to suppress notifications. You can override this in the `arguments`.
 
 #### `installomator`
 
