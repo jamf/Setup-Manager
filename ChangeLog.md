@@ -6,7 +6,7 @@
 ### New Features
 - Logging
     - log output format has been cleaned up
-    - Install log and Jamf Pro log (when available) can now be viewed in the Log window ()#78)
+    - Install log and Jamf Pro log (when available) can now be viewed in the Log window (#78)
     - now also logs to macOS unified logging
     - new top-level default key to control action output logging
 - Network Monitoring

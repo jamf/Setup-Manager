@@ -4,7 +4,7 @@
 
 _"Every Assistant has a Manager"_
 
-![Setup Manager Logo](https://img.shields.io/badge/macOS-12%2B-success)
+![Setup Manager Logo](https://img.shields.io/badge/macOS-13.5%2B-success)
 
 Updates are published in the '[Releases](https://github.com/jamf-concepts/setup-manager/releases)' section of the repo. There you can also [download the latest pkg installer](https://github.com/jamf-concepts/setup-manager/releases/latest). You can subscribe to notifications for the repo using the 'Watch' button above.
 
