@@ -5,6 +5,7 @@ The project some sample files to get you started:
 - [sample plist](Examples/sample-waitForUserEntry.plist) for Jamf Pro with [two phase workflow](Docs/JamfPro-TwoPhase.md)
 - [configuration profile](Examples/sample-jamfschool.mobileconfig) for Jamf School
 
+**Important:** all keys and values are **case-senstive**.
 
 ## Top-level keys
 
@@ -84,11 +85,9 @@ When this key is set, Setup Manager treats it as an image/[icon source](#icon-so
 
 (String, optional, default: `enrollment`)
 
-**Beta:** We believe the run at login window feature may require more testing, especially in some edge cases. When, after thorough testing, you believe this works in your workflow, feel free to deploy it, and please let us know about your success or any issues you might encounter.
+This value determines when Setup Manager should launch. There are two values: `enrollment` (default) and `loginwindow`. When set to `enrollment` Setup Manager will launch immediately when its installation package is installed. This is the setting to use for automated device enrollment (without Auto Advance) and user-initiated enrollment.
 
-This value determines when Setup Manager should launch. There are two values: `enrollment` (default) and `loginwindow`. When set to `enrollment` Setup Manager will launch immediately when the pkg is installed. This is the setting to use for automated device enrollment (without Auto Advance) and user-initiated enrollment.
-
-When the `runAt` value is set to `loginwindow` Setup Manager will launch only when the login window is shown. This is useful for fully automated enrollments using Auto Advance.
+When the `runAt` value is set to `loginwindow` Setup Manager will launch only when the login window is shown. This is useful for fully automated enrollments using Auto Advance and some workflows involving Jamf Connect or similar tools.
 
 A setting of `loginwindow` will only work with enrollment setups that eventually end on the login window (i.e. a user has to be created automatically, the device is bound to a directory, etc).
 
@@ -115,7 +114,7 @@ When this key exists, Setup Manager will prompt for user data while the enrollme
 
 (Dict of Strings, optional)
 
-When this key exists, Setup Manager will show a "Help" button (a circled question mark) in the lower right corner while it is running. You can add sub-keys with content for the help, which are described in [Help](#help). When Setup Manager has completed, the "Help" button will be replaced with the "Continue" and/or "Shutdown" button.
+When this key exists, Setup Manager will show a "Help" button (a circled question mark) in the lower right corner while it is running. You can add sub-keys with content for the help, which are described in [Help](#help-1). When Setup Manager has completed, the "Help" button will be replaced with the "Continue" and/or "Shutdown" button.
 
 #### `accentColor`
 
@@ -148,7 +147,7 @@ Example:
 
 (Number/integer, optional, default: `60`)
 
-This key changes the duration (in seconds) of the "final countdown" before the app automatically performs the `finalAction` (continue or shut down). Set to `-1` (or any negative number) to disable automated execution.
+This key changes the duration (in seconds) of the "final countdown" before the app automatically performs the `finalAction`. Set to `-1` to disable automated execution.
 
 Example:
 
@@ -170,12 +169,15 @@ Disable the countdown:
 
 This key sets the action and label for the button shown when Setup Manger has completed. 
 
-There are three options:
+There are four options:
 - `continue`: (default) merely quits Setup Manager and allows the user to continue (probably Setup Assistant or login window)
 - `restart`: restarts the Mac
-- `shut down`: (no space!) shuts down the Mac
+- `shutdown`: (no space!) shuts down the Mac
+- `none`: no button shown. (see note below)
 
 **Warning:** `restart` and `shutdown` options will force their action immediately. If a user is logged in (after user-initiated enrollment), they may lose data from open, unsaved documents.
+
+**Note on `none`:** the `none` option exists for workflows where the restart or continue is controlled by a process other than Setup Manager. For example, when installing additional software with a `finishedScript` or `finishedTrigger` which forces a restart. Having a `continue` or `restart` button would be confusing and might interrupt the installation in the finished process. However, having no button to end Setup Manager at all, might leave the user 'stuck' there, so be sure to always restart or kill Setup Manager. You can always use the keyboard shortcut `shift-control-command-E` to quit Setup Manager.
 
 This is also the action that is performed when the `finalCountdown` timer runs out.
 
@@ -187,6 +189,25 @@ Example:
 <key>finalAction</key>
 <string>shutdown</string>
 ```
+
+#### `finishedScript`
+
+(String, optional)
+
+A full path to a script file which will be executed _after_ Setup Manager has finished its workflow. This process runs independently of Setup Manager, so it can run installers or scripts that affect Setup Manager.
+
+The script has to fulfill these criteria to be executed:
+
+- owner: `root`, group: `wheel`
+- executable bit set
+- not writable for group or other (file mode `755` or `555`)
+- no quarantine flag attached
+
+#### `finishedTrigger`
+
+(String, optional, Jamf Pro only)
+
+A custom policy trigger which will be executed _after_ Setup Manager has finished its workflow. This process runs independently of Setup Manager, so it can run installers or scripts that affect Setup Manager.
 
 #### `totalDownloadBytes`
 
@@ -218,7 +239,7 @@ Example:
 
 (String, Jamf Pro only)
 
-Set this to `$EMAIL` in the configuration profile. This communicates the user who logged in to customized enrollment to Setup Manager. This can be used together with the `userEntry.showForUserIDs` key to control which users see the user entry UI.
+Set this to `$EMAIL` in the configuration profile. This communicates the user who logged in to customized enrollment to Setup Manager. This can be used together with the [`userEntry.showForUserIDs`](#conditionally-show-the-user-entry-for-certain-users) key to control which users see the user entry UI.
 
 Example:
 
@@ -291,6 +312,19 @@ Example:
 
 When debug mode is enabled, you can set the `simulateMDM` preference key to `Jamf Pro` or `Jamf School`. This allows you to do test runs on un-enrolled Macs.
 
+#### `actionOutputLogging`
+
+(string, optional, default: `error`)
+
+This key controls whether the output of actions is written to the Setup Manager log file.
+
+There are three options:
+- `always`: output and exit code are always written to the log file
+- `error`: (default) output and exit code are only written on errors
+- `never`: output and exit are never written to the log file
+
+Setup Manager's log window will always show the output, regardless of this setting.
+
 ## Actions
 
 All actions should have these keys:
@@ -358,7 +392,7 @@ Example:
 This will run the Jamf Pro policy or polices with the given trigger name. This is the equivalent of running 
 
 ```
-jamf policy -event <triggername> -verbose -forceNoRecon -doNotRestart -noInteraction
+jamf policy -event <triggername> -verbose -forceNoRecon -doNotRestart -noInteraction -skipAppUpdates
 ```
 
 Note: Jamf Pro policies can do a lot of different things and fail in many different ways. Setup Manager does _not_ check for all possible failure modes. It only checks for failed installer pkgs and policy scripts that return non-zero exit codes, which should cover most uses of policies for initial deployment.
@@ -373,6 +407,20 @@ Example:
   <string>https://ics.services.jamfcloud.com/icon/hash_abcdefghj</string>
   <key>policy</key>
   <string>install_bbedit</string>
+</dict>
+```
+
+Note: You can trigger policies attached to "Recurring Check-in" by leaving the string value empty:
+
+
+```xml
+<dict>
+  <key>icon</key>
+  <string>symbol:arrow.trianglehead.2.clockwise.rotate.90</string>
+  <key>label</key>
+  <string>Check-in</string>
+  <key>policy</key>
+  <string/>
 </dict>
 ```
 
@@ -478,7 +526,7 @@ Example:
 
 This will run [Installomator](https://github.com/Installomator/Installomator) to install a given label.
 
-Note: by default, Setup manager will add `NOTIFY=silent` to the arguments to suppress notfications. You can override this in the `arguments`.
+Note: by default, Setup manager will add `NOTIFY=silent` to the arguments to suppress notifications. You can override this in the `arguments`.
 
 #### `installomator`
 
@@ -823,6 +871,10 @@ Example:
 ## Webhooks
 
 Setup Manager can send web hooks to servers and services to trigger workflows there. You can read [details on how to configure and use WebHooks here](Docs/Webhooks.md).
+
+## Network Connectivity
+
+Setup Manager can check and display the network status and connectivity to a list of hosts.
 
 ## Localization
 

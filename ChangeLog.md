@@ -1,5 +1,97 @@
 #  Setup Manager - Change Log
 
+## v1.3beta
+(2025-05-27)
+
+### New Features
+- Logging
+    - log output format has been cleaned up
+    - Install log and Jamf Pro log (when available) can now be viewed in the Log window ()#78)
+    - now also logs to macOS unified logging
+    - new top-level default key to control action output logging
+- Network Monitoring
+    - changes to network interfaces are now logged, see the Notes section for details (#15)
+    - network status can be shown in the top-right corner of the Setup Manager window
+- new flag file `/private/var/db/.JamfSetupStarted`, which is created when Setup Manager starts
+- added [a specific webhook to send a message to Slack](Docs/WebHooks.md#Slack) (#104)
+- two new defaults keys `finishedScript` and `finishedTrigger` allow to run custom behavior when Setup Manager has finished
+- new option `none` for `finalAction` (#115)
+
+### Fixes and Improvements
+- Jamf Pro: improved monitoring for Jamf Pro to complete its setup after enrollment
+- webhook log entries correctly show status
+- added `-skipAppUpdates` option to list of options for Jamf Pro policy actions
+- Jamf Pro policy will trigger 'Recurring Check-in' policies on empty string value
+
+### Deprecations and Removals
+- (1.3) the minimum macOS requirement for Setup Manager is now macOS 13.5
+- (1.2) `showBothButtons` option removed and non-functional, there will always be just one final action button displayed
+- the method for providing localized texts in the configuration profile changed in version 1.1. The previous method (by appending the two letter language code to the key) is considered deprecated. It will continue to work for the time being but will be removed in a future release. It is _strongly_ recommended to change to the [new dictionary-based solution](ConfigurationProfile.md#localization)
+
+### Notes
+
+#### Logging
+
+The format of the Setup Manager log file (in `/Library/Logs/Setup Manager.log`) has changed. The new format should be easier to parse with other tools. There are four columns:
+
+- timestamp (in ISO8601)
+- log level (default, error or fault)
+- category (general, install, network, jamfpro)
+- message
+
+Setup Manager 1.3 also logs to the macOS unified system log. The subsystem is `com.jamf.setupmanager`. You can use the `log` command line tool to read the log.
+
+For example:
+
+```
+sudo log show --last 30m --predicate 'subsystem="com.jamf.setupmanager"'
+```
+
+To clean up the log a little, Setup Manager 1.3 will only write the output of actions to the Setup Manager log file when an error occurred. You can control this behavior with a new top-level preference key `actionOutputLogging`.
+
+
+#### Network change logging
+
+Setup Manager 1.3 adds logging for changes to network interfaces. it is possible that there will multiple entries in the log with regards to the same network change. Most changes logged will be neutral and should not affect your deployment negatively.
+
+However, it is possible that changes to the network configuration of a device can influence the deployment workflow. For example, when a configuration profile with the access information for a secure corporate Wifi is installed on the device, then the download access to  required resources might change. Another example are security that might lead to restricted access for downloads (Installomator uses `curl` to download data, which might trigger security tools.) 
+
+Knowing that network changes or outages occurred during enrollment can be useful for troubleshooting.
+
+#### Network Status icon/menu
+
+Network status is also shown with a new icon in the top-right corner of the Setup Manager window.  
+ 
+Note that Network Relay will only protect traffic to certain configured servers and services, not all traffic.
+
+By default, the network icon will _not_ be shown. You can activate it manually with the command-N keystroke.
+
+When you click on the Network status icon, a popup will show:
+ - the current active network interface
+ - IPv4 and IPv6 addresses
+ - download and upload bandwidth (will take a while to appear)
+ - Network Relay hosts (when network relay profile is present)
+ - list of additional custom hosts, configured in the profile
+
+Note that the connectivity is very basic and might not catch all functionality that is required for a service to work. It should provide an indication whether a service is available, but deeper trouble-shooting and monitoring might be required for reliable diagnostics.
+
+## v1.2.2
+(2025-04-17)
+- signed a helper script that could lead to unexpected background item prompts
+- disabled command-W keystroke
+- fixed a stall in `waitForUserEntry` with Jamf School
+- fixed link to computer record in Teams message (#110)
+- minor documentation fixes
+
+## v1.2.1
+(2025-04-02)
+
+- updated included Installomator script to [v10.8](https://github.com/Installomator/Installomator/releases/tag/v10.8)
+- now tries for 15 seconds to reload local `background` image file (#105), this should help in situations where the image file is installed after Setup Manager
+- improved monitoring of Jamf Pro enrollment process and completion during the "Getting Ready" phase
+- minor documentation fixes (#106)
+
+
 v1.2
 (2025-03-17)
 

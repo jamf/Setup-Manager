@@ -108,3 +108,42 @@ Setup Manager will unload and remove its LaunchAgent and LauchDaemon files upon 
 
 If you still want to remove Setup Manager after successful enrollment, there is [a sample uninstaller script in the Examples folder](../Examples/uninstall.sh).
 
+## (Jamf Pro): Useful Smart Groups 
+
+You can create smart groups to coordinate installations of Configuration profiles. Some useful examples are:
+
+### Setup Manager Installed
+
+Criteria: 'Application Bundle ID' is `com.jamf.setupmanager`
+
+You can use this smart group to scope or limit configuration profiles, Mac App Store/VPP apps, and Jamf App Installer apps. This way their installation will not occur immediately after enrollment, potentially slowing down the installation of essential Jamf Pro components and extending the "Getting Ready" phase.
+
+### Setup Manager Done
+
+Create an Extension attribute named "Setup Manager Done" with the script code:
+
+```sh
+if [ -f "/private/var/db/.JamfSetupEnrollmentDone" ]; then
+  echo "<result>done</result>"
+else
+  echo "<result>incomplete</result>"
+fi
+```
+
+Then create a Smart Group named "Setup Manager Done" with the criteria `"Setup Manager Done" is "done"`.
+
+You can use this to scope configuration profiles and policies so that they are installed or run _after_ Setup Manager is complete.
+
+##  Running Scripts and Policies when Setup Manager finishes
+
+Generally, you want to coordinate tasks, configurations, and installations with Setup Manager actions. However, in some situations the installations might interfere with the Setup Manager workflow itself. This is most relevant with software that needs to reload the login window process, which will also kill Setup Manager.
+
+Setup Manager provides a LaunchDaemon which monitors the `.JamfEnrollmentSetupDone` flag file. It then launches a script or a custom Jamf Pro policy trigger. Since this LaunchDaemon runs independently from Setup Manager, so it can run installers or scripts that might quit login window or Setup Manager.
+
+However, if you have set Setup Manager to automatically shut down or restart at the end, this will interrupt the finished script or policy, unless the automated delay is long enough. Use the [`finalAction`](../ConfigurationProfile.md#finalAction) value of `none` to remove the button and countdown from the Setup Manager UI. However, now it the responsibility of the finishing process to restart the Mac or quit the Setup Manager process, otherwise Setup Manager will keep blocking the UI.
+
+The finished script or custom trigger are configured in the Setup Manager configuration profile, with the [`finishedScript`](../ConfigurationProfile.md#finishedScript) and [`finishedTrigger`](../ConfigurationProfile.md#finishedTrigger) keys.
+
+The SetupManagerFinished daemon logs its output (and the output of the policy and scripts to `/private/var/log/setupManagerFinished.log`.
+
+

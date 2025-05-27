@@ -38,11 +38,23 @@ When enrolled into Jamf Pro, Setup Manager runs (among other things) a recon/Upd
 
 You can open the log window (command-L) or review the [log file](Extras.md#logging) for detail for each step. Should Setup Manager stall during one of these steps, you can [quit](Extras.md#quit) out of Setup Manager and review the [log file](Extras.md#logging) after completing the setup.
 
+## (Jamf Pro) Getting Ready is taking very long (several minutes). What is happening and can I do something to make it faster?
+
+The "Getting Ready" phase prepares some steps and waits for all essential Jamf Pro components (the jamf binary, certificates, Jamf.app, etc.) to be installed and configured before starting with the actual enrollment workflow. Depending on the network connection this might take a while.
+
+Note that you can see the individual steps and the timing for each step in the [Setup Manager log file](Extras.md#logging)].
+
+Once Jamf Pro's enrollment workflow is complete, Setup Manager runs a full update inventory/recon. In general, if the recon takes a long time, you should review the inventory collection settings. Calculating home directory sizes and gathering fonts can take a lot of time and CPU power, and speed up things significantly when turned off, not just during enrollment with Setup Manager.  You should also review extension attributes, for whether they are used and how long each one runs.
+
+Mac App Store/VPP and Jamf App Installer apps that are scoped to the computer will also begin installing _immediately_ after enrollment. Since macOS will only perform one installation at a time, these might delay the installation of essential Jamf Pro components. You can create smart groups to defer these installations.
+
+
+
 ## Can I set the wallpaper/desktop picture or dock with Setup Manager?
 
 The settings for the dock and wallpaper/desktop picture are _user_ settings. Since the user account usually does not yet exist when Setup Manager runs, you cannot affect those settings.
 
-What you can do is run a script at login which sets the desktop (using [desktoppr](https://github.com/scriptingosx/desktoppr) ) or the dock (using [dockutil](https://github.com/kcrawford/dockutil) or a similar tool). You can use the Jamf Pro login trigger for this, or create a custom LaunchAgent or use [outset](https://github.com/macadmins/outset/)
+What you can do is run a script at login which sets the desktop (using [desktoppr](https://github.com/scriptingosx/desktoppr) ) or the dock (using [dockutil](https://github.com/kcrawford/dockutil) or a similar tool). You can use the [Jamf Pro login trigger](https://learn.jamf.com/en-US/bundle/jamf-pro-documentation-current/page/Login_Events.html) for this, or create a custom LaunchAgent or use [outset](https://github.com/macadmins/outset/)
 
 ## Can Setup Manager run at first login, rather than right after enrollment?
 
@@ -51,6 +63,8 @@ Technically, yes.
 With Jamf Pro, you can set the Setup Manager pkg to install at the `login` trigger or manually from Self Service. Then it will launch within the user session.
 
 This is not, however, the primary workflow for Setup Manager and not something that we will test or verify. We believe running right after enrollment over Setup Assistant is the preferable deployment.
+
+With Jamf Pro, you should consider [macOS Onboarding in Self Service](https://learn.jamf.com/en-US/bundle/jamf-pro-documentation-current/page/macOS_Onboarding.html) or a [login trigger](https://learn.jamf.com/en-US/bundle/jamf-pro-documentation-current/page/Login_Events.html) instead.
 
 ## Installer or Policy Script is failing with access errors
 

@@ -113,3 +113,18 @@ Use this webhook format in the Setup Manager profile:
 ```
 
 This `dict` replaces the simple `string` syntax.
+
+### Slack
+
+You can also [configure Slack to receive messages on webhook url](https://api.slack.com/messaging/webhooks).
+
+Use this webhook format in the Setup Manager profile:
+
+```xml
+<dict>
+  <key>kind</key>
+  <string>slack</string>
+  <key>url</key>
+  <string>--insert url from Slack here--</string>
+</dict>
+```
