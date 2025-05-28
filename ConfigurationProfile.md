@@ -211,7 +211,7 @@ A custom policy trigger which will be executed _after_ Setup Manager has finishe
 
 #### `totalDownloadBytes`
 
-(Integer, opitonal, default: 1000000000 or 1GB, v0.8)
+(Integer, optional, default: 1000000000 or 1GB, v0.8)
 
 Use this value to provide an estimate for the total size of all items that will be downloaded. Setup Manager will display and estimated download time for this sum in the "About this Mac..." popup window.
 
@@ -874,7 +874,7 @@ Setup Manager can send web hooks to servers and services to trigger workflows th
 
 ## Network Connectivity
 
-Setup Manager can check and display the network status and connectivity to a list of hosts.
+Setup Manager can check and display the network status and connectivity to a list of hosts. You can read [the details on how to configure this here](Docs/Network.md).
 
 ## Localization
 
@@ -937,6 +937,10 @@ The following keys can be localized:
 - `title`
 - `message`
 - `url`
+
+### Network Check
+
+- `label`
 
 Use these two-letter codes for these languages:
 

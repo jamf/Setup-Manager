@@ -5,7 +5,7 @@
 _"Every Assistant has a Manager"_
 
 ![Setup Manager Logo](https://img.shields.io/badge/macOS-13.5%2B-success)
-
+ 
 Updates are published in the '[Releases](https://github.com/jamf-concepts/setup-manager/releases)' section of the repo. There you can also [download the latest pkg installer](https://github.com/jamf-concepts/setup-manager/releases/latest). You can subscribe to notifications for the repo using the 'Watch' button above.
 
 Please report issues, feature requests [as an issue.](https://github.com/jamf-concepts/setup-manager/issues)
@@ -47,6 +47,7 @@ Setup Manager provides:
 - [Extras and Notes](Docs/Extras.md)
 - [Frequently Asked Questions](Docs/FAQ.md)
 - [Webhooks](Docs/Webhooks.md)
+- [Network Connectivity Checks](Docs/Network.md)
 
 ## Configuration Profile
 
@@ -56,13 +57,13 @@ There is also a [custom schema for Jamf Pro](Docs/Extras.md#custom-json-schema-f
 
 ## Requirements
 
-Setup Manager requires macOS 12.0.0 or higher. It will work only with Jamf Pro or Jamf School.
+Setup Manager requires macOS 13.5 or higher. It will work only with Jamf Pro or Jamf School.
 
 ## Known Issues
 
 - Setup Manager will **_not_** launch at enrollment with Auto-Advance enabled, use the option to run at login window
-- Setup Manager may **_not_** launch or launch and quit quickly when you disable _all_ Setup Assistant screens, leave at least one Setup Assistant option enabled, or use the option to run at login window
-- Policies that are triggered by `enrollmentComplete` may delay or even disrupt Setup Manager running from Prestage/Automated Device Enrollment. Disable or unscope policies triggered by `enrollmentComplete` on devices using Setup Manager.
+- Setup Manager may **_not_** launch or launch and quit quickly when you disable _all_ Setup Assistant screens and skip user creation, leave at least one Setup Assistant option enabled, or use the option to run at login window
+- Policies that are triggered by `enrollmentComplete` may delay or even disrupt Setup Manager running from Prestage/Automated Device Enrollment. Disable or un-scope policies triggered by `enrollmentComplete` on devices using Setup Manager.
 
 ---
 
