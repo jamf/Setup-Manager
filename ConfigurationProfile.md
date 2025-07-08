@@ -5,6 +5,7 @@ The project some sample files to get you started:
 - [sample plist](Examples/sample-waitForUserEntry.plist) for Jamf Pro with [two phase workflow](Docs/JamfPro-TwoPhase.md)
 - [configuration profile](Examples/sample-jamfschool.mobileconfig) for Jamf School
 
+**Important:** all keys and values are **case-senstive**.
 
 ## Top-level keys
 
@@ -74,6 +75,20 @@ Example:
 
 `Please be patient.` will be bold. More detail on [Markdown here](#markdown).
 
+During the "Getting Ready" phase up to three lines of text will be shown. When the action icon progress list is shown, text will be truncated to a single line.
+
+Use actual line breaks in the XML for line breaks in this text. (`\n` escape sequence will _not_ work in XML)
+
+Example:
+
+```xml
+<key>message</key>
+<string>Please be patient…
+
+This line of text will be truncated when the action icon list is shown.</string>
+```
+
+
 #### `background`
 
 (String, optional, localized, dark mode)
@@ -84,11 +99,9 @@ When this key is set, Setup Manager treats it as an image/[icon source](#icon-so
 
 (String, optional, default: `enrollment`)
 
-**Beta:** We believe the run at login window feature may require more testing, especially in some edge cases. When, after thorough testing, you believe this works in your workflow, feel free to deploy it, and please let us know about your success or any issues you might encounter.
+This value determines when Setup Manager should launch. There are two values: `enrollment` (default) and `loginwindow`. When set to `enrollment` Setup Manager will launch immediately when its installation package is installed. This is the setting to use for automated device enrollment (without Auto Advance) and user-initiated enrollment.
 
-This value determines when Setup Manager should launch. There are two values: `enrollment` (default) and `loginwindow`. When set to `enrollment` Setup Manager will launch immediately when the pkg is installed. This is the setting to use for automated device enrollment (without Auto Advance) and user-initiated enrollment.
-
-When the `runAt` value is set to `loginwindow` Setup Manager will launch only when the login window is shown. This is useful for fully automated enrollments using Auto Advance.
+When the `runAt` value is set to `loginwindow` Setup Manager will launch only when the login window is shown. This is useful for fully automated enrollments using Auto Advance and some workflows involving Jamf Connect or similar tools.
 
 A setting of `loginwindow` will only work with enrollment setups that eventually end on the login window (i.e. a user has to be created automatically, the device is bound to a directory, etc).
 
@@ -170,12 +183,15 @@ Disable the countdown:
 
 This key sets the action and label for the button shown when Setup Manger has completed. 
 
-There are three options:
+There are four options:
 - `continue`: (default) merely quits Setup Manager and allows the user to continue (probably Setup Assistant or login window)
 - `restart`: restarts the Mac
 - `shutdown`: (no space!) shuts down the Mac
+- `none`: no button shown. (see note below)
 
 **Warning:** `restart` and `shutdown` options will force their action immediately. If a user is logged in (after user-initiated enrollment), they may lose data from open, unsaved documents.
+
+**Note on `none`:** the `none` option exists for workflows where the restart or continue is controlled by a process other than Setup Manager. For example, when installing additional software with a `finishedScript` or `finishedTrigger` which forces a restart. Having a `continue` or `restart` button would be confusing and might interrupt the installation in the finished process. However, having no button to end Setup Manager at all, might leave the user 'stuck' there, so be sure to always restart or kill Setup Manager. You can always use the keyboard shortcut `shift-control-command-E` to quit Setup Manager.
 
 This is also the action that is performed when the `finalCountdown` timer runs out.
 
@@ -188,11 +204,48 @@ Example:
 <string>shutdown</string>
 ```
 
+#### `finishedScript`
+
+(String, optional)
+
+A full path to a script file which will be executed _after_ Setup Manager has finished its workflow. This process runs independently of Setup Manager, so it can run installers or scripts that affect Setup Manager.
+
+The script has to fulfill these criteria to be executed:
+
+- owner: `root`, group: `wheel`
+- executable bit set
+- not writable for group or other (file mode `755` or `555`)
+- no quarantine flag attached
+
+The output of the finished script and trigger will be logged to `/private/var/log/setupManagerFinished.log`.
+
+Example:
+
+```xml
+<key>finishedScript</key>
+<string>/Library/Management/finishedScript.sh</string>
+```
+
+#### `finishedTrigger`
+
+(String, optional, Jamf Pro only)
+
+A custom policy trigger which will be executed _after_ Setup Manager has finished its workflow. This process runs independently of Setup Manager, so it can run installers or scripts that affect Setup Manager.
+
+The output of the finished script and trigger will be logged to `/private/var/log/setupManagerFinished.log`.
+
+Example:
+
+```xml
+<key>finishedTrigger</key>
+<string>setup_manager_finished</string>
+```
+
 #### `totalDownloadBytes`
 
-(Integer, opitonal, default: 1000000000 or 1GB, v0.8)
+(Integer, optional, default: 1000000000 or 1GB, v0.8)
 
-Use this value to provide an estimate for the total size of all items that will be downloaded. Setup Manager will display and estimated download time for this sum in the "About this Mac..." popup window.
+Use this value to provide an estimate for the total size of all items that will be downloaded. Setup Manager will display an estimated download time for this sum in the "About this Mac..." popup window.
 
 Example:
 
@@ -291,6 +344,26 @@ Example:
 
 When debug mode is enabled, you can set the `simulateMDM` preference key to `Jamf Pro` or `Jamf School`. This allows you to do test runs on un-enrolled Macs.
 
+#### `actionOutputLogging`
+
+(string, optional, default: `error`)
+
+This key controls whether the output of actions is written to the Setup Manager log file.
+
+There are three options:
+- `always`: output and exit code are always written to the log file
+- `error`: (default) output and exit code are only written on errors
+- `never`: output and exit are never written to the log file
+
+Setup Manager's log window will always show the output, regardless of this setting.
+
+Example:
+
+```xml
+<key>actionOutputLogging</key>
+<string>always</string>
+```
+
 ## Actions
 
 All actions should have these keys:
@@ -358,7 +431,7 @@ Example:
 This will run the Jamf Pro policy or polices with the given trigger name. This is the equivalent of running 
 
 ```
-jamf policy -event <triggername> -verbose -forceNoRecon -doNotRestart -noInteraction
+jamf policy -event <triggername> -verbose -forceNoRecon -doNotRestart -noInteraction -skipAppUpdates
 ```
 
 Note: Jamf Pro policies can do a lot of different things and fail in many different ways. Setup Manager does _not_ check for all possible failure modes. It only checks for failed installer pkgs and policy scripts that return non-zero exit codes, which should cover most uses of policies for initial deployment.
@@ -373,6 +446,20 @@ Example:
   <string>https://ics.services.jamfcloud.com/icon/hash_abcdefghj</string>
   <key>policy</key>
   <string>install_bbedit</string>
+</dict>
+```
+
+Note: You can trigger policies attached to "Recurring Check-in" by leaving the string value empty:
+
+
+```xml
+<dict>
+  <key>icon</key>
+  <string>symbol:arrow.trianglehead.2.clockwise.rotate.90</string>
+  <key>label</key>
+  <string>Check-in</string>
+  <key>policy</key>
+  <string/>
 </dict>
 ```
 
@@ -476,9 +563,9 @@ Example:
 
 ### Installomator
 
-This will run [Installomator](https://github.com/Installomator/Installomator) to install a given label.
+Setup Manager includes the [Installomator](https://github.com/Installomator/Installomator) script to simplify installations. This action will run [Installomator](https://github.com/Installomator/Installomator) to install a given label.
 
-Note: by default, Setup manager will add `NOTIFY=silent` to the arguments to suppress notifications. You can override this in the `arguments`.
+Note: by default, Setup manager will add `NOTIFY=silent` to the arguments to suppress notifications. You can override these variables and add more with the `arguments` key.
 
 #### `installomator`
 
@@ -502,6 +589,21 @@ Example:
   <string>symbol:gearshape.2</string>
   <key>installomator</key>
   <string>googlechromepkg</string>
+</dict>
+```
+
+with arguments: 
+
+```xml
+<dict>
+  <key>label</key>
+  <string>Example App</string>
+  <key>installomator</key>
+  <string>example</string>
+  <key>arguments</key>
+  <array>
+    <string>downloadURL=https://example.com/alternativeURL</string>
+  </array>
 </dict>
 ```
 
@@ -824,6 +926,10 @@ Example:
 
 Setup Manager can send web hooks to servers and services to trigger workflows there. You can read [details on how to configure and use WebHooks here](Docs/Webhooks.md).
 
+## Network Connectivity
+
+Setup Manager can check and display the network status and connectivity to a list of hosts. You can read [the details on how to configure this here](Docs/Network.md).
+
 ## Localization
 
 The app will pick up the user choice of the UI language for the interface elements. (Table of currently available languages below.) The app will fall back to English for other language choices.
@@ -886,6 +992,10 @@ The following keys can be localized:
 - `message`
 - `url`
 
+### Network Check
+
+- `label`
+
 Use these two-letter codes for these languages:
 
 | Language           | two-letter code |
@@ -894,9 +1004,10 @@ Use these two-letter codes for these languages:
 | Dutch (Nederlands) | nl              |
 | French             | fr              |
 | German             | de              |
-| Italian            | it              |
 | Hebrew             | he              |
+| Italian            | it              |
 | Norwegian          | nb              |
+| Polish             | pl              |
 | Spanish            | es              |
 | Swedish            | sv              |
 
