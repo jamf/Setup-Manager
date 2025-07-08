@@ -1,5 +1,106 @@
 #  Setup Manager - Change Log
 
+## 1.3
+(2025-07-08)
+
+Notes added since 1.3beta are marked with '(release)'
+
+### New Features
+- Logging
+    - log output format has been cleaned up
+    - Install log and Jamf Pro log (when available) can now be viewed in the Log window (#78, #130)
+    - now also logs to macOS unified logging
+    - new top-level default key to control action output logging
+- Network Monitoring
+    - changes to network interfaces are now logged, see the Notes section for details (#15)
+    - network status can be shown in the top-right corner of the Setup Manager window
+- new flag file `/private/var/db/.JamfSetupStarted`, which is created when Setup Manager starts. You can use this to scope Mac App Store apps and Jamf App Installers, which prevents these apps from installing early in the enrollment, slowing down the Jamf Pro configuration
+- added [a specific webhook to send a message to Slack](Docs/WebHooks.md#Slack) (#104)
+- two new defaults keys `finishedScript` and `finishedTrigger` allow to run custom behavior when Setup Manager has finished
+- new option `none` for `finalAction` (#115)
+- (release) Polish localization (Thanks to @bsojka)
+
+### Fixes and Improvements
+- Jamf Pro: improved monitoring for Jamf Pro to complete its setup after enrollment
+- webhook log entries correctly show status
+- added `-skipAppUpdates` option to list of options for Jamf Pro policy actions, this should avoid some false "error 57" reports
+- Jamf Pro policy will trigger 'Recurring Check-in' policies on empty string value
+- (release) added name for macOS Tahoe 26
+- (release) minor localization and UI fixes
+- (release) disabled some undesirable keyboard shortcuts (#125)
+- (release) arguments in `installomator` actions are now processed correctly
+- (release) output to log is flushed immediately to avoid truncation on restart/shutdown (#129)
+- (release) MDM Server address shown in extended "About this Mac" (#127)
+
+### Deprecations and Removals
+- (1.3) the minimum macOS requirement for Setup Manager is now macOS 13.5
+- (1.2) `showBothButtons` option removed and non-functional, there will always be just one final action button displayed
+- the method for providing localized texts in the configuration profile changed in version 1.1. The previous method (by appending the two letter language code to the key) is considered deprecated. It will continue to work for the time being but will be removed in a future release. It is _strongly_ recommended to change to the [new dictionary-based solution](ConfigurationProfile.md#localization)
+
+### Notes
+
+#### Logging
+
+The format of the Setup Manager log file (in `/Library/Logs/Setup Manager.log`) has changed. The new format should be easier to read and parse with other tools. There are four columns:
+
+- timestamp (in ISO8601)
+- log level (default, error or fault)
+- category (general, install, network, jamfpro)
+- message
+
+Setup Manager 1.3 also logs to the macOS unified system log. The subsystem is `com.jamf.setupmanager`. You can use the `log` command line tool to read the log.
+
+For example:
+
+```
+sudo log show --last 30m --predicate 'subsystem="com.jamf.setupmanager"'
+```
+
+To clean up the log a little, Setup Manager 1.3 will only write the output of actions to the Setup Manager log file when an error occurred. You can control this behavior with a new top-level preference key `actionOutputLogging`.
+
+#### Installation and Jamf Pro logs and summaries
+
+The Log window (open with command-L) gained a new "Install" tab, which shows the system's installation log file (`/var/log/install.log`). When enrolling with Jamf Pro, there is another new "Jamf" tab, which shows the Jamf log (`/var/log/jamf.log`). By default, the Log window will be summarized to events relevant to the enrollment workflow. You can see the full log content by unchecking the 'Summarize' option.
+
+Note that both logs will show events that were not initiated by Setup Manager. Nevertheless, these events may be relevant to your enrollment workflow.
+
+These summarized events will also appear in the Setup Manager log tab and file, as well as the universal log entries. Having these events in context at the time they occur in the Setup Manager log is very helpful when trouble-shooting enrollment workflows.
+
+#### Network change logging
+
+Setup Manager 1.3 adds logging for changes to network interfaces. It is possible that there will multiple entries in the log with regards to the same network change. Most changes logged will be neutral and should not affect your deployment negatively.
+
+However, it is possible that changes to the network configuration of a device can influence the deployment workflow. For example, when a configuration profile with the access information for a secure corporate Wifi is installed on the device, then the download access to  required resources might change. Another example are security tools that might lead to restricted access for downloads (Installomator uses `curl` to download data, which might trigger security tools.) 
+
+Checking the log for network changes or outages during enrollment can be useful for troubleshooting.
+
+#### Network Status icon/menu
+
+Network status can also show with a new icon in the top-right corner of the Setup Manager window.  
+ 
+Note that Network Relay will only protect traffic to certain configured servers and services, not all traffic.
+
+By default, the network icon will _not_ be shown. You can activate it manually with the command-N keystroke.
+
+When you click on the Network status icon, a popup will show:
+ - the current active network interface
+ - IPv4 and IPv6 addresses
+ - download and upload bandwidth (will take a while to appear)
+ - Network Relay hosts (when network relay profile is present)
+ - list of additional custom hosts, configured in the profile
+
+Note that the connectivity check is quite basic and might not catch all functionality that is required for a service to work. It should provide an indication whether a service is reachable, but deeper trouble-shooting and monitoring might be required for reliable diagnostics.
+
+Seen["Network Connectivity"](https://github.com/jamf/Setup-Manager/Docs/Network.md) for more detail.
+
+#### Finished Script and Trigger
+
+Setup Manager now includes functionality to launch a script or Jamf Pro custom policy trigger in a separate process when the main Setup Manager process is finished. This is useful for installations that might unexpectedly restart the computer or the context that Setup Manager is running in (most commonly, Setup Manager is running at login window, which the Jamf Connect installer will kill).
+
+There are two keys relevant for this: `finishedScript` and `finishedTrigger`. 
+
+See ["Running Scripts and Policies when Setup Manager finishes"](https://github.com/jamf/Setup-Manager/Docs/Extras.md#running-scripts-and-policies-when-setup-manager-finishes) for detail.
+
 ## v1.3beta
 (2025-05-27)
 
@@ -27,53 +128,6 @@
 - (1.3) the minimum macOS requirement for Setup Manager is now macOS 13.5
 - (1.2) `showBothButtons` option removed and non-functional, there will always be just one final action button displayed
 - the method for providing localized texts in the configuration profile changed in version 1.1. The previous method (by appending the two letter language code to the key) is considered deprecated. It will continue to work for the time being but will be removed in a future release. It is _strongly_ recommended to change to the [new dictionary-based solution](ConfigurationProfile.md#localization)
-
-### Notes
-
-#### Logging
-
-The format of the Setup Manager log file (in `/Library/Logs/Setup Manager.log`) has changed. The new format should be easier to parse with other tools. There are four columns:
-
-- timestamp (in ISO8601)
-- log level (default, error or fault)
-- category (general, install, network, jamfpro)
-- message
-
-Setup Manager 1.3 also logs to the macOS unified system log. The subsystem is `com.jamf.setupmanager`. You can use the `log` command line tool to read the log.
-
-For example:
-
-```
-sudo log show --last 30m --predicate 'subsystem="com.jamf.setupmanager"'
-```
-
-To clean up the log a little, Setup Manager 1.3 will only write the output of actions to the Setup Manager log file when an error occurred. You can control this behavior with a new top-level preference key `actionOutputLogging`.
-
-
-#### Network change logging
-
-Setup Manager 1.3 adds logging for changes to network interfaces. it is possible that there will multiple entries in the log with regards to the same network change. Most changes logged will be neutral and should not affect your deployment negatively.
-
-However, it is possible that changes to the network configuration of a device can influence the deployment workflow. For example, when a configuration profile with the access information for a secure corporate Wifi is installed on the device, then the download access to  required resources might change. Another example are security that might lead to restricted access for downloads (Installomator uses `curl` to download data, which might trigger security tools.) 
-
-Knowing that network changes or outages occurred during enrollment can be useful for troubleshooting.
-
-#### Network Status icon/menu
-
-Network status is also shown with a new icon in the top-right corner of the Setup Manager window.  
- 
-Note that Network Relay will only protect traffic to certain configured servers and services, not all traffic.
-
-By default, the network icon will _not_ be shown. You can activate it manually with the command-N keystroke.
-
-When you click on the Network status icon, a popup will show:
- - the current active network interface
- - IPv4 and IPv6 addresses
- - download and upload bandwidth (will take a while to appear)
- - Network Relay hosts (when network relay profile is present)
- - list of additional custom hosts, configured in the profile
-
-Note that the connectivity is very basic and might not catch all functionality that is required for a service to work. It should provide an indication whether a service is available, but deeper trouble-shooting and monitoring might be required for reliable diagnostics.
 
 ## v1.2.2
 (2025-04-17)

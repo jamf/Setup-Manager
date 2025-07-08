@@ -75,6 +75,20 @@ Example:
 
 `Please be patient.` will be bold. More detail on [Markdown here](#markdown).
 
+During the "Getting Ready" phase up to three lines of text will be shown. When the action icon progress list is shown, text will be truncated to a single line.
+
+Use actual line breaks in the XML for line breaks in this text. (`\n` escape sequence will _not_ work in XML)
+
+Example:
+
+```xml
+<key>message</key>
+<string>Please be patient…
+
+This line of text will be truncated when the action icon list is shown.</string>
+```
+
+
 #### `background`
 
 (String, optional, localized, dark mode)
@@ -203,17 +217,35 @@ The script has to fulfill these criteria to be executed:
 - not writable for group or other (file mode `755` or `555`)
 - no quarantine flag attached
 
+The output of the finished script and trigger will be logged to `/private/var/log/setupManagerFinished.log`.
+
+Example:
+
+```xml
+<key>finishedScript</key>
+<string>/Library/Management/finishedScript.sh</string>
+```
+
 #### `finishedTrigger`
 
 (String, optional, Jamf Pro only)
 
 A custom policy trigger which will be executed _after_ Setup Manager has finished its workflow. This process runs independently of Setup Manager, so it can run installers or scripts that affect Setup Manager.
 
+The output of the finished script and trigger will be logged to `/private/var/log/setupManagerFinished.log`.
+
+Example:
+
+```xml
+<key>finishedTrigger</key>
+<string>setup_manager_finished</string>
+```
+
 #### `totalDownloadBytes`
 
 (Integer, optional, default: 1000000000 or 1GB, v0.8)
 
-Use this value to provide an estimate for the total size of all items that will be downloaded. Setup Manager will display and estimated download time for this sum in the "About this Mac..." popup window.
+Use this value to provide an estimate for the total size of all items that will be downloaded. Setup Manager will display an estimated download time for this sum in the "About this Mac..." popup window.
 
 Example:
 
@@ -324,6 +356,13 @@ There are three options:
 - `never`: output and exit are never written to the log file
 
 Setup Manager's log window will always show the output, regardless of this setting.
+
+Example:
+
+```xml
+<key>actionOutputLogging</key>
+<string>always</string>
+```
 
 ## Actions
 
@@ -524,9 +563,9 @@ Example:
 
 ### Installomator
 
-This will run [Installomator](https://github.com/Installomator/Installomator) to install a given label.
+Setup Manager includes the [Installomator](https://github.com/Installomator/Installomator) script to simplify installations. This action will run [Installomator](https://github.com/Installomator/Installomator) to install a given label.
 
-Note: by default, Setup manager will add `NOTIFY=silent` to the arguments to suppress notifications. You can override this in the `arguments`.
+Note: by default, Setup manager will add `NOTIFY=silent` to the arguments to suppress notifications. You can override these variables and add more with the `arguments` key.
 
 #### `installomator`
 
@@ -550,6 +589,21 @@ Example:
   <string>symbol:gearshape.2</string>
   <key>installomator</key>
   <string>googlechromepkg</string>
+</dict>
+```
+
+with arguments: 
+
+```xml
+<dict>
+  <key>label</key>
+  <string>Example App</string>
+  <key>installomator</key>
+  <string>example</string>
+  <key>arguments</key>
+  <array>
+    <string>downloadURL=https://example.com/alternativeURL</string>
+  </array>
 </dict>
 ```
 
@@ -950,9 +1004,10 @@ Use these two-letter codes for these languages:
 | Dutch (Nederlands) | nl              |
 | French             | fr              |
 | German             | de              |
-| Italian            | it              |
 | Hebrew             | he              |
+| Italian            | it              |
 | Norwegian          | nb              |
+| Polish             | pl              |
 | Spanish            | es              |
 | Swedish            | sv              |
 

@@ -2,9 +2,14 @@
 
 Setup Manager can display the current network status in the top right corner of the main window.
 
-By default, the icon will only appear when the network is _not_ active, or when Network Relay is configured. You can always toggle the visibility of the network status icon with command-N.
+By default, the icon will only appear when 
+- there is no network connection
+- Network Relay is configured
+- the `networkCheck` array is present in the profile
 
-The icon will show the network "globe" icon when the network is connected, the icon with a slash when it is disconnected, and the icon with a shield when it is connected and Network Relay is configured.
+You can always manually toggle the visibility of the network status icon with command-N.
+
+The icon will show the network "globe" icon when the network is connected, the icon with a slash when it is disconnected, and the icon with a small shield when it is connected and Network Relay is configured.
 
 You can click on the icon for more detailed information:
 - network connection name
@@ -64,4 +69,12 @@ Example:
 </array>
 ```
 
+## Network Change logging
 
+Setup Manager 1.3 adds logging for changes to network interfaces. It is possible that there will multiple entries in the log with regards to the same network change. Most changes logged will be neutral and should not affect your deployment negatively.
+
+However, it is possible that changes to the network configuration of a device can influence the deployment workflow. Changes to network or Wi-Fi configurations and other network or security tools might disrupt the network connectivity during enrollment. This might interrupt or cancel downloads.
+
+For example, when a configuration profile with the access information for a secure corporate Wifi is installed on the device, then the download access to required resources might change. Another example are security tools that might lead to restricted access for downloads (Installomator uses `curl` to download data, which might trigger security tools.) 
+
+Checking the log for network changes or outages during enrollment can be useful for troubleshooting.

@@ -12,9 +12,10 @@ Yes, use the top-level `background` key and point it to a local image file or a 
 
 There can be many causes for this. A few common causes are:
  
-- Jamf Pro: check that Setup Manager is added to your prestage and the package does not have the label "Availability pending" in Settings> Packages
-- Jamf Pro: do not install JamfConnect.pkg in prestage when you want to use Setup Manager. Install JamfConnect with Setup Manager instead
-- you need at least one of the 'Setup Assistant Options' in the prestage to be set to _not_ skip. Location Services or 'Choose your Look' are common choices that you generally want to leave up the user anyway. Otherwise, Setup Assistant may quit before Setup Manager can launch and do its actions.
+- you need at least one of the 'Setup Assistant Options' in the prestage to be set to _not_ skip. Location Services is a good choice that you generally want to leave up the user anyway. Otherwise, Setup Assistant may quit before Setup Manager can launch and do its actions.
+- Jamf Pro: 
+    - check that Setup Manager is added to your prestage and the package does not have the label "Availability pending" in Settings> Packages
+    - in Prestage > Enrollment Packages verify that the Distribution Point is set correctly (it resets to "none" when you remove the last enrollment package)
 
 ## Does Setup Manager require Jamf Connect
 
@@ -27,7 +28,7 @@ Setup Manager will run fine without Jamf Connect. You can even build 'single-tou
 - preinstall icon files with a custom package installer in prestage. Set the priority of the media/branding package lower than that for Setup Manager, or give the branding/media package a name that is alphabetically earlier than Setup Manager, so it installs before Setup Manager
 - use http(s) urls to the image files
     - you can host them on a web server/service that you have control over
-    - you can add the icon as an icon for a Self Service policy in Jamf and then copy the url to the icon once uploaded
+    - you can add the icon to a Self Service policy in Jamf and then copy the url to the icon once uploaded
 
 
 ## What is happening during "Getting Ready" and "Finishing"?
@@ -44,17 +45,27 @@ The "Getting Ready" phase prepares some steps and waits for all essential Jamf P
 
 Note that you can see the individual steps and the timing for each step in the [Setup Manager log file](Extras.md#logging)].
 
-Once Jamf Pro's enrollment workflow is complete, Setup Manager runs a full update inventory/recon. In general, if the recon takes a long time, you should review the inventory collection settings. Calculating home directory sizes and gathering fonts can take a lot of time and CPU power, and speed up things significantly when turned off, not just during enrollment with Setup Manager.  You should also review extension attributes, for whether they are used and how long each one runs.
+Once Jamf Pro's enrollment workflow is complete, Setup Manager runs a full update inventory/recon. In general, if the recon takes a long time, you should review the inventory collection settings. Calculating home directory sizes and gathering fonts can take a lot of time and CPU power, and speed up things significantly when turned off, not just during enrollment with Setup Manager.  You should also review extension attributes, for how long each one runs.
 
 Mac App Store/VPP and Jamf App Installer apps that are scoped to the computer will also begin installing _immediately_ after enrollment. Since macOS will only perform one installation at a time, these might delay the installation of essential Jamf Pro components. You can create smart groups to defer these installations.
 
+With Setup Manager 1.3 and higher, you can check whether apps are getting installed before Setup Manager starts the actions in the Setup Manager log.
 
 
 ## Can I set the wallpaper/desktop picture or dock with Setup Manager?
 
 The settings for the dock and wallpaper/desktop picture are _user_ settings. Since the user account usually does not yet exist when Setup Manager runs, you cannot affect those settings.
 
-What you can do is run a script at login which sets the desktop (using [desktoppr](https://github.com/scriptingosx/desktoppr) ) or the dock (using [dockutil](https://github.com/kcrawford/dockutil) or a similar tool). You can use the [Jamf Pro login trigger](https://learn.jamf.com/en-US/bundle/jamf-pro-documentation-current/page/Login_Events.html) for this, or create a custom LaunchAgent or use [outset](https://github.com/macadmins/outset/)
+What you can do is run a script at login which sets the desktop (using [desktoppr](https://github.com/scriptingosx/desktoppr) ) or the dock (using [dockutil](https://github.com/kcrawford/dockutil) or a similar tool).
+
+## If Setup Manager cannot do it, how can I run scripts at first login
+
+There are several options:
+
+- custom launch agent
+- [outset](https://github.com/macadmins/outset/)
+- Jamf Pro: [Self Service macOS Onboarding](https://learn.jamf.com/en-US/bundle/jamf-pro-documentation-current/page/macOS_Onboarding.html)
+- Jamf Pro: [policy with a login trigger](https://learn.jamf.com/en-US/bundle/jamf-pro-documentation-current/page/Login_Events.html)
 
 ## Can Setup Manager run at first login, rather than right after enrollment?
 
@@ -69,3 +80,28 @@ With Jamf Pro, you should consider [macOS Onboarding in Self Service](https://le
 ## Installer or Policy Script is failing with access errors
 
 For some policy scripts or installers it may be necessary to give the Setup Manager app Full Disk Access or some other exemptions with a PPPC Profile. 
+
+## Installomator actions are all failing
+
+The log shows exit code 4, which means the download was rejected.
+
+Installomator uses Gatekeeper to verify the downloads. When Gatekeeper is set to allow Mac App Store apps only it will reject all third party apps and installers and the verification will fail.
+
+## Can I set Installomator variables?
+
+Yes. The `installomator` action has an `arguments` key, which takes an array strings, one for each argument. With this, you can override variables in Installomator.
+
+Example: 
+
+```xml
+<dict>
+  <key>label</key>
+  <string>Example App</string>
+  <key>installomator</key>
+  <string>example</string>
+  <key>arguments</key>
+  <array>
+    <string>downloadURL=https://example.com/alternativeURL</string>
+  </array>
+</dict>
+```

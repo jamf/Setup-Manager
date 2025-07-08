@@ -15,7 +15,7 @@
 			<key>label</key>
 			<dict>
 				<key>de</key>
-				<string>Zeitzone setzen</string>
+				<string>Zeitzone einstellen</string>
 				<key>en</key>
 				<string>Set Time Zone</string>
 				<key>es</key>
@@ -28,6 +28,12 @@
 				<string>Imposta il fuso orario</string>
 				<key>nl</key>
 				<string>Tijdzone instellen</string>
+				<key>sv</key>
+				<string>Ställ in tidszon</string>
+				<key>nb</key>
+				<string>Angi tidssone</string>
+				<key>pl</key>
+				<string>Ustal strefę czasową</string>
 			</dict>
 			<key>requiresRoot</key>
 			<true/>
@@ -91,6 +97,12 @@
 		<string>Sii paziente mentre Setup Manager configura il tuo nuovo Mac.</string>
 		<key>nl</key>
 		<string>Even geduld terwijl Setup Manager je nieuwe Mac configureert.</string>
+		<key>pl</key>
+		<string>Prosimy o cierpliwość, podczas gdy Setup Manager konfiguruje Twojego nowego Maca.</string>
+		<key>sv</key>
+		<string>Ha tålamod medan Setup Manager konfigurerar din nya Mac.</string>
+		<key>nb</key>
+		<string>Vær tålmodig mens Setup Manager konfigurerer den nye Mac-en din.</string>
 	</dict>
 	<key>title</key>
 	<dict>
@@ -99,15 +111,21 @@
 		<key>en</key>
 		<string>Welcome!</string>
 		<key>es</key>
-		<string>¡Bienvenido!</string>
+		<string>¡^[^[Bienvenido](inflect: true)](inflectionAlternative: &apos;Te damos la bienvenida&apos;)!</string>
 		<key>fr</key>
 		<string>Bienvenu!</string>
 		<key>he</key>
 		<string>ברוכים הבאים!</string>
 		<key>it</key>
-		<string>Benvenuto!</string>
+		<string>^[Benvenuto](inflect: true, inflectionAlternative: &quot;Ciao&quot;)!</string>
 		<key>nl</key>
 		<string>Welcom!</string>
+		<key>pl</key>
+		<string>Witamy!</string>
+		<key>sv</key>
+		<string>Välkommen</string>
+		<key>nb</key>
+		<string>Velkommen</string>
 	</dict>
 	<key>userEntry</key>
 	<dict>

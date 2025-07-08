@@ -62,7 +62,7 @@ Setup Manager requires macOS 13.5 or higher. It will work only with Jamf Pro or 
 ## Known Issues
 
 - Setup Manager will **_not_** launch at enrollment with Auto-Advance enabled, use the option to run at login window
-- Setup Manager may **_not_** launch or launch and quit quickly when you disable _all_ Setup Assistant screens and skip user creation, leave at least one Setup Assistant option enabled, or use the option to run at login window
+- Setup Manager may **_not_** launch or launch and quit quickly when you disable _all_ Setup Assistant screens and skip user creation, leave at least one Setup Assistant option that shows _before_ the user creation enabled, or use the option to run at login window
 - Policies that are triggered by `enrollmentComplete` may delay or even disrupt Setup Manager running from Prestage/Automated Device Enrollment. Disable or un-scope policies triggered by `enrollmentComplete` on devices using Setup Manager.
 
 ---

@@ -1,5 +1,19 @@
 # Extras and Notes
 
+
+## Keyboard Shortcuts
+
+Note that the Setup Manager window does not activate to receive keystrokes automatically when running over Setup Manager. You have to click in the Setup Manager window first.
+
+| shift-control-command E | ["exit"/quit Setup Manager](#Quit), use only in emergencies as it will leave installations in an  indeterminate state |
+| command-L | open [Log window](#Logging) |
+| command-B | toggle Battery status icon in Setup Manager window |
+| command-N | toggle [Network status icon](Network.md) in Setup Manager window |
+| space | show [serial number bar code window](#scannable-serial-number-barcode) |
+| i | show "About this Mac" popup |
+| h | show "Help" popup, when present |
+| hold option key when clicking "About this Mac" | shows more info |
+
 ## Custom JSON Schema for Jamf Pro
 
 - create a new profile
@@ -23,7 +37,30 @@ The command-Q keyboard shortcut to quit the app is disabled. Use `shift-control-
 
 ## Logging
 
-Setup Manager logs to `/Library/Logs/Setup Manager.log`. While Setup Manager is running you can open a log window with command-L.
+While Setup Manager is running you can open a log window with command-L.
+
+There are two or three tabs, one for the main Setup Manager log, one showing output from `/var/log/install.log` and (Jamf Pro only) one tab showing output from `/var/log/jamf.log`. By default, these log tabs will be summarized to events relevant to the enrollment workflow. You can see the full log content by unchecking the 'Summarize' option.
+
+Note that both logs will show events that were not initiated by Setup Manager. Nevertheless, these events may be relevant to your enrollment workflow.
+
+These summarized events will also appear in the Setup Manager log tab and log file, as well as the universal log entries. Having these events in context at the time they occur in the Setup Manager log is very helpful when trouble-shooting enrollment workflows.
+
+Setup Manager logs to `/Library/Logs/Setup Manager.log`. There are four columns:
+
+- timestamp (in ISO8601)
+- log level (default, error or fault)
+- category (general, install, network, jamfpro)
+- message
+
+To clean up the main log a little, Setup Manager will only write the output of actions to the Setup Manager log file when an error occurred. You can control this behavior with a new top-level preference key `actionOutputLogging`.
+
+Setup Manager also logs to the macOS unified system log. The subsystem is `com.jamf.setupmanager`. You can use the `log` command line tool to read the log.
+
+For example:
+
+```
+sudo log show --last 30m --predicate 'subsystem="com.jamf.setupmanager"'
+```
 
 ## Debug mode
 
@@ -136,7 +173,7 @@ You can use this to scope configuration profiles and policies so that they are i
 
 ##  Running Scripts and Policies when Setup Manager finishes
 
-Generally, you want to coordinate tasks, configurations, and installations with Setup Manager actions. However, in some situations the installations might interfere with the Setup Manager workflow itself. This is most relevant with software that needs to reload the login window process, which will also kill Setup Manager.
+Generally, you want to coordinate tasks, configurations, and installations with Setup Manager actions. However, in some situations the installations might interfere with the Setup Manager workflow itself. This is most relevant with software that needs to reload the login window process, which will also kill Setup Manager. (e.g Jamf Connect Login)
 
 Setup Manager provides a LaunchDaemon which monitors the `.JamfEnrollmentSetupDone` flag file. It then launches a script or a custom Jamf Pro policy trigger. Since this LaunchDaemon runs independently from Setup Manager, so it can run installers or scripts that might quit login window or Setup Manager.
 
@@ -145,5 +182,4 @@ However, if you have set Setup Manager to automatically shut down or restart at 
 The finished script or custom trigger are configured in the Setup Manager configuration profile, with the [`finishedScript`](../ConfigurationProfile.md#finishedScript) and [`finishedTrigger`](../ConfigurationProfile.md#finishedTrigger) keys.
 
 The SetupManagerFinished daemon logs its output (and the output of the policy and scripts to `/private/var/log/setupManagerFinished.log`.
-
 
