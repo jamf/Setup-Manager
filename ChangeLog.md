@@ -15,7 +15,7 @@ Notes added since 1.3beta are marked with '(release)'
     - changes to network interfaces are now logged, see the Notes section for details (#15)
     - network status can be shown in the top-right corner of the Setup Manager window
 - new flag file `/private/var/db/.JamfSetupStarted`, which is created when Setup Manager starts. You can use this to scope Mac App Store apps and Jamf App Installers, which prevents these apps from installing early in the enrollment, slowing down the Jamf Pro configuration
-- added [a specific webhook to send a message to Slack](Docs/WebHooks.md#Slack) (#104)
+- added [a specific webhook to send a message to Slack](Docs/Webhooks.md#slack) (#104)
 - two new defaults keys `finishedScript` and `finishedTrigger` allow to run custom behavior when Setup Manager has finished
 - new option `none` for `finalAction` (#115)
 - (release) Polish localization (Thanks to @bsojka)
@@ -91,7 +91,7 @@ When you click on the Network status icon, a popup will show:
 
 Note that the connectivity check is quite basic and might not catch all functionality that is required for a service to work. It should provide an indication whether a service is reachable, but deeper trouble-shooting and monitoring might be required for reliable diagnostics.
 
-Seen["Network Connectivity"](https://github.com/jamf/Setup-Manager/Docs/Network.md) for more detail.
+Seen["Network Connectivity"](Docs/Network.md) for more detail.
 
 #### Finished Script and Trigger
 
@@ -99,7 +99,7 @@ Setup Manager now includes functionality to launch a script or Jamf Pro custom p
 
 There are two keys relevant for this: `finishedScript` and `finishedTrigger`. 
 
-See ["Running Scripts and Policies when Setup Manager finishes"](https://github.com/jamf/Setup-Manager/Docs/Extras.md#running-scripts-and-policies-when-setup-manager-finishes) for detail.
+See ["Running Scripts and Policies when Setup Manager finishes"](Docs/Extras.md#running-scripts-and-policies-when-setup-manager-finishes) for detail.
 
 ## v1.3beta
 (2025-05-27)
