@@ -128,3 +128,37 @@ Use this webhook format in the Setup Manager profile:
   <string>--insert url from Slack here--</string>
 </dict>
 ```
+
+### Multiple webhooks
+
+You can send multiple services per event:
+
+```xml
+<key>webhooks</key>
+<dict>
+  <key>finished</key>
+  <array>
+    <string>https://example.com/webhook-finish</string>
+    <dict>
+      <key>kind</key>
+      <string>teams</string>
+      <key>url</key>
+      <string>--insert url from Teams Workflows here--</string>
+    </dict>
+  </array>
+  <key>started</key>
+  <array>
+    <string>https://example.com/webhook-start</string>
+    <dict>
+      <key>kind</key>
+      <string>teams</string>
+      <key>url</key>
+      <string>--insert url from Teams Workflows here--</string>
+    </dict>    
+  </array>
+</dict>
+```
+
+### Webhooks in Debug mode
+
+Webhooks are generally _not_ sent when DEBUG is set to true. However, if you set a `DEBUG` key to `true` _inside_ the webhooks dictionary to true, webhooks will be sent, even when global DEBUG is enabled.

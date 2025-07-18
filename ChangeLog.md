@@ -1,5 +1,14 @@
 #  Setup Manager - Change Log
 
+## 1.3.1
+(2025-07-17)
+
+- updates to Polish localization
+- improvements to launch process at login window
+- logs macOS version at launch
+- email addresses and urls in markdown text are not active links any more
+- documentation updates and clarifications
+
 ## 1.3
 (2025-07-08)
 

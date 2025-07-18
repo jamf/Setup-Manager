@@ -3,9 +3,9 @@
 Setup Manager can display the current network status in the top right corner of the main window.
 
 By default, the icon will only appear when 
-- there is no network connection
+- there is no network connection or the connection is lost
 - Network Relay is configured
-- the `networkCheck` array is present in the profile
+- the `networkCheck` array is present in the profile, even when it is empty
 
 You can always manually toggle the visibility of the network status icon with command-N.
 
@@ -67,6 +67,13 @@ Example:
     <string>tcp</string>
   </dict>
 </array>
+```
+
+Example: empty `networkCheck` array to force Network icon to always show
+
+```xml
+<key>networkCheck</key>
+<array/>
 ```
 
 ## Network Change logging

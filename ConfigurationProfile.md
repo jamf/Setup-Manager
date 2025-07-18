@@ -422,6 +422,20 @@ Example:
 </dict>
 ```
 
+This example is the equivalent of this command line:
+
+```
+sudo systemsetup -setTimeZone Europe/Amsterdam
+```
+
+Notes: to break the command in to its components
+
+- full path to the command
+- arguments are split into the `arguments` array, one string entry per argument, no quoting or backslash escaping
+- if the command contains a `&` it needs to be escaped with `&amp;`
+- shell constructs such as substitution (e.g `$SHELL`), redirection (e.g `&2>1`)
+- `sudo` won't work in this context, instead set `requiresRoot` to true
+
 ### Jamf Policy Trigger
 
 #### `policy`
