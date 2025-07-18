@@ -5,6 +5,8 @@
 
 Note that the Setup Manager window does not activate to receive keystrokes automatically when running over Setup Manager. You have to click in the Setup Manager window first.
 
+| Shortcut | Action |
+| --- | --- |
 | shift-control-command E | ["exit"/quit Setup Manager](#Quit), use only in emergencies as it will leave installations in an  indeterminate state |
 | command-L | open [Log window](#Logging) |
 | command-B | toggle Battery status icon in Setup Manager window |
