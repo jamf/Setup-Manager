@@ -1,0 +1,8 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+ name: setup-manager
+spec:
+ type: application
+ lifecycle: production
+ owner: concepts
