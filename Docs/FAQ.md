@@ -12,10 +12,14 @@ Yes, use the top-level `background` key and point it to a local image file or a 
 
 There can be many causes for this. A few common causes are:
  
-- you need at least one of the 'Setup Assistant Options' in the prestage to be set to _not_ skip. Location Services is a good choice that you generally want to leave up the user anyway. Otherwise, Setup Assistant may quit before Setup Manager can launch and do its actions.
+- when running at 'enrollment,' you need at least one of the 'Setup Assistant Options' in the Prestage to be set to _not_ skip. 'Location Services' or 'Terms & Conditions' are a good choice that you generally want to leave up the user anyway. Otherwise, Setup Assistant may quit before Setup Manager can launch and do its actions.
+- when using a distribution point other than Jamf Cloud Distribution Point, you need [to provide a manifest](https://appleshare.it/posts/use-manifest-file/)
 - Jamf Pro: 
-    - check that Setup Manager is added to your prestage and the package does not have the label "Availability pending" in Settings> Packages
-    - in Prestage > Enrollment Packages verify that the Distribution Point is set correctly (it resets to "none" when you remove the last enrollment package)
+    - check that Setup Manager is added to your Prestage and the package does not have the label "Availability pending" in Settings> Packages
+    - in Prestage > Enrollment Packages verify that the Distribution Point is set correctly (it resets to "none" when you remove the last enrollment package, so this is easy to miss)
+    - you can try deleting the Setup Manager pkg from Packages and re-uploading it
+    - verify that the pkg is not installed during Prestage by checking for the presence of `Setup Manager.app` in `/Applications/Utilities`, if the app does not exist, the Prestage is not installing Setup Manager
+    - when the above steps do not remedy the issue, please engage Jamf Support.
 
 ## Does Setup Manager require Jamf Connect
 
@@ -62,10 +66,10 @@ What you can do is run a script at login which sets the desktop (using [desktopp
 
 There are several options:
 
-- custom launch agent
-- [outset](https://github.com/macadmins/outset/)
 - Jamf Pro: [Self Service macOS Onboarding](https://learn.jamf.com/en-US/bundle/jamf-pro-documentation-current/page/macOS_Onboarding.html)
 - Jamf Pro: [policy with a login trigger](https://learn.jamf.com/en-US/bundle/jamf-pro-documentation-current/page/Login_Events.html)
+- custom launch agent
+- [outset](https://github.com/macadmins/outset/)
 
 ## Can Setup Manager run at first login, rather than right after enrollment?
 

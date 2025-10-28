@@ -30,7 +30,7 @@ Setup Manager provides:
   - zero-touch (user-driven)
   - single-touch (tech-driven)
   - user initiated enrollment
-  - handsfree deployment with AutoAdvance (beta)
+  - handsfree deployment with Auto Advance
 - customized branding
 - localized interface and localizable custom text
 - works with Jamf Pro and Jamf School

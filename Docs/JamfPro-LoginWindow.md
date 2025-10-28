@@ -1,7 +1,5 @@
 #  Jamf Pro: Run Setup Manager at Login Window
 
-**Beta** _We believe the run at login window feature may require more testing, especially in some edge cases. When, after thorough testing, you believe this works in your workflow, feel free to deploy it, and please let us know about success or any issues you might encounter._
-
 By default, Setup Manager launches as soon as the installation completes. You can defer launching Setup Manager to launch when the macOS Login Window appears, instead.
 
 When the `runAt` key in the profile is set to `loginwindow`, Setup Manager will not launch immediately after installation but when Login Window appears. In combination with the 'AutoAdvance' feature for automated device enrollment, this allows for completely 'hands-off' enrollment and configuration workflows.

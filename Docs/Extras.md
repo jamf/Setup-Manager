@@ -5,15 +5,15 @@
 
 Note that the Setup Manager window does not activate to receive keystrokes automatically when running over Setup Manager. You have to click in the Setup Manager window first.
 
-| Shortcut | Action |
-| --- | --- |
+| Shortcut                | Action |
+| ----------------------- | ------ |
 | shift-control-command E | ["exit"/quit Setup Manager](#Quit), use only in emergencies as it will leave installations in an  indeterminate state |
-| command-L | open [Log window](#Logging) |
-| command-B | toggle Battery status icon in Setup Manager window |
-| command-N | toggle [Network status icon](Network.md) in Setup Manager window |
-| space | show [serial number bar code window](#scannable-serial-number-barcode) |
-| i | show "About this Mac" popup |
-| h | show "Help" popup, when present |
+| command-L               | open [Log window](#Logging) |
+| command-B               | toggle Battery status icon in Setup Manager window |
+| command-N               | toggle [Network status icon](Network.md) in Setup Manager window |
+| space                   | show [serial number bar code window](#scannable-serial-number-barcode) |
+| i                       | show "About this Mac" popup |
+| h                       | show "Help" popup, when present |
 | hold option key when clicking "About this Mac" | shows more info |
 
 ## Custom JSON Schema for Jamf Pro
@@ -41,17 +41,17 @@ The command-Q keyboard shortcut to quit the app is disabled. Use `shift-control-
 
 While Setup Manager is running you can open a log window with command-L.
 
-There are two or three tabs, one for the main Setup Manager log, one showing output from `/var/log/install.log` and (Jamf Pro only) one tab showing output from `/var/log/jamf.log`. By default, these log tabs will be summarized to events relevant to the enrollment workflow. You can see the full log content by unchecking the 'Summarize' option.
+There are two or three tabs, one for the main Setup Manager log, one showing output from `/var/log/install.log`, one showing configuration profile installation and removal, and (Jamf Pro only) one tab showing output from `/var/log/jamf.log`. Some log tabs will be summarized to events relevant to the enrollment workflow. You can see the full log content by unchecking the 'Summarize' option.
 
-Note that both logs will show events that were not initiated by Setup Manager. Nevertheless, these events may be relevant to your enrollment workflow.
+Note that the extra logs (Install, Profiles, and Jamf) show events that were not initiated by Setup Manager. Nevertheless, these events can be relevant to your enrollment workflow.
 
-These summarized events will also appear in the Setup Manager log tab and log file, as well as the universal log entries. Having these events in context at the time they occur in the Setup Manager log is very helpful when trouble-shooting enrollment workflows.
+These extra events will also appear in the Setup Manager log tab and log file, as well as the universal log entries. Having these events in context at the time they occur in the Setup Manager log is very helpful when trouble-shooting enrollment workflows.
 
 Setup Manager logs to `/Library/Logs/Setup Manager.log`. There are four columns:
 
 - timestamp (in ISO8601)
 - log level (default, error or fault)
-- category (general, install, network, jamfpro)
+- category (general, install, network, profile, jamfpro)
 - message
 
 To clean up the main log a little, Setup Manager will only write the output of actions to the Setup Manager log file when an error occurred. You can control this behavior with a new top-level preference key `actionOutputLogging`.
@@ -185,3 +185,9 @@ The finished script or custom trigger are configured in the Setup Manager config
 
 The SetupManagerFinished daemon logs its output (and the output of the policy and scripts to `/private/var/log/setupManagerFinished.log`.
 
+## macOS Version support
+
+| Setup Manager | Minimum macOS | Platforms               |
+|---------------|---------------|-------------------------|
+| up to 1.2.2   | 12.0          | Intel and Apple silicon |
+| 1.3 and later | 13.5          | Intel and Apple silicon |

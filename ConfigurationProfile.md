@@ -36,11 +36,15 @@ Example:
 <string>Welcome to your new Mac!</string>
 ```
 
+When `title` is empty or unset, the default message `Welcome to Setup Manager` will be shown, unless the `banner` set, when no title will be shown instead. This allows for a custom branded title and icon in the banner image.
+
 #### `icon`
 
 (String, default: `name:AppIcon`, localized, dark mode)
 
 The icon shown at the top center of the window. There are many options to define icons, described in the [Icon Sources](#icon-sources) section later. Images will be scaled to fit a size of 700x128 pixels (or 1400x256 @2x).
+
+When `icon` is empty or unset, Setup Manager will show the Setup Manager app icon, unless the `banner` is set, when no icon will be shown instead. This allows for a custom branded icon and title in the banner image.
 
 #### `message`
 
@@ -88,6 +92,13 @@ Example:
 This line of text will be truncated when the action icon list is shown.</string>
 ```
 
+#### `banner`
+
+(String, optional, localized, dark mode, v1.4)
+
+When this key is set, Setup Manager treats it as an image/[icon source](#icon-sources) and displays it as a banner image in the top area of the Setup Manager window, behind the `icon` and `title`. The banner area size is 800x233 pixels (1600x466 @2x) on Sequoia and earlier and 800x247 (1600x494 @2x) on Tahoe (the liquid glass toolbar on Tahoe is taller). The banner image will _not_ be scaled down to fit. The image will be displayed with bottom-center alignment, so you can add a extra pixels at the top and the same image should work for all macOS versions.
+
+When the `banner` is set, and the `title` or `icon` are empty or unset, _neither_ title message _nor_ icon will be shown. This allows for customized branding of the title area with just the banner image. Note that you can localize banner image sources.
 
 #### `background`
 
@@ -132,7 +143,7 @@ When this key exists, Setup Manager will show a "Help" button (a circled questio
 
 #### `accentColor`
 
-(String or Dict, optional, default: system blue, dark mode)
+(String or Dict, optional, localized, dark mode, default: system blue)
 
 Sets the accent color for buttons, progress bar, SF Symbol icons, and other UI elements. You can use this to match branding. Color is encoded as a six digit hex code, e.g. `#FF0088`.
 
@@ -143,7 +154,16 @@ Example:
 <string>#FF00AA</string>
 ```
 
-If you want different accent colors depending on whether the system is in light or dark mode, provide a `dict` with two keys, for `light` and `dark` mode:
+You can also use named system colors. (See ['Defining Colors'](#defining-colors) for a full list.)
+
+Example:
+
+```xml
+<key>accentColor</key>
+<string>##green</string>
+```
+
+If you want different accent colors depending on whether the system is in light or dark mode, provide a `dict` with two keys, for `light` and `dark` mode: (Note: named system colors adapt automatically)
 
 Example:
 
@@ -156,6 +176,14 @@ Example:
   <string>#AA0055</string>
 </dict>
 ```
+
+#### `tileColor`
+
+(String or Dict, optional, localized, dark mode, default: `##background`, v1.4)
+
+Sets the action tile background color for all action tiles, unless the value is overridden by an individual action's `tileColor` key. You can use [color designators](#defining-colors). See the action level [`tileColor`](#tilecolor-1) for details.
+
+When you set the `tileColor` to `##automatic`, Setup Manager computes an average color from the tile's `icon`. For `symbol` icons, the default background will be used.
 
 #### `finalCountdown`
 
@@ -254,20 +282,33 @@ Example:
 <integer>4500000000</integer>
 ```
 
-#### `jssID`
+#### `computerID`
 
 (String, Jamf Pro only)
 
-Set this to `$JSSID` in the configuration profile and Setup Manager will be aware of its computer's id in Jamf Pro. It will be displayed in the 'About this Mac…' popup, when clicked with the option key.
+When filled with the correct payload variable, this provides the identifier for the computer to Setup Manager. It will be displayed in the in the 'About this Mac…' popup, when clicked with the option key.
 
-Example:
+For Jamf Pro, the value for `computerID` should be `$JSSID`. For Jamf School, it should be `%udid%.
+
+Examples:
+
+Jamf Pro:
 
 ```xml
-<key>jssID</key>
+<key>computerID</key>
 <string>$JSSID</string>
 ```
 
-#### `userID`
+Jamf School:
+
+```xml
+<key>computerID</key>
+<string>%udid%</string>
+```
+
+Note: up to version 1.3, this key was called `jssID`. This was changed in v1.4 for Jamf School support. The old key `jssID` is deprecated.
+
+#### `enrollmentUserID`
 
 (String, Jamf Pro only)
 
@@ -276,9 +317,11 @@ Set this to `$EMAIL` in the configuration profile. This communicates the user wh
 Example:
 
 ```xml
-<key>userID</key>
+<key>enrollmentUserID</key>
 <string>$EMAIL</string>
 ```
+
+Note: in Setup Manager v1.3 and earlier, this key was called `userID`. The name changed in v1.4 to avoid confusion with `userEntry.userID` which serves a different purpose and can have different values. The top-level `userID` key will keep working with the same function for now. If both keys are given, `enrollmentUserID` will take precedence. The top-level `userID` key will be removed in a future version.
 
 #### `computerNameTemplate`
 
@@ -364,6 +407,32 @@ Example:
 <string>always</string>
 ```
 
+#### `networkQualityCheck`
+
+(Bool, optional, default: `true`, v1.4)
+
+Set this key to false to suppress the network quality check. This is useful in classroom or lab environments where multiple Macs are re-enrolled at similar times to protect network bandwidth.
+
+Example:
+
+```xml
+<key>networkQualityCheck</key>
+<false/>
+```
+
+#### `finishedMessage`
+
+(String, optional, localized, substitutions, markdown, v1.4)
+
+Custom message when Setup Manager workflow is complete.
+
+Example: 
+
+```xml
+<key>finishedMessage</key>
+<string>**Finished** – _Enjoy your %model%!_</string>
+```
+
 ## Actions
 
 All actions should have these keys:
@@ -381,6 +450,55 @@ The label is used as the name of the action in display.
 The [icon source](#icon-sources) used for the display of the label. Different types of actions will have different default icons, which are used when no `icon` key is present. The icons will be scaled to fit 64x64 pixels (or 128x128 @2x).
 
 There are several different types of actions, and these are defined by additional keys. These keys will be on the same level as the keys above.
+
+#### `tileColor`
+
+(String, optional, dark mode, v1.4)
+
+This key sets this action's' background color. You can use [color designators](#defining-colors).
+
+`tileColor` values set on individual actions will override the top-level `tileColor`.
+
+Example: 
+
+```xml
+<key>tileColor</key>
+<string>#FF00AA</string>
+```
+
+```xml
+<key>tileColor</key>
+<string>##gray</string>
+```
+
+Set the key to an empty value or `##background` to use the default window background color instead.
+
+
+```xml
+<key>tileColor</key>
+<string/>
+```
+
+```xml
+<key>tileColor</key>
+<string>##background</string>
+```
+
+When you set the `tileColor` to `##automatic`, Setup Manager computes an average color from tile's `icon`. For `symbol` icons, the default background will be used.
+
+```xml
+<key>tileColor</key>
+<string>##automatic</string>
+```
+
+Set `tileColor` to `##clear` to remove the tile background. This works best when `hideActionLabels` is set to false.
+
+```xml
+<key>tileColor</key>
+<string>##clear</string>
+<key>hideActionLabels</key>
+<false/>
+```
 
 ### Shell Command
 
@@ -677,13 +795,35 @@ Note that the availability and appearance of SF Symbols may vary with the OS ver
 <string>symbol:clock</string>
 ```
 
+### Color
+
+(v1.4)
+
+When the icon source starts with `#`, Setup Manager will interpret it as a hex color.
+
+You can use hex color notation with three digits, e.g `#0f0` or six digits, e.g. `#f900a2`. 
+
+You can also use named system colors with two leading `##`, e.g `##yellow` or `##primary`. 
+
+(See ['Defining Colors'](#defining-colors) for details.)
+
+```xml
+<key>background</key>
+<string>##white</string>
+```
+
+```xml
+<key>background</key>
+<string>#aaa</string>
+```
+
 ### Dark Mode
 
-Note: after enrollment, over Setup Assistant, the system is always in light mode. This is only relevant when you use Setup Manager after user-initiated enrollment 
+Note: after enrollment, over Setup Assistant, the system is always in light mode. This is only relevant when you use Setup Manager after user-initiated enrollment or launch it otherwise over user space.
 
 To provide alternative images for dark or light mode, change the `string` defining the image to a dictionary with a `dark` and a `light` key. This works with the `background`, `icon`, and each action's `icon`. This also works with the `accentColor` key.
 
-Note that Setup Manager does _not_ monitor the appearance mode, so if it changes _while_ Setup Manager is running, things will not update consistently.
+Setup Manager does _not_ monitor the appearance mode, so if it changes _while_ Setup Manager is running, things will not update consistently.
 
 Example: 
 
@@ -875,7 +1015,7 @@ In this example, the 'Room' field will be shown in Setup Manager with the label 
 
 You can configure Setup Manager to only show the user entry section when specified users have authenticated in enrollment customization. This enables workflows, where certain users (techs and admins) get the option to re-assign the device to another user, but other users don't see the option.
 
-For this, you need to setup the top-level `userID` to receive the `$EMAIL` variable. This will communicate to SetupManager the user who logged in with customized enrollment. Then you add key `showForUserIDs` with an array of user emails to the `userEntry` dict. When both `userID` and `userEntry.showForUserIDs` are set, the user entry UI will only show for the listed users.
+For this, you need to setup the top-level `enrollmnetUserID` to receive the `$EMAIL` variable. This will communicate to SetupManager the user who logged in with customized enrollment. Then you add key `showForUserIDs` with an array of user emails to the `userEntry` dict. When both `enrollmentUserID` and `userEntry.showForUserIDs` are set, the user entry UI will only show for the listed users.
 
 #### `showForUserIDs`
 
@@ -900,7 +1040,7 @@ Example:
     <string>\S+\.\S+@example.com</string>
   </dict>
 </dict>
-<key>userID</key>
+<key>enrollmentUserID</key>
 <string>$EMAIL</string>
 ```
 
@@ -1076,3 +1216,68 @@ These keys can use markdown:
 
 - `message`
 - Help: `message`
+
+## Defining Colors
+
+Colors are defined with strings in the profile.
+
+When the icon source starts with `#`, Setup Manager will interpret it as a hex color.
+
+You can use hex color notation with three digits, e.g `#0f0` or six digits, e.g. `#f900a2`. 
+
+Example: 
+
+```xml
+<key>accentColor</key>
+<string>#FF00AA</string>
+```
+
+(v1.4) You can also use named system colors with two leading `##`, e.g `##yellow` or `##primary`. Available color names are:
+
+```
+ primary         primary text color, black in light mode, white in dark mode
+ secondary       slightly muted variant of primary
+ accentColor     color used for controls, set with `accentColor`
+ background      system window background color
+ clear           no background/transparent (1)
+ black           (1)
+ blue
+ brown
+ cyan
+ gray
+ green
+ indigo
+ mint
+ orange
+ pink
+ purple
+ red
+ teal
+ white           (1)
+ yellow
+```
+
+(1) All colors will automatically adapt to dark or light mode, _except_ `clear`, `black`, and `white`.
+
+Example:
+
+```xml
+<key>accentColor</key>
+<string>##green</string>
+```
+
+### Dark mode
+
+If you want different accent colors depending on whether the system is in light or dark mode, provide a `dict` with two keys, for `light` and `dark` mode: (Note: most named system colors adapt automatically)
+
+Example:
+
+```xml
+<key>accentColor</key>
+<dict>
+  <key>dark</key>
+  <string>#FF00AA</string>
+  <key>light</key>
+  <string>#AA0055</string>
+</dict>
+```
