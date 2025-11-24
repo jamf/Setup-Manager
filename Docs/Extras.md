@@ -31,7 +31,11 @@ The custom schema does not contain all keys and options available in the [config
 
 When you reach the limits of the custom schema, use the XML it generates as a starting to building a custom XML.
 
-Note that the custom schema can become confused when you switch between enrollment action types and you will need to clean up extra empty fields.
+Note that the custom schema can become confused when you switch between enrollment action types and you will need to clean up extra empty fields. It is best to delete the action type you don't need any more and create a new action of the desired type.
+
+## iMazing Profile Editor
+
+There is also a manifest for Setup Manager in [iMazing Profile Editor](https://imazing.com/profile-editor).
 
 ## Quit
 

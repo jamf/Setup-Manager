@@ -8,20 +8,23 @@
 
 Yes, use the top-level `background` key and point it to a local image file or a http URL to an image file. If you don't want custom branding, you can set `background` to `/System/Library/CoreServices/DefaultDesktop.heic` for the default image.
 
-## Setup Manager is not launching after enrollment
+## Setup Manager is not launching after enrollment?
 
-There can be many causes for this. A few common causes are:
+There can be many causes for this.
+
+First, check whether the Setup Manager.app exists at `/Applications/Utilities/Setup Manager.app` and a Setup Manager log file gets created at `/Library/Logs/Setup Manager.log`. When the app and the log file exist, read the log file for errors and messages which should give you a hint as to what is going on. When you have no user account to log in, you can boot to Recovery to check on these files.
+
+If neither of those files exist, then the download and/or installation of Setup Manager is failing or not occurring in the first place. A few common causes are:
  
-- when running at 'enrollment,' you need at least one of the 'Setup Assistant Options' in the Prestage to be set to _not_ skip. 'Location Services' or 'Terms & Conditions' are a good choice that you generally want to leave up the user anyway. Otherwise, Setup Assistant may quit before Setup Manager can launch and do its actions.
-- when using a distribution point other than Jamf Cloud Distribution Point, you need [to provide a manifest](https://appleshare.it/posts/use-manifest-file/)
-- Jamf Pro: 
-    - check that Setup Manager is added to your Prestage and the package does not have the label "Availability pending" in Settings> Packages
-    - in Prestage > Enrollment Packages verify that the Distribution Point is set correctly (it resets to "none" when you remove the last enrollment package, so this is easy to miss)
-    - you can try deleting the Setup Manager pkg from Packages and re-uploading it
-    - verify that the pkg is not installed during Prestage by checking for the presence of `Setup Manager.app` in `/Applications/Utilities`, if the app does not exist, the Prestage is not installing Setup Manager
-    - when the above steps do not remedy the issue, please engage Jamf Support.
+- Jamf Pro:
+    - when using a distribution point other than Jamf Cloud Distribution Point, you need [to provide a manifest](https://appleshare.it/posts/use-manifest-file/)
+    - check that Setup Manager is added to your Prestage and the package does **not** have the label "Availability pending" in Settings> Packages. Pending packages will not install during prestage. Wait a few minutes to see if the pending label updates
+    - in Prestage > Enrollment Packages verify that the Package is added and the Distribution Point is set correctly (the DP resets to "none" when you remove the last enrollment package from Prestage, so this is easy to miss)
+    - you can try deleting the Setup Manager pkg from Packages, re-uploading the package and re-adding it to the Prestage. (and verify that the Distribution Point is set correctly in the Prestage)
+- when the above steps do not remedy the issue, please engage Jamf Support.
+- when running at 'enrollment,' Setup Manager requires Setup Assistant to be running in the background. When you are using standard macOS user account creation, Setup Assistant will be showing that pane "behind" Setup Manager, so you should be fine. But if you are using Jamf Connect Login or a similar tool for account creation, you need at least one of the 'Setup Assistant Options' in the Prestage to be set to _not_ skip. 'Location Services' or 'Terms & Conditions' are a good choice that you generally want to leave up the user anyway. Otherwise, Setup Assistant may quit before Setup Manager can launch and do its actions.
 
-## Does Setup Manager require Jamf Connect
+## Does Setup Manager require Jamf Connect?
 
 No.
 

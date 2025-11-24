@@ -1,5 +1,19 @@
 #  Setup Manager - Change Log
 
+## 1.4beta2
+
+(2025-11-24)
+
+Same as [the previous beta](https://github.com/jamf/Setup-Manager/releases/tag/v1.4beta) with these additional changes:
+
+- Localization:
+  - added UK English (en-GB) localization
+  - various localization fixes (#171)
+- fixed Network Info font color (#166)
+- `waitForUserEntry` action correctly runs a recon/Update Inventory (#168)
+- `accentColor` affects all items and controls (#170)
+- UI adjustments (#169)
+
 ## v1.4beta
 (2025-10-28)
 

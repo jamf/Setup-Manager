@@ -24,4 +24,4 @@ No signals are sent when `DEBUG` is set to `true`. The signal is sent to `nom.te
 
 We use this data to determine the usage of Setup Manager and where to focus future development, so we appreciate when you let us gather this data.
 
-You can suppress the tracking signal by setting the `PLEASE_DO_NOT_TRACK' boolean key to `true` in the configuration profile.
+You can suppress the tracking signal by setting the `PLEASE_DO_NOT_TRACK` boolean key to `true` in the configuration profile.
