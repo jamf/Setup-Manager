@@ -51,7 +51,7 @@ You can add more actions here. There are more types of actions available, you ca
 - create a new Prestage or duplicate an existing one
 - add the Setup Manager pkg and the configuration profile to the Prestage
 - when installing and using Jamf Connect Login, ensure you have the latest version
-- ensure that 'Automatically advance through Setup Assitant' is _disabled_
+- ensure that 'Automatically advance through Setup Assistant' is _disabled_
 - have at least one Setup Assistant option which shows before user creation _disabled_ (so that _is_ displayed), we recommend the Location Services or Terms and Conditions pane
 - ensure your test Mac(s) is (are) assigned to the Prestage
 
