@@ -4,13 +4,18 @@
 
 _"Every Assistant has a Manager"_
 
-![Setup Manager Logo](https://img.shields.io/badge/macOS-13.5%2B-success)
- 
-Updates are published in the '[Releases](https://github.com/jamf-concepts/setup-manager/releases)' section of the repo. There you can also [download the latest pkg installer](https://github.com/jamf-concepts/setup-manager/releases/latest). You can subscribe to notifications for the repo using the 'Watch' button above.
+![minOS](https://img.shields.io/badge/macOS-13.5%2B-success)
+![GitHub Release](https://img.shields.io/github/v/release/jamf/setup-manager?color=green)
+![GitHub Pre-Release](https://img.shields.io/github/v/release/jamf/setup-manager?include_prereleases&label=pre-release)
+![GitHub Downloads total](https://img.shields.io/github/downloads/jamf/setup-manager/total)
+![GitHub Downloads latest](https://img.shields.io/github/downloads/jamf/setup-manager/latest/total)
 
-Please report issues, feature requests [as an issue.](https://github.com/jamf-concepts/setup-manager/issues)
 
-We have opened the [discussions](https://github.com/jamf-concepts/setup-manager/discussions) area for questions and more generic feedback.
+Updates are published in the '[Releases](https://github.com/jamf/setup-manager/releases)' section of the repo. There you can also [download the latest pkg installer](https://github.com/jamf/setup-manager/releases/latest). You can subscribe to notifications for the repo using the 'Watch' button above.
+
+Please report issues, feature requests [as an issue.](https://github.com/jamf/setup-manager/issues)
+
+We have opened the [discussions](https://github.com/jamf/setup-manager/discussions) area for questions and more generic feedback.
 
 There is also a [`#jamf-setup-manager`](https://macadmins.slack.com/archives/C078DDLKRDW) channel on the [MacAdmins Slack](https://macadmins.org).
 
@@ -67,4 +72,4 @@ Setup Manager requires macOS 13.5 or higher. It will work only with Jamf Pro or 
 
 ---
 
-Please report issues, feature requests, and feedback (positive and negative) [as an issue.](https://github.com/Jamf-Concepts/Setup-Manager/issues)
+Please report issues, feature requests, and feedback (positive and negative) [as an issue.](https://github.com/jamf/Setup-Manager/issues)

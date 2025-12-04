@@ -842,7 +842,7 @@ Example:
 
 ## User Entry
 
-You can enable user entry for the following keys:
+You can enable user entry for the following fields:
 
 - `userID`
 - `email`
@@ -858,12 +858,17 @@ You can enable user entry for the following keys:
 
 Any of the fields will only be shown when its key exists. If you were to create an empty `userEntry` dict, you get an empty user input screen with a 'Save' button - not a good user experience.
 
+For each field, you need to provide at least one of `default`, `placeholder`, or `options`.
+
 `userID` and `email` can be somewhat confusing and depending on which Cloud directory you have configured in Jamf Pro, you may need one or the other or both. Because of this Setup Manager 1.1 and older would only prompt for 'User email' and set both `userID` and `email` from that value. To maintain compatibility with this behavior, Setup Manager will continue to set _both_ `userID` and `email` when only one of the two values is requested and entered. If you request both fields, both will be set individually in the recon.
 
 
 ### User Data file
 
 Data from user entry is written, together with some other data to a file when Setup Manager reaches a `waitForUserEntry` action and again when it finishes. The file is stored at `/private/var/db/SetupManagerUserData.txt`. [More details.](Docs/Extras.md#user-data-file)
+
+
+### Keys
 
 #### `default`
 
@@ -1017,7 +1022,7 @@ In this example, the 'Room' field will be shown in Setup Manager with the label 
 
 You can configure Setup Manager to only show the user entry section when specified users have authenticated in enrollment customization. This enables workflows, where certain users (techs and admins) get the option to re-assign the device to another user, but other users don't see the option.
 
-For this, you need to setup the top-level `enrollmnetUserID` to receive the `$EMAIL` variable. This will communicate to SetupManager the user who logged in with customized enrollment. Then you add key `showForUserIDs` with an array of user emails to the `userEntry` dict. When both `enrollmentUserID` and `userEntry.showForUserIDs` are set, the user entry UI will only show for the listed users.
+For this, you need to setup the top-level `enrollmentUserID` to receive the `$EMAIL` variable. This will communicate to SetupManager the user who logged in with customized enrollment. Then you add key `showForUserIDs` with an array of user emails to the `userEntry` dict. When both `enrollmentUserID` and `userEntry.showForUserIDs` are set, the user entry UI will only show for the listed users.
 
 #### `showForUserIDs`
 

@@ -1,5 +1,103 @@
 #  Setup Manager - Change Log
 
+## 1.4
+
+(2025-12-03)
+
+While making sure that Setup Manager looks nice with macOS Tahoe and Liquid Glass, we have added a few more features to improve customization.
+
+### New Features
+- User Interface
+  - macOS Tahoe/Liquid Glass adaptions
+  - new `banner` key allows you to provide a banner image that cover the top part of the Setup Manager window ([details](ConfigurationProfile.md#banner))
+  - `title` and `icon` keys are now optional, when a `banner` key is set
+  - action tiles can have a background color set with the top-level or per-action 'tileColor'key
+  - `banner` and `background` can use hex or system colors
+  - where colors are defined, you can use system color names. See ['Defining Colors'](ConfigurationProfile.md#defining-colors) for details
+- new profile keys:
+  - `networkQualityCheck` suppresses network bandwidth calculation when set to `false` (#135)
+  - `finishedMessage` for a customized message when Setup Manager workflow is complete (#128)
+- logging:
+  - new tab for configuration profiles in the log
+  - detection of configuration profile installation and removal
+  - image/icon load errors are now logged
+  - logs a warning when Setup Manager detects it is launched for a second time
+- switched launch tracking to a new service (see [Launch Tracking](Docs/LaunchTracking.md) for details)
+
+### Fixes and Improvements
+
+- disabled check for Jamf.app as it could fail in some challenging network configs
+- enrollmentUserID added to webhook data (#140)
+- localization fixes (#149)
+- elapsed time in Mac Info window stops counting when workflow is finished 
+- link to computer in Slack and Teams messages should work with Jamf School
+- setting computer name with user entry or `computerNameTemplate` works with Jamf School
+- updated uninstall.sh script (#156)
+- (beta2) Localization:
+  - added UK English (en-GB) localization (thanks to @philipross)
+  - various localization fixes (#171)
+- (beta2) fixed Network Info font color (#166)
+- (beta2) `waitForUserEntry` action correctly runs a recon/Update Inventory (#168)
+- (beta2) `accentColor` affects all items and controls (#170)
+- (beta2) UI adjustments (#169)
+
+
+### Changes, deprecations and removals
+- (1.4) `userID` top-level key name changed to `enrollmentUserID`
+- (1.4) `jssID` key has been renamed to `computerID`
+- (1.3) the minimum macOS requirement for Setup Manager is now macOS 13.5
+- (1.2) `showBothButtons` option removed and non-functional, there will always be just one final action button displayed
+- (1.1)the method for providing localized texts in the configuration profile changed in version 1.1. The previous method (by appending the two letter language code to the key) is considered deprecated. It will continue to work for the time being but will be removed in a future release. It is _strongly_ recommended to change to the [new dictionary-based solution](ConfigurationProfile.md#localization)
+
+### Notes
+
+There are quite a few new options in Setup Manager 1.4 beta to configure and customize the new UI. There is a new option for a color or image banner across the top of the Setup Manager window. Action tiles can now be colored automatically or with specific colors. Colors can now be set anywhere that image sources are used and you get a list of named system colors.
+
+While the [description of all the keys in the repo](ConfigurationProfile.md) has been updated, many of the keys, old and new, now work together for a variety of useful combinations.
+
+#### Updating the profile to use 1.4 (beta) features
+
+The good news first: we designed the update so that you can keep using the same profile from earlier versions and the Setup Manager window will look mostly the same on macOS Sequoia and earlier, and have the new “Liquid Glass” look and feel on macOS Tahoe.
+
+To use the new UI options, set the new keys.
+
+#### Banner
+
+Setup Manager 1.4 introduces the option to show a color or image banner in the top of the Setup Manager window. This is controlled by the top-level [`banner` key](ConfigurationProfile.md#banner). The `banner` value is an [image source](ConfigurationProfile.md#icon-sources), so it can be a reference to local image file, an image file hosted on a web server, or (also new in 1.4) a [color designation](ConfigurationProfile.md#defining-colors).
+
+Colors can be set with hex codes, e.g. `#f00` or `#f900a2` or with (new in 1.4) system color names, e.g. `##gray`, `##red`, etc.
+
+The size of the banner area is 800x233 pixels (1600x466 @2x) on Sequoia and earlier and 800x247 (1600x494 @2x) on Tahoe (the liquid glass tool bar is taller). The image will be displayed with bottom-center alignment and _not_ scaled, so you can add a few extra pixels at the top and the same image should work for all macOS versions.
+
+The behavior of the `icon` and `title` keys changes depending on whether the `banner` has a value.
+
+When _no_ `banner` value is set, Setup Manager will show its app icon when an `icon` key is missing or empty. It will also show ‘Welcome’ or the localized equivalent when the `title` key is missing or empty.
+
+When the `banner` _is_ set, an empty or missing `title` or `icon` will simply not be shown. This lets you use the banner image for a completely customized experience.
+
+Note that the `banner` value can be localized.
+
+#### Action Tile Colors
+
+Setup Manager 1.4 allows you to set a color for the action tiles. Use the [top-level `tileColor` key](ConfigurationProfile.md#tilecolor) to set the color for all action tiles. You can also set the tile color for an individual action with [a `tileColor` key in the action](ConfigurationProfile.md#tilecolor-1).
+
+When no `tileColor` is set, the default behavior is to use the window background color (gray on Sequoia and earlier, white on Tahoe, or the dark mode equivalent).
+
+You can set the `tileColor` value (top-level and action level) to [a hex color or system color name](ConfigurationProfile.md#defining-colors). There are a few special color names:
+
+- `##automatic`: calculates each tile's color from the average color of each action’s icon, icons defined with `symbol:…` will use the default color
+- `##background`: system window background (gray on Sequoia and earlier, white on Tahoe)
+- `##clear`: transparent or no background, works best when `hideActionLabels` is set to false
+
+See [`tileColor`](ConfigurationProfile.md#tilecolor-1) and [‘Defining Colors’](ConfigurationProfile.md#defining-colors) in the documentation for details.
+
+#### Profile Installation and Removal Logging
+
+A new tab has been added to logging window which logs the installation and removal of configuration profiles. These events will also be logged to the main Setup Manager log, which allows you to see them in context of the entire workflow.
+
+This can be especially useful to determine whether a particular profile disrupts the network and possibly the download of an important component. In the unified system log, these entries will have the `profile` category.
+
+
 ## 1.4beta2
 
 (2025-11-24)
