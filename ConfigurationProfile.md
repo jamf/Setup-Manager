@@ -21,7 +21,7 @@ These behaviors change in debug mode:
 - `policy`, `recon`, and `shell` actions that require root are replaced with a delay (and will always complete successfully)
 - `watchPath` and `wait` actions timeout and fail after 10 seconds
 
-When in debug mode, you can also set the `simulateMDM` preference key to `Jamf Pro` or `Jamf School`. This allows you to do test runs on un-enrolled Macs.
+When in debug mode, you can also set the `simulateMDM` preference key to `Jamf Pro` or `Jamf School`. This is _necessary_ for test runs on un-enrolled Macs and to launch Setup Manager as a local user.
 
 #### `title`
 

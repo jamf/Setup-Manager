@@ -33,6 +33,8 @@ When you reach the limits of the custom schema, use the XML it generates as a st
 
 Note that the custom schema can become confused when you switch between enrollment action types and you will need to clean up extra empty fields. It is best to delete the action type you don't need any more and create a new action of the desired type.
 
+While the Jamf Pro interface offers different schemas for different versions of Setup Manager, you _only_ have to upgrade to the latest version when you need to use new features only available in that version.
+
 ## iMazing Profile Editor
 
 There is also a manifest for Setup Manager in [iMazing Profile Editor](https://imazing.com/profile-editor).

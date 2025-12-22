@@ -1,5 +1,15 @@
 #  Setup Manager - Change Log
 
+## 1.4.1
+
+(2025-12-22)
+
+- `finishedScript` and `finishedTrigger` now respect when `DEBUG` key is set and do nothing (#181)
+- improved error detection and reporting in `DEBUG` mode (#150, #180)
+- adjusted recon/Update Inventory workflow, to adapt to a change in `jamf` binary (#177)
+- fixed custom JSON for Jamf Pro profile for Webhooks (#184)
+- localization fixes
+
 ## 1.4
 
 (2025-12-03)
