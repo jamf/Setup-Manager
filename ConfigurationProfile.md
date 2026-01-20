@@ -1118,7 +1118,7 @@ can be localized like this:
   <key>de</key>
   <string>Willkommen!</string>
   <key>fr</key>
-  <string>Bienvenu!</string>
+  <string>Bienvenue!</string>
   <key>nl</key>
   <string>Welkom!</string>
 </dict>
@@ -1170,8 +1170,10 @@ Use these codes for these languages:
 | Italian            | it              |
 | Norwegian          | nb              |
 | Polish             | pl              |
+| Portuguese (Brazil)| pt-BR           |
 | Spanish            | es              |
 | Swedish            | sv              |
+| Turkish            | tr              |
 
 The [plist and profile example files](Examples) contain localizations for many of the custom text elements.
 

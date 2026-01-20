@@ -47,7 +47,7 @@ The command-Q keyboard shortcut to quit the app is disabled. Use `shift-control-
 
 While Setup Manager is running you can open a log window with command-L.
 
-There are two or three tabs, one for the main Setup Manager log, one showing output from `/var/log/install.log`, one showing configuration profile installation and removal, and (Jamf Pro only) one tab showing output from `/var/log/jamf.log`. Some log tabs will be summarized to events relevant to the enrollment workflow. You can see the full log content by unchecking the 'Summarize' option.
+There are several tabs, one for the main Setup Manager log, one showing output from `/var/log/install.log`, one showing configuration profile installation and removal, and (Jamf Pro only) one tab showing output from `/var/log/jamf.log`. Some log tabs will be summarized to events relevant to the enrollment workflow. You can see the full log content by unchecking the 'Summarize' option.
 
 Note that the extra logs (Install, Profiles, and Jamf) show events that were not initiated by Setup Manager. Nevertheless, these events can be relevant to your enrollment workflow.
 
@@ -69,6 +69,8 @@ For example:
 ```
 sudo log show --last 30m --predicate 'subsystem="com.jamf.setupmanager"'
 ```
+
+There is a button at the top of the log window which creates a new folder named `SetupManagerLogs-<timestamp>` in `/Users/Shared` and copies Setup Manager, install, and (when present) jamf log files there. Hold the option key to select a different location. Note the logs are copied in their current state, so wait until Setup Manager is done before exporting. 
 
 ## Debug mode
 
