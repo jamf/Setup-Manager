@@ -72,6 +72,8 @@ The data for the `finished` webhook includes the same as above, with some additi
   "duration": 53,                           // integer
   "finished": "2025-01-14T15:12:20Z",       // time Setup Manager finished, date as string, iso8601
   "computerName": "Mac-123456"              // computer name, only when set through Setup Manager
+  "downloadThroughput": 698497408           // integer, when it could be measured
+  "uploadThroughput": 67450904              // integer, when it could be measured
   "userEntry": {                            // data entered by the user
     "department": "IT",
     "computerName": "IT-ABC123",

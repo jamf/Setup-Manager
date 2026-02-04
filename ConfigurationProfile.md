@@ -205,6 +205,8 @@ Disable the countdown:
 <integer>-1</integer>
 ```
 
+**Note** the `integer` tag. When you accidentally set the type to `string` its value will not be interpreted correctly.
+
 #### `finalAction`
 
 (String, optional, default: `continue`)
@@ -431,6 +433,19 @@ Example:
 ```xml
 <key>finishedMessage</key>
 <string>**Finished** – _Enjoy your %model%!_</string>
+```
+
+#### `startingMessage`
+
+(String, optional, localized, substitutions, markdown, v1.4.3, default: "Getting Started…")
+
+Custom message shown while Setup Manager is "Getting Ready…", i.e. waiting for the Jamf framework to be installed
+
+Example: 
+
+```xml
+<key>startingMessage</key>
+<string>Waiting for management framework installation. Please remain patient!</string>
 ```
 
 ## Actions
@@ -1220,12 +1235,16 @@ In some fields, markdown formatting can be used to generate rich, formatted text
 
 The `Please be patient.` text will be shown bolded. You can find details on markdown formatting in the [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/).
 
-Note that while you _can_ embed links to websites in the markdown using the `[…](…)` syntax they will not work while running over Setup Assistant or Login Window.
+If you want to insert a line break, you need to insert two line breaks into the markdown text.
+
+Note that while you _can_ embed links to websites in the markdown using the `[…](…)` syntax they will not work.
 
 These keys can use markdown:
 
 - `message`
 - Help: `message`
+- `finishedMessage`
+- `startingMessage`
 
 ## Defining Colors
 

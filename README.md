@@ -44,7 +44,7 @@ Setup Manager provides:
 
 - Jamf Pro
   - [JamfPro-Quick Start](Docs/JamfPro-QuickStart.md)
-  - zero-touch and user-initiated deployments (forthcoming)
+  - [Manual User-initiated deployments](Docs/JamfPro-UIE.md)
   - [extra installations based on user data entry](Docs/JamfPro-TwoPhase.md)
   - [Single-touch workflow with user re-assignment using Jamf Connect](Docs/JamfProConnect-SingleTouch.md)
   - [handsfree deployment with AutoAdvance and Setup Manager at login window](Docs/JamfPro-LoginWindow.md)
@@ -72,4 +72,4 @@ Setup Manager requires macOS 13.5 or higher. It will work only with Jamf Pro or 
 
 ---
 
-Please report issues, feature requests, and feedback (positive and negative) [as an issue.](https://github.com/jamf/Setup-Manager/issues)
+Please report issues, feature requests, and feedback [as an issue.](https://github.com/jamf/Setup-Manager/issues)

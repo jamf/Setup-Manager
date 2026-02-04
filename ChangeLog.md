@@ -1,5 +1,29 @@
 #  Setup Manager - Change Log
 
+## 1.4.3
+
+(2026-02-04)
+
+- fixed a bug where `finalCountdown` could not be disabled (#192)
+- added a key to override the "Getting Ready…" message (#191)
+- battery popup is nicer and localized
+- added `uploadThroughput` and `downloadThroughput` to the webhook event data
+- fixed quoting in preinstall script
+- Polish localization updates
+- minor UI and localization fixes
+
+## 1.4.2
+
+(2026-01-20)
+
+- Turkish localization 🇹🇷 (thanks to @nurox999)
+- Portuguese (Brazil) localization 🇧🇷 (thanks to Eric M)
+- Export Logs button in log window which copies relevant log files to a new folder in `/Users/Shared/`
+- fixed an issue where the finishing webhook was sent twice (#188)
+- newlines are no longer stripped out of `message` and `help.message` values in the profile
+- minor documentation fixes and updates
+
+
 ## 1.4.1
 
 (2025-12-22)

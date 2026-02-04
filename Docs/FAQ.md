@@ -52,12 +52,15 @@ The "Getting Ready" phase prepares some steps and waits for all essential Jamf P
 
 Note that you can see the individual steps and the timing for each step in the [Setup Manager log file](Extras.md#logging)].
 
-Once Jamf Pro's enrollment workflow is complete, Setup Manager runs a full update inventory/recon. In general, if the recon takes a long time, you should review the inventory collection settings. Calculating home directory sizes and gathering fonts can take a lot of time and CPU power, and speed up things significantly when turned off, not just during enrollment with Setup Manager.  You should also review extension attributes, for how long each one runs.
+Once Jamf Pro's enrollment workflow is complete, Setup Manager runs a full update inventory/recon. In general, if the recon takes a long time, you should review the inventory collection settings in Jamf Pro. Calculating home directory sizes and gathering fonts can take a lot of time and CPU power, and speed up things significantly when turned off, not just during enrollment with Setup Manager.  You should also review extension attributes, for how long each one runs.
+
+Gathering software update information in inventory collection may lead to long recon times or even stalls. Since recent versions of macOS use DDM status channels for both reporting of the current macOS version and the status of software updates, you do not generally require this information in the inventory collection.
 
 Mac App Store/VPP and Jamf App Installer apps that are scoped to the computer will also begin installing _immediately_ after enrollment. Since macOS will only perform one installation at a time, these might delay the installation of essential Jamf Pro components. You can create smart groups to defer these installations.
 
 With Setup Manager 1.3 and higher, you can check whether apps are getting installed before Setup Manager starts the actions in the Setup Manager log.
 
+Any configuration profiles that affect network settings can lead to a brief drop of the network connection which can slow down or completely interrupt the download and configuration of the Jamf Pro framework. The Setup Manager (1.3 and later) log will show changes to network or outages. When you see those in connection with long delays, you should look for profiles that are installed before that might affect the network. Setup Manager 1.4 and higher log will show profile installations and removals. Profiles that affect Wifi, firewall, VPN settings or the installation of security tools that affect or change network access are ciritical here and should be deferred to [be installed at a later stage with scoping](https://github.com/jamf/Setup-Manager/blob/main/Docs/Extras.md#jamf-pro-useful-smart-groups).
 
 ## Can I set the wallpaper/desktop picture or dock with Setup Manager?
 
