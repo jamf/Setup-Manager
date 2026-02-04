@@ -437,7 +437,7 @@ Example:
 
 #### `startingMessage`
 
-(String, optional, localized, substitutions, markdown, v1.4.3, default: "Getting Started…")
+(String, optional, localized, substitutions, markdown, v1.4.3, default: "Getting Ready…")
 
 Custom message shown while Setup Manager is "Getting Ready…", i.e. waiting for the Jamf framework to be installed
 
