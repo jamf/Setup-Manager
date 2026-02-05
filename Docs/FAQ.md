@@ -48,19 +48,25 @@ You can open the log window (command-L) or review the [log file](Extras.md#loggi
 
 ## (Jamf Pro) Getting Ready is taking very long (several minutes). What is happening and can I do something to make it faster?
 
-The "Getting Ready" phase prepares some steps and waits for all essential Jamf Pro components (the jamf binary, certificates, Jamf.app, etc.) to be installed and configured before starting with the actual enrollment workflow. Depending on the network connection this might take a while.
+The "Getting Ready" phase prepares some steps and waits for all essential Jamf Pro fraemwork components (the jamf binary, certificates, Jamf apps, etc.) to be installed and configured before starting with the actual enrollment workflow. Depending on the network connection this can take a while, but there are several steps you can take to order your enrollment workflow to avoid conflicts and timeouts which should speed things up.
 
-Note that you can see the individual steps and the timing for each step in the [Setup Manager log file](Extras.md#logging)].
+You can see the individual steps and how much time is spent on each step in the [Setup Manager log](Extras.md#logging)].
 
-Once Jamf Pro's enrollment workflow is complete, Setup Manager runs a full update inventory/recon. In general, if the recon takes a long time, you should review the inventory collection settings in Jamf Pro. Calculating home directory sizes and gathering fonts can take a lot of time and CPU power, and speed up things significantly when turned off, not just during enrollment with Setup Manager.  You should also review extension attributes, for how long each one runs.
+If the "Getting Ready…" phase in your enrollment is taking significantly more than 1-3 minutes (on a decent network connection) then there are issues in your enrollment workflow that can almost certainly be improved.
 
-Gathering software update information in inventory collection may lead to long recon times or even stalls. Since recent versions of macOS use DDM status channels for both reporting of the current macOS version and the status of software updates, you do not generally require this information in the inventory collection.
+Mac App Store/VPP and Jamf App Installer apps that are scoped to the computer will begin installing _immediately_ after enrollment. Since macOS will only perform one installation at a time, these might delay the installation of essential Jamf Pro components. You can create [smart groups to defer these installations](https://github.com/jamf/Setup-Manager/blob/main/Docs/Extras.md#jamf-pro-useful-smart-groups).
 
-Mac App Store/VPP and Jamf App Installer apps that are scoped to the computer will also begin installing _immediately_ after enrollment. Since macOS will only perform one installation at a time, these might delay the installation of essential Jamf Pro components. You can create smart groups to defer these installations.
+Verify that no policies are being triggered by `enrollmentComplete` when using Setup Manager. This can lead to policies running in parallel, which, at best, will lead to delays, but at worst can lead to unexpected bahavior or deadlocks.
 
 With Setup Manager 1.3 and higher, you can check whether apps are getting installed before Setup Manager starts the actions in the Setup Manager log.
 
 Any configuration profiles that affect network settings can lead to a brief drop of the network connection which can slow down or completely interrupt the download and configuration of the Jamf Pro framework. The Setup Manager (1.3 and later) log will show changes to network or outages. When you see those in connection with long delays, you should look for profiles that are installed before that might affect the network. Setup Manager 1.4 and higher log will show profile installations and removals. Profiles that affect Wifi, firewall, VPN settings or the installation of security tools that affect or change network access are ciritical here and should be deferred to [be installed at a later stage with scoping](https://github.com/jamf/Setup-Manager/blob/main/Docs/Extras.md#jamf-pro-useful-smart-groups).
+
+Once Jamf Pro's enrollment workflow is complete, Setup Manager runs a full update inventory/recon. In general, if the recon takes a long time, you should review the [inventory collection settings in Jamf Pro](https://learn.jamf.com/en-US/bundle/jamf-pro-documentation-11.24.0/page/Computer_Inventory_Collection_Settings.html). Calculating home directory sizes and gathering fonts can take a lot of time and CPU power, and speed up things significantly when turned off, not just during enrollment with Setup Manager.  You should also review extension attributes, for how long each one runs.
+
+Gathering software update information in inventory collection may lead to long recon times or even stalls. Since recent versions of macOS use DDM status channels for both reporting of the current macOS version and the status of software updates, you do not generally require this information in the inventory collection.
+
+If the time for the recon remains in the minutes after reviewing the settings, you should review the custom extension attributes in your Jamf Pro. Dan Snelson has an helpful [blog post](https://snelson.us/2025/10/jnuc-2025-jamf-pro-performance-tuning-extension-attribute-audit/) and [recorded JNUC session (YouTube)](https://www.youtube.com/watch?v=o1V4kCEUJUs) on this topic.
 
 ## Can I set the wallpaper/desktop picture or dock with Setup Manager?
 

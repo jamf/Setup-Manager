@@ -448,6 +448,8 @@ Example:
 <string>Waiting for management framework installation. Please remain patient!</string>
 ```
 
+**Note:** if the "Getting Ready…" phase in your enrollment is taking significantly more than 1-3 minutes (on a decent network connection) then there are issues in your enrollment workflow that [can almost certainly be improved](Docs/FAQ.md#jamf-pro-getting-ready-is-taking-very-long-several-minutes-what-is-happening-and-can-i-do-something-to-make-it-faster).
+
 ## Actions
 
 All actions should have these keys:
@@ -1235,7 +1237,15 @@ In some fields, markdown formatting can be used to generate rich, formatted text
 
 The `Please be patient.` text will be shown bolded. You can find details on markdown formatting in the [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/).
 
-If you want to insert a line break, you need to insert two line breaks into the markdown text.
+If you want to insert a line break, you need to insert two line breaks into the markdown text. Note also, that property lists don't understand \n as an escape character, so you have to insert two actual line breaks.
+
+```xml
+<key>startingMessage</key>
+<string>Waiting for things to get ready.
+
+**This may a moment!** Please remain patient.</string>
+```
+
 
 Note that while you _can_ embed links to websites in the markdown using the `[…](…)` syntax they will not work.
 
