@@ -1,5 +1,12 @@
 #  Setup Manager - Change Log
 
+## 1.4.4
+
+(2026-02-10)
+
+- fixed a bug that could prevent the final recon from finishing (#196)
+- added horizontal padding to starting and finished messages
+
 ## 1.4.3
 
 (2026-02-04)
