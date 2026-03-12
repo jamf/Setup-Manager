@@ -57,7 +57,7 @@ Setup Manager logs to `/Library/Logs/Setup Manager.log`. There are four columns:
 
 - timestamp (in ISO8601)
 - log level (default, error or fault)
-- category (general, install, network, profile, jamfpro)
+- category (general, install, network, profile, jamfpro, battery)
 - message
 
 To clean up the main log a little, Setup Manager will only write the output of actions to the Setup Manager log file when an error occurred. You can control this behavior with a new top-level preference key `actionOutputLogging`.
