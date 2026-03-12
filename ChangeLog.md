@@ -1,5 +1,14 @@
 #  Setup Manager - Change Log
 
+## 1.4.5
+
+(2026-03-12)
+
+- removed redundant recon when setting computer name (#201)
+- shortened some wait times in "Getting Ready…" for Jamf Pro deployments
+- fixed a crash which might occure when opening the log window twice (#197, #204)
+- log entry when battery is below warning threshold
+
 ## 1.4.4
 
 (2026-02-10)
