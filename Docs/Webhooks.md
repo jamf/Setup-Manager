@@ -163,4 +163,10 @@ You can send multiple services per event:
 
 ### Webhooks in Debug mode
 
-Webhooks are generally _not_ sent when DEBUG is set to true. However, if you set a `DEBUG` key to `true` _inside_ the webhooks dictionary to true, webhooks will be sent, even when global DEBUG is enabled.
+Webhooks are generally _not_ sent when `DEBUG` is set to true. However, if you set a `DEBUG` key to `true` _inside_ the `webhooks` dictionary, webhooks will be sent, even when global `DEBUG` is enabled.
+
+### Logging
+
+Since the webhook URLs may contain codes you don't necessarily want to share, only the url scheme, host, and port are printed in the log, unless the `DEBUG` key inside the `webhooks` dictionary is set to `true`.
+
+Note that the full URL for the webhook will always be visible in the profile, which will be visible to every user on the device in System Settings or with other tools. If you want to prevent the user seeing the webhook urls, you need to remove the Setup Manager profile after enrollment (using smart group scoping) or use a middleware server to indirectly talk with the webhook service.
