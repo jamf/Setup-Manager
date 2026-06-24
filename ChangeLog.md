@@ -1,5 +1,12 @@
 #  Setup Manager - Change Log
 
+## 1.4.6
+
+(2026-06-22)
+
+- fixed a potential crashing issue in log parsing (#217, #219)
+- webhook urls are now abreviated in the log, unless the `DEBUG` key _in_ the `webhooks` dictionary is set to `true`
+
 ## 1.4.5
 
 (2026-03-12)
