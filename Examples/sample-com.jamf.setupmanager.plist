@@ -14,9 +14,13 @@
 			<string>symbol:clock</string>
 			<key>label</key>
 			<dict>
+				<key>fi</key>
+				<string>Aseta aikavyöhyke</string>
 				<key>de</key>
 				<string>Zeitzone einstellen</string>
 				<key>en</key>
+				<string>Set Time Zone</string>
+				<key>en-GB</key>
 				<string>Set Time Zone</string>
 				<key>es</key>
 				<string>Establecer zona horaria</string>
@@ -26,6 +30,10 @@
 				<string>הגדרות אזור זמן</string>
 				<key>it</key>
 				<string>Imposta il fuso orario</string>
+				<key>ja</key>
+				<string>タイムゾーンを設定</string>
+				<key>ko</key>
+				<string>시간대 설정</string>
 				<key>nl</key>
 				<string>Tijdzone instellen</string>
 				<key>sv</key>
@@ -34,6 +42,20 @@
 				<string>Angi tidssone</string>
 				<key>pl</key>
 				<string>Ustal strefę czasową</string>
+				<key>pt-BR</key>
+				<string>Definir fuso horário</string>
+				<key>pt-PT</key>
+				<string>Definir fuso horário</string>
+				<key>tr</key>
+				<string>Saat dilimini ayarla</string>
+				<key>zh-Hans</key>
+				<string>设置时区</string>
+				<key>zh-Hant</key>
+				<string>設定時區</string>
+				<key>zh-TW</key>
+				<string>設定時區</string>
+				<key>da</key>
+				<string>Indstil tidszone</string>
 			</dict>
 			<key>requiresRoot</key>
 			<true/>
@@ -83,10 +105,14 @@
 	<string>$JSSID</string>
 	<key>message</key>
 	<dict>
+		<key>fi</key>
+		<string>Ole kärsivällinen, kun Setup Manager määrittää uutta Mac-tietokonettasi.</string>
 		<key>de</key>
 		<string>Bitte etwas Geduld während Setup Manager deinen neuen Mac konfiguriert.</string>
 		<key>en</key>
 		<string>Please be patient while Setup Manager configures your new Mac.</string>
+		<key>en-GB</key>
+		<string>Please be patient whilst Setup Manager configures your new Mac.</string>
 		<key>es</key>
 		<string>Por favor espere mientras Setup Manager configura tu nuevo Mac.</string>
 		<key>fr</key>
@@ -95,20 +121,42 @@
 		<string>אנא התאזר בסבלנות בזמן ש-Setup Manager מגדיר את ה-Mac החדש שלך</string>
 		<key>it</key>
 		<string>Sii paziente mentre Setup Manager configura il tuo nuovo Mac.</string>
+		<key>ja</key>
+		<string>Setup Managerが新しいMacを構成している間、しばらくお待ちください。</string>
+		<key>ko</key>
+		<string>Setup Manager가 새 Mac을 구성하는 동안 기다려 주십시오.</string>
 		<key>nl</key>
 		<string>Even geduld terwijl Setup Manager je nieuwe Mac configureert.</string>
 		<key>pl</key>
 		<string>Prosimy o cierpliwość, podczas gdy Setup Manager konfiguruje Twojego nowego Maca.</string>
+		<key>pt-BR</key>
+		<string>Por favor aguarde enquanto o Setup Manager configura o seu novo Mac.</string>
+		<key>pt-PT</key>
+		<string>Por favor aguarde enquanto o Setup Manager configura o seu novo Mac.</string>
 		<key>sv</key>
 		<string>Ha tålamod medan Setup Manager konfigurerar din nya Mac.</string>
 		<key>nb</key>
 		<string>Vær tålmodig mens Setup Manager konfigurerer den nye Mac-en din.</string>
+		<key>tr</key>
+		<string>Setup Manager yeni Mac'inizi yapılandırırken lütfen sabırlı olun.</string>
+		<key>zh-Hans</key>
+		<string>请稍候，Setup Manager 正在配置你的新 Mac。</string>
+		<key>zh-Hant</key>
+		<string>請稍候，Setup Manager 正在設定你的新 Mac。</string>
+		<key>zh-TW</key>
+		<string>請稍候，Setup Manager 正在設定你的新 Mac。</string>
+		<key>da</key>
+		<string>Vær tålmodig, mens Setup Manager konfigurerer din nye Mac.</string>
 	</dict>
 	<key>title</key>
 	<dict>
 		<key>de</key>
 		<string>Willkommen!</string>
+		<key>fi</key>
+		<string>Tervetuloa!</string>
 		<key>en</key>
+		<string>Welcome!</string>
+		<key>en-GB</key>
 		<string>Welcome!</string>
 		<key>es</key>
 		<string>¡^[^[Bienvenido](inflect: true)](inflectionAlternative: &apos;Te damos la bienvenida&apos;)!</string>
@@ -118,14 +166,32 @@
 		<string>ברוכים הבאים!</string>
 		<key>it</key>
 		<string>^[Benvenuto](inflect: true, inflectionAlternative: &quot;Ciao&quot;)!</string>
+		<key>ja</key>
+		<string>ようこそ!</string>
+		<key>ko</key>
+		<string>환영합니다!</string>
 		<key>nl</key>
 		<string>Welcom!</string>
 		<key>pl</key>
 		<string>Witamy!</string>
+		<key>pt-BR</key>
+		<string>Bem-vindo!</string>
+		<key>pt-PT</key>
+		<string>Bem-vindo!</string>
 		<key>sv</key>
 		<string>Välkommen</string>
 		<key>nb</key>
 		<string>Velkommen</string>
+		<key>tr</key>
+		<string>Hoş geldiniz!</string>
+		<key>zh-Hans</key>
+		<string>欢迎!</string>
+		<key>zh-Hant</key>
+		<string>歡迎!</string>
+		<key>zh-TW</key>
+		<string>歡迎!</string>
+		<key>da</key>
+		<string>Velkommen!</string>
 	</dict>
 	<key>userEntry</key>
 	<dict>
@@ -153,8 +219,30 @@
 				<string>vorname.nachname@example.com</string>
 				<key>en</key>
 				<string>first.last@example.com</string>
+				<key>en-GB</key>
+				<string>first.last@example.com</string>
+				<key>fi</key>
+				<string>etunimi.sukunimi@example.com</string>
+				<key>ja</key>
+				<string>名.姓@example.com</string>
+				<key>ko</key>
+				<string>이름.성@example.com</string>
 				<key>nl</key>
 				<string>voornaam.achternaam@example.com</string>
+				<key>pt-BR</key>
+				<string>nome.sobrenome@example.com</string>
+				<key>pt-PT</key>
+				<string>nome.apelido@example.com</string>
+				<key>tr</key>
+				<string>ad.soyad@example.com</string>
+				<key>zh-Hans</key>
+				<string>名.姓@example.com</string>
+				<key>zh-Hant</key>
+				<string>名.姓@example.com</string>
+				<key>zh-TW</key>
+				<string>名.姓@example.com</string>
+				<key>da</key>
+				<string>fornavn.efternavn@example.com</string>
 			</dict>
 		</dict>
 	</dict>

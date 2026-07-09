@@ -30,10 +30,32 @@
 											<string>Zeitzone setzen</string>
 											<key>en</key>
 											<string>Set Time Zone</string>
+											<key>en-GB</key>
+											<string>Set Time Zone</string>
+											<key>fi</key>
+											<string>Aseta aikavyöhyke</string>
 											<key>fr</key>
 											<string>Définir le fuseau horaire</string>
+											<key>ja</key>
+											<string>タイムゾーンを設定</string>
+											<key>ko</key>
+											<string>시간대 설정</string>
 											<key>nl</key>
 											<string>Tijdzone instellen</string>
+											<key>pt-BR</key>
+											<string>Definir fuso horário</string>
+											<key>pt-PT</key>
+											<string>Definir fuso horário</string>
+											<key>tr</key>
+											<string>Saat dilimini ayarla</string>
+											<key>zh-Hans</key>
+											<string>设置时区</string>
+											<key>zh-Hant</key>
+											<string>設定時區</string>
+											<key>zh-TW</key>
+											<string>設定時區</string>
+											<key>da</key>
+											<string>Indstil tidszone</string>
 										</dict>
 										<key>requiresRoot</key>
 										<true/>
@@ -54,10 +76,32 @@
 											<string>Rosetta installieren</string>
 											<key>en</key>
 											<string>Install Rosetta</string>
+											<key>en-GB</key>
+											<string>Install Rosetta</string>
+											<key>fi</key>
+											<string>Asenna Rosetta</string>
 											<key>fr</key>
 											<string>Installer Rosetta</string>
+											<key>ja</key>
+											<string>Rosettaをインストール</string>
+											<key>ko</key>
+											<string>Rosetta 설치</string>
 											<key>nl</key>
 											<string>Rosetta installeren</string>
+											<key>pt-BR</key>
+											<string>Instalar Rosetta</string>
+											<key>pt-PT</key>
+											<string>Instalar Rosetta</string>
+											<key>tr</key>
+											<string>Rosetta'yı yükle</string>
+											<key>zh-Hans</key>
+											<string>安装 Rosetta</string>
+											<key>zh-Hant</key>
+											<string>安裝 Rosetta</string>
+											<key>zh-TW</key>
+											<string>安裝 Rosetta</string>
+											<key>da</key>
+											<string>Installer Rosetta</string>
 										</dict>
 										<key>requiresRoot</key>
 										<true/>
@@ -89,10 +133,32 @@
 									<string>Setup Manager konfiguriert deinen Mac…</string>
 									<key>en</key>
 									<string>Setup Manager is configuring your Mac…</string>
+									<key>en-GB</key>
+									<string>Setup Manager is configuring your Mac…</string>
+									<key>fi</key>
+									<string>Setup Manager määrittää Mac-tietokonettasi…</string>
 									<key>fr</key>
 									<string>Setup Manager configure votre Mac…</string>
+									<key>ja</key>
+									<string>Setup ManagerがMacを構成しています…</string>
+									<key>ko</key>
+									<string>Setup Manager가 Mac을 구성하고 있습니다…</string>
 									<key>nl</key>
 									<string>Setup Manager configureert je Mac…</string>
+									<key>pt-BR</key>
+									<string>O Setup Manager está configurando o seu Mac…</string>
+									<key>pt-PT</key>
+									<string>O Setup Manager está a configurar o seu Mac…</string>
+									<key>tr</key>
+									<string>Setup Manager Mac'inizi yapılandırıyor…</string>
+									<key>zh-Hans</key>
+									<string>Setup Manager 正在配置你的 Mac…</string>
+									<key>zh-Hant</key>
+									<string>Setup Manager 正在設定你的 Mac…</string>
+									<key>zh-TW</key>
+									<string>Setup Manager 正在設定你的 Mac…</string>
+									<key>da</key>
+									<string>Setup Manager konfigurerer din Mac…</string>
 								</dict>
 								<key>title</key>
 								<dict>
@@ -100,10 +166,32 @@
 									<string>Willkommen!</string>
 									<key>en</key>
 									<string>Welcome!</string>
+									<key>en-GB</key>
+									<string>Welcome!</string>
+									<key>fi</key>
+									<string>Tervetuloa!</string>
 									<key>fr</key>
 									<string>Bienvenue!</string>
+									<key>ja</key>
+									<string>ようこそ!</string>
+									<key>ko</key>
+									<string>환영합니다!</string>
 									<key>nl</key>
 									<string>Welkom!</string>
+									<key>pt-BR</key>
+									<string>Bem-vindo!</string>
+									<key>pt-PT</key>
+									<string>Bem-vindo!</string>
+									<key>tr</key>
+									<string>Hoş geldiniz!</string>
+									<key>zh-Hans</key>
+									<string>欢迎!</string>
+									<key>zh-Hant</key>
+									<string>歡迎!</string>
+									<key>zh-TW</key>
+									<string>歡迎!</string>
+									<key>da</key>
+									<string>Velkommen!</string>
 								</dict>
 							</dict>
 						</dict>

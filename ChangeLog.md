@@ -1,5 +1,19 @@
 #  Setup Manager - Change Log
 
+## 1.4.7
+
+(2026-07-09)
+
+- updated built-in Installomator to v10.9
+- improved unloading Jamf Pro Daemon (#225)
+- Localizations
+  - 🇹🇼 繁體中文/Chinese (Taiwan)
+  - 🇨🇳 简体中文/Chinese (simplified) (#224)
+  - 🇨🇳 繁體中文/Chinese (traditional) (#224)
+  - 🇰🇷 한국인/Korean (#224)
+  - 🇫🇮 Suomi/Finnish
+  - 🇵🇹 Português/Portuguese (pt-PT)
+
 ## 1.4.6
 
 (2026-06-22)

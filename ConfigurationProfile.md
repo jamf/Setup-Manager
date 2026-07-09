@@ -1176,21 +1176,29 @@ The following keys can be localized:
 
 Use these codes for these languages:
 
-| Language           | two-letter code |
-|--------------------|-----------------|
-| English            | en (default)    |
-| English (UK)       | en-GB           |
-| Dutch (Nederlands) | nl              |
-| French             | fr              |
-| German             | de              |
-| Hebrew             | he              |
-| Italian            | it              |
-| Norwegian          | nb              |
-| Polish             | pl              |
-| Portuguese (Brazil)| pt-BR           |
-| Spanish            | es              |
-| Swedish            | sv              |
-| Turkish            | tr              |
+| Language             | Native Name         |  code           |
+|----------------------|---------------------|-----------------|
+| English              | English             | en (default)    |
+| English (UK)         | English (UK)        | en-GB           |
+| Chinese (Taiwan)     | 繁體中文             | zh-TW           |
+| Chinese (simplified) | 简体中文             | zh-Hans         |
+| Chinese (traditional)| 繁體中文             | zh-Hant         |
+| Danish               | Dansk               | da              |
+| Dutch                | Nederlands          | nl              |
+| Finnish              | Suomi               | fi              |
+| French               | Français            | fr              |
+| German               | Deutsch             | de              |
+| Hebrew               | עברית               | he              |
+| Italian              | Italiano            | it              |
+| Japanese             | 日本語               | ja              |
+| Korean               | 한국어               | ko              |
+| Norwegian            | Norsk bokmål        | nb              |
+| Polish               | Polski              | pl              |
+| Portuguese (Brazil)  | Português (Brasil)  | pt-BR           |
+| Portuguese           | Português           | pt-PT           |
+| Spanish              | Español             | es              |
+| Swedish              | Svenska             | sv              |
+| Turkish              | Türkçe              | tr              |
 
 The [plist and profile example files](Examples) contain localizations for many of the custom text elements.
 
