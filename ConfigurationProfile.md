@@ -211,7 +211,7 @@ Disable the countdown:
 
 (String, optional, default: `continue`)
 
-This key sets the action and label for the button shown when Setup Manger has completed. 
+This key sets the action and label for the button shown when Setup Manager has completed. 
 
 There are four options:
 - `continue`: (default) merely quits Setup Manager and allows the user to continue (probably Setup Assistant or login window)

@@ -58,7 +58,7 @@ You can add more actions here. There are more types of actions available, you ca
 ## Wipe the Test Mac
 
 - on the test mac, choose 'Erase all Contents and Settings' in the Settings app or wipe the Mac using the 'Wipe Computer' remote management command in Jamf Pro
-- click through the initial enrollment dialogs. After you approve the enrollment in your MDM, Setup Manger should appear and perform the actions you configured
+- click through the initial enrollment dialogs. After you approve the enrollment in your MDM, Setup Manager should appear and perform the actions you configured
 - while the installations are progressing, click on "About this Mac…" for information, click again while holding down the option key for even more information
 - hit command-L for a log window. You can also find this log info later at `/Library/Logs/Setup Manager.log`
 

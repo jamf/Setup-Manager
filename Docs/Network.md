@@ -78,7 +78,7 @@ Example: empty `networkCheck` array to force Network icon to always show
 
 ## Network Change logging
 
-Setup Manager 1.3 adds logging for changes to network interfaces. It is possible that there will multiple entries in the log with regards to the same network change. Most changes logged will be neutral and should not affect your deployment negatively.
+Setup Manager 1.3 adds logging for changes to network interfaces. It is possible that there will be multiple entries in the log with regards to the same network change. Most changes logged will be neutral and should not affect your deployment negatively.
 
 However, it is possible that changes to the network configuration of a device can influence the deployment workflow. Changes to network or Wi-Fi configurations and other network or security tools might disrupt the network connectivity during enrollment. This might interrupt or cancel downloads.
 
