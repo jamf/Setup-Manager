@@ -6,11 +6,11 @@ While we strongly recommend to use Automated Device Enrollment where possible, w
 
 Since Prestage enrollment packages are only installed during Automated Device Enrollment, you need to create a policy which installs the Setup Manager pkg and attach that to the `enrollmentComplete` trigger.
 
-Create the Setup Manager profile and make sure it is scoped in a way that it will reach the device immediataly at enrollment. For example, you can create a smart group on the criterium `Enrolled via Automated Device Enrollment` `is` `No` to gather all Macs _not_ enrolled with ADE.
+Create the Setup Manager profile and make sure it is scoped in a way that it will reach the device immediately at enrollment. For example, you can create a smart group on the criterium `Enrolled via Automated Device Enrollment` `is` `No` to gather all Macs _not_ enrolled with ADE.
 
 ## Troubleshooting
 
-With UIE, there _will_ be an unvoidable short delay between the enrollment and when Setup Manager launches. If the pause is very long, you will need to analyse jamf.log and install.log to see where the time is spent. Setup Manager logs will show some events that occur even before Setup Manager is installed and launches, but the time information might be lost or not represented. Use the suggestions here for reducing the time to launch.
+With UIE, there _will_ be an unavoidable short delay between the enrollment and when Setup Manager launches. If the pause is very long, you will need to analyse jamf.log and install.log to see where the time is spent. Setup Manager logs will show some events that occur even before Setup Manager is installed and launches, but the time information might be lost or not represented. Use the suggestions here for reducing the time to launch.
 
 ## Workflow and Profile
 

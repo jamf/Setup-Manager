@@ -4,11 +4,11 @@
 
 (Dict, optional)
 
-Setup Manager can send webhooks to inform other services of its status. The configuration for the webhooks in all stored under the top-level `webhooks` key.
+Setup Manager can send webhooks to inform other services of its status. The configuration for the webhooks is all stored under the top-level `webhooks` key.
 
 The webhooks dict can contain two keys, both of which are again dicts. `started` defines the webhook or webhooks that are called when Setup Manager starts its workflow, and the other `finished` defines the webhook or webhooks when it finishes the workflow.
 
-When the either the `started` or `finished` key is missing, no webhook will be sent for that event.
+When either the `started` or `finished` key is missing, no webhook will be sent for that event.
 
 Example:
 

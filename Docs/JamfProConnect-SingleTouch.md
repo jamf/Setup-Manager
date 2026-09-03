@@ -4,7 +4,7 @@
 
 In a single touch workflow a tech performs or monitors the initial setup of a device to the point just before the user creates their account. While Setup Manager can run zero-touch workflows, it was built specifically with single-touch workflows in mind.
 
-A single touch workflow can be as easy the tech unpacking the Mac (erasing it with an MDM command or restoring it with Apple Configurator when necessary), connecting it to network, stepping through the initial Setup dialogs, optionally entering the asset tag or other data, monitoring Setup Manager's process until it is finished and then handing over or sending the Mac to the designated end user who continues the setup and creates their account in Setup Assistant.
+A single touch workflow can be as easy as the tech unpacking the Mac (erasing it with an MDM command or restoring it with Apple Configurator when necessary), connecting it to network, stepping through the initial Setup dialogs, optionally entering the asset tag or other data, monitoring Setup Manager's process until it is finished and then handing over or sending the Mac to the designated end user who continues the setup and creates their account in Setup Assistant.
 
 You can use a combination of Jamf Pro, Setup Manager and Jamf Connector, to get a tighter deployment, user assignment and account creation process. This requires a bit more setup and configuration. This workflow allows the tech to monitor the Setup Manager workflow, enter device specific data such as an asset tag and assign _and lock_ the device to a different user, without requiring the end user's login credentials.
 
@@ -14,7 +14,7 @@ You can use a combination of Jamf Pro, Setup Manager and Jamf Connector, to get 
 - Setup Manager
 - Jamf Connect Login configured with SSO
 
-Customized Enrollment with SSO is not _required_ for this workflow. The assignment to the final user is set from the email entered in Setup Manager. Nevertheless, customized enrollment with SSO is useful in this context since restricts Mac enrollment to a group of authorized accounts.
+Customized Enrollment with SSO is not _required_ for this workflow. The assignment to the final user is set from the email entered in Setup Manager. Nevertheless, customized enrollment with SSO is useful in this context since it restricts Mac enrollment to a group of authorized accounts.
 
 You should have Jamf Pro and Jamf Connect configured with the required SSO integrations and thoroughly tested before configuring this workflow. 
 
@@ -24,7 +24,7 @@ Verify that "Collect User and Location information from Directory Service" is **
 
 Add the Setup Manager pkg to the Prestage. Also create a configuration profile for Setup Manager with the workflow to install and configure the software you want to be installed at this stage.
 
-You need to leave least one panel of Setup Assistant _enabled_. Otherwise Setup Manager might not launch.
+You need to leave at least one panel of Setup Assistant _enabled_. Otherwise Setup Manager might not launch.
 
 Setup Manager profile will require a `userEntry` field for `userID` to know which user to assign the Mac to. This will show a field prompting for "User Email." You can of course add other fields to `userEntry` at this time, though they are not required.
 
@@ -46,7 +46,7 @@ Example:
 
 ## Deploy Jamf Connect
 
-You also need to make sure that Jamf Connect (Login) is deployed is installed and configured. There are different approaches to do this.
+You also need to make sure that Jamf Connect (Login) is installed and configured. There are different approaches to do this.
 
 - add Jamf Connect pkg to prestage
 - install Jamf Connect with a pkg policy triggered from Setup Manager workflow
