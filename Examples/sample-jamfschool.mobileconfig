@@ -38,6 +38,10 @@
 											<string>Définir le fuseau horaire</string>
 											<key>ja</key>
 											<string>タイムゾーンを設定</string>
+											<key>hi</key>
+											<string>समय क्षेत्र सेट करें</string>
+											<key>uk</key>
+											<string>Налаштувати часовий пояс</string>
 											<key>ko</key>
 											<string>시간대 설정</string>
 											<key>nl</key>
@@ -56,6 +60,20 @@
 											<string>設定時區</string>
 											<key>da</key>
 											<string>Indstil tidszone</string>
+											<key>bg</key>
+											<string>Задаване на часовата зона</string>
+											<key>es</key>
+											<string>Establecer zona horaria</string>
+											<key>he</key>
+											<string>הגדרות אזור זמן</string>
+											<key>it</key>
+											<string>Imposta il fuso orario</string>
+											<key>nb</key>
+											<string>Angi tidssone</string>
+											<key>pl</key>
+											<string>Ustal strefę czasową</string>
+											<key>sv</key>
+											<string>Ställ in tidszon</string>
 										</dict>
 										<key>requiresRoot</key>
 										<true/>
@@ -84,6 +102,10 @@
 											<string>Installer Rosetta</string>
 											<key>ja</key>
 											<string>Rosettaをインストール</string>
+											<key>hi</key>
+											<string>Rosetta इंस्टॉल करें</string>
+											<key>uk</key>
+											<string>Установити Rosetta</string>
 											<key>ko</key>
 											<string>Rosetta 설치</string>
 											<key>nl</key>
@@ -102,6 +124,20 @@
 											<string>安裝 Rosetta</string>
 											<key>da</key>
 											<string>Installer Rosetta</string>
+											<key>bg</key>
+											<string>Инсталиране на Rosetta</string>
+											<key>es</key>
+											<string>Instalar Rosetta</string>
+											<key>he</key>
+											<string>התקנת Rosetta</string>
+											<key>it</key>
+											<string>Installa Rosetta</string>
+											<key>nb</key>
+											<string>Installer Rosetta</string>
+											<key>pl</key>
+											<string>Zainstaluj Rosetta</string>
+											<key>sv</key>
+											<string>Installera Rosetta</string>
 										</dict>
 										<key>requiresRoot</key>
 										<true/>
@@ -141,6 +177,10 @@
 									<string>Setup Manager configure votre Mac…</string>
 									<key>ja</key>
 									<string>Setup ManagerがMacを構成しています…</string>
+									<key>hi</key>
+									<string>Setup Manager आपके Mac को कॉन्फ़िगर कर रहा है…</string>
+									<key>uk</key>
+									<string>Setup Manager налаштовує ваш Mac…</string>
 									<key>ko</key>
 									<string>Setup Manager가 Mac을 구성하고 있습니다…</string>
 									<key>nl</key>
@@ -159,6 +199,20 @@
 									<string>Setup Manager 正在設定你的 Mac…</string>
 									<key>da</key>
 									<string>Setup Manager konfigurerer din Mac…</string>
+									<key>bg</key>
+									<string>Setup Manager конфигурира вашия Mac…</string>
+									<key>es</key>
+									<string>Setup Manager está configurando tu Mac…</string>
+									<key>he</key>
+									<string>Setup Manager מגדיר את ה-Mac שלך…</string>
+									<key>it</key>
+									<string>Setup Manager sta configurando il tuo Mac…</string>
+									<key>nb</key>
+									<string>Setup Manager konfigurerer Mac-en din…</string>
+									<key>pl</key>
+									<string>Setup Manager konfiguruje Twojego Maca…</string>
+									<key>sv</key>
+									<string>Setup Manager konfigurerar din Mac…</string>
 								</dict>
 								<key>title</key>
 								<dict>
@@ -174,6 +228,10 @@
 									<string>Bienvenue!</string>
 									<key>ja</key>
 									<string>ようこそ!</string>
+									<key>hi</key>
+									<string>स्वागत है!</string>
+									<key>uk</key>
+									<string>Ласкаво просимо!</string>
 									<key>ko</key>
 									<string>환영합니다!</string>
 									<key>nl</key>
@@ -192,6 +250,20 @@
 									<string>歡迎!</string>
 									<key>da</key>
 									<string>Velkommen!</string>
+									<key>bg</key>
+									<string>Добре дошли!</string>
+									<key>es</key>
+									<string>¡Bienvenido!</string>
+									<key>he</key>
+									<string>ברוכים הבאים!</string>
+									<key>it</key>
+									<string>Benvenuto!</string>
+									<key>nb</key>
+									<string>Velkommen</string>
+									<key>pl</key>
+									<string>Witamy!</string>
+									<key>sv</key>
+									<string>Välkommen</string>
 								</dict>
 							</dict>
 						</dict>

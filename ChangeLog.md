@@ -1,5 +1,34 @@
 #  Setup Manager - Change Log
 
+## 1.5beta
+
+(2026-11-10)
+
+ - raised minimum macOS requirement to macOS Sonoma 14.6
+ - User entry allows for custom fields and ordering (#24, #161, #244)
+    - new: custom user entry fields (#24, #182, #244)
+    - new user entry view: list of icons
+    - new `userEntry` profile schema: user entry fields are now an _ordered_ `array`, [details](Docs/UserEntry.md) (#161)
+    - profiles using the previous `userEntry` profile schema will continue to work (for now), but you need to switch to the new, `array` schema to use new features 
+    - `userEntry.showForUserIDs` has been renamed to `showUserEntryForUserIDs` and moved to top-level
+    - `placeholder`, `default`, and `validationMessage` keys in a user entry now support substitution (#98)
+ - many improvements for custom Jamf Pro schema, including localized values and dark mode variants for icons and images (#86)
+ - improved handling of computer name
+    - current computer name is always shown in user data file and webhooks (#237)
+    - `%computerName%` value added to substitutions (#152)
+- additional webhook `userEntry` sent during `waitForUserEntry` , [details](Docs/Webhooks.md) (#143)
+- fixed a wrong file path in uninstall.sh (#229)
+- documentation updates and link fixes (#240)
+  - added documentation for `optionalFinalActions` (#253)
+  - added documentation for authenticated webhooks
+- Localizations
+  - 🇯🇵 日本語/Japanese  (#224)
+  - 🇵🇹 Português/Portuguese (pt-PT)  is now actually included (announced but missing in 1.4.7)
+  - 🇧🇬 Български/Bulgarian (bg)  (#230)
+  - 🇮🇳 हिन्दी/Hindi (hi)  (#230)
+  - 🇺🇦 Українська/Ukrainian (uk) (#243)
+  - general improvements to existing localizations
+
 ## 1.4.7
 
 (2026-07-09)

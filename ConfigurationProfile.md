@@ -42,7 +42,7 @@ When `title` is empty or unset, the default message `Welcome to Setup Manager` w
 
 (String, default: `name:AppIcon`, localized, dark mode)
 
-The icon shown at the top center of the window. There are many options to define icons, described in the [Icon Sources](#icon-sources) section later. Images will be scaled to fit a size of 700x128 pixels (or 1400x256 @2x).
+The icon shown at the top center of the window. There are many options to define icons, described in the [Icon Sources](Docs/IconSources.md) section later. Images will be scaled to fit a size of 700x128 pixels (or 1400x256 @2x).
 
 When `icon` is empty or unset, Setup Manager will show the Setup Manager app icon, unless the `banner` is set, when no icon will be shown instead. This allows for a custom branded icon and title in the banner image.
 
@@ -96,7 +96,7 @@ This line of text will be truncated when the action icon list is shown.</string>
 
 (String, optional, localized, dark mode, v1.4)
 
-When this key is set, Setup Manager treats it as an image/[icon source](#icon-sources) and displays it as a banner image in the top area of the Setup Manager window, behind the `icon` and `title`. The banner area size is 800x233 pixels (1600x466 @2x) on Sequoia and earlier and 800x247 (1600x494 @2x) on Tahoe (the liquid glass toolbar on Tahoe is taller). The banner image will _not_ be scaled down to fit. The image will be displayed with bottom-center alignment, so you can add a extra pixels at the top and the same image should work for all macOS versions.
+When this key is set, Setup Manager treats it as an image/[icon source](Docs/IconSources.md) and displays it as a banner image in the top area of the Setup Manager window, behind the `icon` and `title`. The banner area size is 800x233 pixels (1600x466 @2x) on Sequoia and earlier and 800x247 (1600x494 @2x) on Tahoe (the liquid glass toolbar on Tahoe is taller). The banner image will _not_ be scaled down to fit. The image will be displayed with bottom-center alignment, so you can add a extra pixels at the top and the same image should work for all macOS versions.
 
 When the `banner` is set, and the `title` or `icon` are empty or unset, _neither_ title message _nor_ icon will be shown. This allows for customized branding of the title area with just the banner image. Note that you can localize banner image sources.
 
@@ -104,7 +104,7 @@ When the `banner` is set, and the `title` or `icon` are empty or unset, _neither
 
 (String, optional, localized, dark mode)
 
-When this key is set, Setup Manager treats it as an image/[icon source](#icon-sources) and displays the image in a screen covering background.
+When this key is set, Setup Manager treats it as an image/[icon source](Docs/IconSources.md) and displays the image in a screen covering background.
 
 #### `runAt`
 
@@ -131,9 +131,9 @@ This array contains a list of `Dict`s which describe the individual actions to b
 
 #### `userEntry`
 
-(Dict of Dicts, optional)
+(Array of Dicts (v1.5+), optional)
 
-When this key exists, Setup Manager will prompt for user data while the enrollment actions are running. The individual keys are described in [User Entry](#user-entry).
+When this key exists, Setup Manager will prompt for user data while the enrollment actions are running. The individual keys are described in [User Entry](Docs/UserEntry.md).
 
 #### `help`
 
@@ -154,7 +154,7 @@ Example:
 <string>#FF00AA</string>
 ```
 
-You can also use named system colors. (See ['Defining Colors'](#defining-colors) for a full list.)
+You can also use named system colors. (See ['Defining Colors'](Docs/Colors.md) for a full list.)
 
 Example:
 
@@ -181,7 +181,7 @@ Example:
 
 (String or Dict, optional, localized, dark mode, default: `##background`, v1.4)
 
-Sets the action tile background color for all action tiles, unless the value is overridden by an individual action's `tileColor` key. You can use [color designators](#defining-colors). See the action level [`tileColor`](#tilecolor-1) for details.
+Sets the action tile background color for all action tiles, unless the value is overridden by an individual action's `tileColor` key. You can use [color designators](Docs/Colors.md). See the action level [`tileColor`](#tilecolor-1) for details.
 
 When you set the `tileColor` to `##automatic`, Setup Manager computes an average color from the tile's `icon`. For `symbol` icons, the default background will be used.
 
@@ -211,7 +211,7 @@ Disable the countdown:
 
 (String, optional, default: `continue`)
 
-This key sets the action and label for the button shown when Setup Manger has completed. 
+This key sets the action and label for the button shown when Setup Manager has completed. 
 
 There are four options:
 - `continue`: (default) merely quits Setup Manager and allows the user to continue (probably Setup Assistant or login window)
@@ -232,6 +232,25 @@ Example:
 ```xml
 <key>finalAction</key>
 <string>shutdown</string>
+```
+
+#### `optionalFinalActions`
+
+(boolean, default: false, v1.4)
+
+When this key is set to `true`, holding the option key when clicking the finalAction button will show alternative final actions. 
+
+This also enables these keyboard shortcuts:
+
+- continue: option-command C
+- restart:  option-command R
+- shutdown: option-command S
+
+Example:
+
+```
+<key>optionalFinalActions</key>
+<true/>
 ```
 
 #### `finishedScript`
@@ -290,7 +309,7 @@ Example:
 
 When filled with the correct payload variable, this provides the identifier for the computer to Setup Manager. It will be displayed in the in the 'About this Mac…' popup, when clicked with the option key.
 
-For Jamf Pro, the value for `computerID` should be `$JSSID`. For Jamf School, it should be `%udid%.
+For Jamf Pro, the value for `computerID` should be `$JSSID`. For Jamf School, it should be `%udid%`.
 
 Examples:
 
@@ -314,7 +333,7 @@ Note: up to version 1.3, this key was called `jssID`. This was changed in v1.4 f
 
 (String, Jamf Pro only)
 
-Set this to `$EMAIL` in the configuration profile. This communicates the user who logged in to customized enrollment to Setup Manager. This can be used together with the [`userEntry.showForUserIDs`](#conditionally-show-the-user-entry-for-certain-users) key to control which users see the user entry UI.
+Set this to `$EMAIL` in the configuration profile. This communicates the user who logged in to customized enrollment to Setup Manager. This can be used together with the [`showUserEntryForUserIDs`](#showuserentryforuserids) key to control which users see the user entry UI.
 
 Example:
 
@@ -325,11 +344,31 @@ Example:
 
 Note: in Setup Manager v1.3 and earlier, this key was called `userID`. The name changed in v1.4 to avoid confusion with `userEntry.userID` which serves a different purpose and can have different values. The top-level `userID` key will keep working with the same function for now. If both keys are given, `enrollmentUserID` will take precedence. The top-level `userID` key will be removed in a future version.
 
+#### `showUserEntryForUserIDs`
+
+(Array of Strings, optional, Jamf Pro only, v1.5)
+
+By default, the [user entry](Docs/UserEntry.md) is shown to every user. When this key is set, and `enrollmentUserID` is set to `$EMAIL`, the user entry is only shown when the enrollment user ID is in this list. This is useful when only some users in customized enrollment should be asked for user data.
+
+Example:
+
+```xml
+<key>enrollmentUserID</key>
+<string>$EMAIL</string>
+<key>showUserEntryForUserIDs</key>
+<array>
+  <string>first.last@example.com</string>
+  <string>other.person@example.com</string>
+</array>
+```
+
+Note: in Setup Manager v1.4 and earlier, this was the `showForUserIDs` key inside the `userEntry` dict. The old key keeps working with the old `userEntry` schema, see [User Entry (legacy)](Docs/UserEntry-Legacy.md#conditionally-show-the-user-entry-for-certain-users).
+
 #### `computerNameTemplate`
 
 (String, Jamf Pro only, substitutions)
 
-When this key is set, Setup Manager will generate the computer name from this template and set it automatically. When this key is present, a `computerName` dict or string in `userEntry` will be ignored.
+When this key is set, Setup Manager will generate the computer name from this template and set it automatically. When this key is present, a `computerName` field in `userEntry` will be ignored and not presented to the user.
 
 The template uses substitution tokens, which begin and end with `%` character which will be substituted with data at run time. See [Substitutions](#substitution) for details.
 
@@ -464,7 +503,7 @@ The label is used as the name of the action in display.
 
 (String, optional, localized, dark mode)
 
-The [icon source](#icon-sources) used for the display of the label. Different types of actions will have different default icons, which are used when no `icon` key is present. The icons will be scaled to fit 120x120 pixels.
+The [icon source](Docs/IconSources.md) used for the display of the label. Different types of actions will have different default icons, which are used when no `icon` key is present. The icons will be scaled to fit 120x120 pixels.
 
 There are several different types of actions, and these are defined by additional keys. These keys will be on the same level as the keys above.
 
@@ -474,7 +513,7 @@ There are several different types of actions, and these are defined by additiona
 
 (String, optional, dark mode, v1.4)
 
-This key sets this action's' background color. You can use [color designators](#defining-colors).
+This key sets this action's' background color. You can use [color designators](Docs/Colors.md).
 
 `tileColor` values set on individual actions will override the top-level `tileColor`.
 
@@ -759,314 +798,6 @@ with arguments:
 ```
 
 
-## Icon Sources
-
-Icons (which include the top-level `icon`, the `background` and the `icon`s in individual actions) can be defined in several ways in Setup Manager.
-
-### From the web
-
-When the icon source string starts with `http` or `https`, Setup Manager will attempt to download a file from that URL and interpret it as an image file. It will show a spinning progress view while downloading.
-
-```xml
-<key>icon</key>
-<string>https://example.com/path/to/icon.png</string>
-```
-
-### Local file
-
-When the icon source is an absolute file path, Setup Manager will attempt to read that file as an image file and display it.
-
-```xml
-<key>icon</key>
-<string>/Library/Organization/image.png</string>
-```
-
-You will need to install custom local image files _before_ Setup Manager runs.
-
-With Jamf Pro, you can achieve that by adding another pkg to the Prestage. Since the Prestage installs pkgs in alphabetical order, this branding pkg should be named to be alphabetically _before_ "Setup Manager."
-
-### Application:
-
-When the icon source is an absolute file path that ends in `.app`, Setup Manager will get the icon from that app.
-
-```xml
-<key>icon</key>
-<string>/System/Applications/App Store.app</string>
-```
-
-### Name:
-
-When the icon source starts with `name:`, Setup Manager will get the icon with that name. Two names are useful: `AppIcon` gets Setup Manager's app icon and `NSComputer` will get an icon representing the current hardware.
-
-```xml
-<key>icon</key>
-<string>name:AppIcon</string>
-```
-
-### SF Symbols:
-
-When the icon source starts with `symbol:`, Setup Manager will create the icon using that symbol's name. You can look up symbol names using the [SF Symbols](https://developer.apple.com/sf-symbols/) app.
-
-Note that the availability and appearance of SF Symbols may vary with the OS version and language/region.
-
-```xml
-<key>icon</key>
-<string>symbol:clock</string>
-```
-
-### Color
-
-(v1.4)
-
-When the icon source starts with `#`, Setup Manager will interpret it as a hex color.
-
-You can use hex color notation with three digits, e.g `#0f0` or six digits, e.g. `#f900a2`. 
-
-You can also use named system colors with two leading `##`, e.g `##yellow` or `##primary`. 
-
-(See ['Defining Colors'](#defining-colors) for details.)
-
-```xml
-<key>background</key>
-<string>##white</string>
-```
-
-```xml
-<key>background</key>
-<string>#aaa</string>
-```
-
-### Dark Mode
-
-Note: after enrollment, over Setup Assistant, the system is always in light mode. This is only relevant when you use Setup Manager after user-initiated enrollment or launch it otherwise over user space.
-
-To provide alternative images for dark or light mode, change the `string` defining the image to a dictionary with a `dark` and a `light` key. This works with the `background`, `icon`, and each action's `icon`. This also works with the `accentColor` key.
-
-Setup Manager does _not_ monitor the appearance mode, so if it changes _while_ Setup Manager is running, things will not update consistently.
-
-Example: 
-
-```xml
-<key>icon</key>
-<dict>
-  <key>dark</key>
-  <string>name:Jamf_white</string>
-  <key>light</key>
-  <string>name:Jamf_blue</string>
-</dict>
-```
-
-
-## User Entry
-
-You can enable user entry for the following fields:
-
-- `userID`
-- `email`
-- `endUsername` (shown as 'Account Name')
-- `realname` (shown as 'Full Name')
-- `position`
-- `phone`
-- `department`
-- `building`
-- `room`
-- `assetTag`
-- `computerName`
-
-Any of the fields will only be shown when its key exists. If you were to create an empty `userEntry` dict, you get an empty user input screen with a 'Save' button - not a good user experience.
-
-For each field, you need to provide at least one of `default`, `placeholder`, or `options`.
-
-`userID` and `email` can be somewhat confusing and depending on which Cloud directory you have configured in Jamf Pro, you may need one or the other or both. Because of this Setup Manager 1.1 and older would only prompt for 'User email' and set both `userID` and `email` from that value. To maintain compatibility with this behavior, Setup Manager will continue to set _both_ `userID` and `email` when only one of the two values is requested and entered. If you request both fields, both will be set individually in the recon.
-
-
-### User Data file
-
-Data from user entry is written, together with some other data to a file when Setup Manager reaches a `waitForUserEntry` action and again when it finishes. The file is stored at `/private/var/db/SetupManagerUserData.txt`. [More details.](Docs/Extras.md#user-data-file)
-
-
-### Keys
-
-#### `default`
-
-(String, localized)
-
-Provide a default value in one of two ways:
-
-Example:
-
-```xml
-<key>computerName</key>
-<string>Mac-12345</string>
-```
-
-Use this simple `string` form, when all you need is the field with a default value filled in. Leave the `string` value empty if you don't even want a default value.
-
-When you want to configure other options of the field, you need to use the `dict` form:
-
-Example:
-
-```xml
-<key>computerName</key>
-<dict>
-  <key>default</key>
-  <string>ABC12345</string>
-  <key>validation</key>
-  <string>[A-Z]{3}\d{5}</string>
-</dict>
-```
-
-
-#### `placeholder`
-
-(String, localized)
-
-This will show the string value given as a greyed out placeholder in the empty text field.
-
-```xml
-<key>assetTag</key>
-<dict>
-  <key>placeholder</key>
-  <string>ABC12345</string>
-</dict>
-```
-
-Note: a `default` value will prevent the placeholder from appearing, unless the user actively deletes the contents of a field.
-
-#### `options`
-
-(Array of Strings, optional)
-
-This will show a popup list of preset options:
-
-```xml
-<key>department</key>
-<dict>
-  <key>options</key>
-  <array>
-    <string>IT</string>
-    <string>Sales</string>
-    <string>R&amp;D</string>
-  </array>
-</dict>
-```
-
-The first option is the default selection.
-
-Note: since we want to avoid having to provide Jamf Pro API credentials to Setup Manager, JSM does _not_ read the list of  buildings or departments from Jamf and you will have to transcribe them into the profile. Annoying, but the lesser of two evils, here.
-
-#### `validation`
-
-(String, optional)
-
-The value of this key is a regular expression string. When the expression matches the entire string entered, it validates. For example, a `validation` of `[A-Z]{3}\d{5}` will match three uppercase letters (`[A-Z]{3}`) and then five numbers (`\d{5}`).
-
-Some useful regular expressions:
-
-- `.+`: at least one character (i.e. not empty)
-- `[a-z]{7}`: exactly seven lowercase letters
-- `\d{3,5}`: three to five digits (numbers)
-- `\S+\@(example\.com|example.org)`: email ending with `example.com` or `example.org`
-
-Detailed description of the regular expression syntax: [NSRegularExpression](https://developer.apple.com/documentation/foundation/nsregularexpression)
-
-Example:
-
-```xml
-<key>userID</key>
-<dict>
-  <key>placeholder</key>
-  <string>first.last@example.com</string>
-  <key>validation</key>
-  <string>\S+\.\S+\@example\.com</string>
-</dict>
-```
-
-#### `validationMessage`
-
-(String, optional, localized)
-
-The default validation message will show the regular expression the value is not matching. This is suitable for debugging but not at all user friendly. You really should provide a localized message explaining how the entry should conform.
-
-```xml
-<key>assetTag</key>
-<dict>
-  <key>placeholder</key>
-  <string>ABC12345</string>
-  <key>validation</key>
-  <string>[A-Z]{3}\d{5}</string>
-  <key>validationMessage</key>
-  <dict>
-    <key>en</key>
-    <string>Asset Tag needs to be of format 'ABC12345'</string>
-    <key>de</key>
-    <string>Etikett Nummer muss im Format 'ABC12345' sein</string>
-    <key>fr</key>
-    <string>L'étiquette d'actif doit être au format 'ABC12345'</string>
-    <key>nl</key>
-    <string>Asset Tag moet het formaat 'ABC12345' hebben</string>
-  </dict>
-</dict>
-```
-
-#### `label`
-
-(String, localized, optional)
-
-Many Jamf Pro admins use the standard fields in ways that don't match their built-in label. For this purpose you can override the default label shown for a field in the user entry.
-
-Note that the text label in the [User Data file](Docs/Extras.md#user-data-file) will _not_ be changed.
-
-Example:
-
-```xml
-<key>room</key>
-<dict>
-  <key>label</key>
-  <string>Site</string>
-  <key>options</key>
-  <array>
-    <string>London</string>
-    <string>Paris</string>
-    <string>Amsterdam</string>
-  </array>
-</dict>
-```
-
-In this example, the 'Room' field will be shown in Setup Manager with the label 'Site.' The choice will be submitted  to the 'room' field in Jamf Pro inventory and written with the 'room' label to the [User data file](Docs/Extras.md#user-data-file). You can then pick up the data in policy scripts after Setup Manager is finished or the `waitForUserEntry` action and process it accordingly.
-
-### Conditionally show the user entry for certain users
-
-You can configure Setup Manager to only show the user entry section when specified users have authenticated in enrollment customization. This enables workflows, where certain users (techs and admins) get the option to re-assign the device to another user, but other users don't see the option.
-
-For this, you need to setup the top-level `enrollmentUserID` to receive the `$EMAIL` variable. This will communicate to SetupManager the user who logged in with customized enrollment. Then you add key `showForUserIDs` with an array of user emails to the `userEntry` dict. When both `enrollmentUserID` and `userEntry.showForUserIDs` are set, the user entry UI will only show for the listed users.
-
-#### `showForUserIDs`
-
-(Array of Strings, optional)
-
-Example:
-
-```xml
-<key>userEntry</key>
-<dict>
-  <key>showForUserIDs</key>
-  <array>
-    <string>a.b@example.com</string>
-    <string>m.b@example.com</string>
-    <string>r.p@example.com</string>
-  </array>
-  <key>userID</key>
-  <dict>
-    <key>placeholder</key>
-    <string>first.last@example.com</string>
-    <key>validation</key>
-    <string>\S+\.\S+@example.com</string>
-  </dict>
-</dict>
-<key>enrollmentUserID</key>
-<string>$EMAIL</string>
-```
 
 ## Help
 
@@ -1080,7 +811,7 @@ When you provide a top-level `help` key with a dictionary a help button (with a 
 
 (String, optional, localized, markdown)
 
-#### `url`: 
+#### `url`
 
 (String, optional, localized)
 
@@ -1100,108 +831,6 @@ Example:
 </dict>
 ```
 
-## Webhooks
-
-Setup Manager can send web hooks to servers and services to trigger workflows there. You can read [details on how to configure and use WebHooks here](Docs/Webhooks.md).
-
-## Network Connectivity
-
-Setup Manager can check and display the network status and connectivity to a list of hosts. You can read [the details on how to configure this here](Docs/Network.md).
-
-## Localization
-
-The app will pick up the user choice of the UI language for the interface elements. (Table of currently available languages below.) The app will fall back to English for other language choices.
-
-You can provide localizations for the custom texts given in the configuration profile. 
-
-**Deprecation notice:** the method for providing localized texts in the configuration profile changed in version 1.1. The previous method (by appending the two letter language code to the key) is considered deprecated. It will continue to work for the time being but will be removed in a future release. It is _strongly_ recommended to change to the new dictionary-based solution.
-
-To provide a set of localizations for a value in the profile, change its type from `string` to `dict`. Inside the `dict`, provide a value for each localization for each localization with the language code as key.
-
-For example, this unlocalized key-value pair
-
-```xml
-<key>title</key>
-<string>Welcome!</string>
-``` 
-
-can be localized like this:
-
-```xml
-<key>title</key>
-<dict>
-  <key>en</key>
-  <string>Welcome!</string>
-  <key>de</key>
-  <string>Willkommen!</string>
-  <key>fr</key>
-  <string>Bienvenue!</string>
-  <key>nl</key>
-  <string>Welkom!</string>
-</dict>
-```
-
-When there is no value for the localization, the app will fall back to the value of the `en` key.
-
-The following keys can be localized:
-
-### Top-level keys
-
-- `title`
-- `message`
-- `icon`
-- `background`
-
-### Actions
-
-- `label`
-- `icon`
-
-### User Entry
-
-- `default`
-- `placeholder`
-- `validationMessage`
-- `label`
-
-### Help
-
-- `title`
-- `message`
-- `url`
-
-### Network Check
-
-- `label`
-
-Use these codes for these languages:
-
-| Language             | Native Name         |  code           |
-|----------------------|---------------------|-----------------|
-| English              | English             | en (default)    |
-| English (UK)         | English (UK)        | en-GB           |
-| Chinese (Taiwan)     | 繁體中文             | zh-TW           |
-| Chinese (simplified) | 简体中文             | zh-Hans         |
-| Chinese (traditional)| 繁體中文             | zh-Hant         |
-| Danish               | Dansk               | da              |
-| Dutch                | Nederlands          | nl              |
-| Finnish              | Suomi               | fi              |
-| French               | Français            | fr              |
-| German               | Deutsch             | de              |
-| Hebrew               | עברית               | he              |
-| Italian              | Italiano            | it              |
-| Japanese             | 日本語               | ja              |
-| Korean               | 한국어               | ko              |
-| Norwegian            | Norsk bokmål        | nb              |
-| Polish               | Polski              | pl              |
-| Portuguese (Brazil)  | Português (Brasil)  | pt-BR           |
-| Portuguese           | Português           | pt-PT           |
-| Spanish              | Español             | es              |
-| Swedish              | Svenska             | sv              |
-| Turkish              | Türkçe              | tr              |
-
-The [plist and profile example files](Examples) contain localizations for many of the custom text elements.
-
 ## Substitution
 
 Certain keys, such as `computerNameTemplate` can use tokens, which begin and end with `%` character. The tokens will be substituted with data from the device or user entry.
@@ -1216,8 +845,15 @@ The following tokens are available:
 - `udid`: the computer's provisioning universal device identifier
 - `model`: the computer's model name, e.g. `MacBook Air` or `Mac mini`
 - `model-short`: the first word of `model` (no spaces), i.e. `MacBook`, `Mac` or `iMac`
+- `computerName`: current value of the computer name (this might change depending on when the substitution occurs)
+- `enrollmentUserID`
 - these values from user entry, _after_ user entry has completed (see [`waitForUserEntry`](#waitForUserEntry))
     - `email`
+    - `userID`
+    - `realname`
+    - `endUserName`
+    - `position`
+    - `phone`
     - `assetTag`
     - `building`
     - `department`
@@ -1232,7 +868,12 @@ These keys can use substitutions:
 - `title`
 - `message`
 - `computerNameTemplate`
-- actions: `label`
+- Actions
+  -  `label`
+- User Entry:
+  - `placeholder`
+  - `default`
+  - `validationMessage`
 
 ## Markdown
 
@@ -1264,67 +905,26 @@ These keys can use markdown:
 - `finishedMessage`
 - `startingMessage`
 
+
+## Icon Sources
+
+Icons and images can be defined in many ways: from the web, local files, applications, SF Symbols, or colors, with optional dark mode alternatives. The details have moved to their own page: [Icon Sources](Docs/IconSources.md).
+
+## User Entry
+See [the full documentation here](Docs/UserEntry.md)
+
+## Webhooks
+
+Setup Manager can send web hooks to servers and services to trigger workflows there. You can read [details on how to configure and use WebHooks here](Docs/Webhooks.md).
+
+## Network Connectivity
+
+Setup Manager can check and display the network status and connectivity to a list of hosts. You can read [the details on how to configure this here](Docs/Network.md).
+
+## Localization
+
+The localization documentation has moved to its own page. You can read [how to localize custom texts in the configuration profile and see the table of available languages here](Docs/Localization.md).
+
 ## Defining Colors
 
-Colors are defined with strings in the profile.
-
-When the icon source starts with `#`, Setup Manager will interpret it as a hex color.
-
-You can use hex color notation with three digits, e.g `#0f0` or six digits, e.g. `#f900a2`. 
-
-Example: 
-
-```xml
-<key>accentColor</key>
-<string>#FF00AA</string>
-```
-
-(v1.4) You can also use named system colors with two leading `##`, e.g `##yellow` or `##primary`. Available color names are:
-
-```
- primary         primary text color, black in light mode, white in dark mode
- secondary       slightly muted variant of primary
- accentColor     color used for controls, set with `accentColor`
- background      system window background color
- clear           no background/transparent (1)
- black           (1)
- blue
- brown
- cyan
- gray
- green
- indigo
- mint
- orange
- pink
- purple
- red
- teal
- white           (1)
- yellow
-```
-
-(1) All colors will automatically adapt to dark or light mode, _except_ `clear`, `black`, and `white`.
-
-Example:
-
-```xml
-<key>accentColor</key>
-<string>##green</string>
-```
-
-### Dark mode
-
-If you want different accent colors depending on whether the system is in light or dark mode, provide a `dict` with two keys, for `light` and `dark` mode: (Note: most named system colors adapt automatically)
-
-Example:
-
-```xml
-<key>accentColor</key>
-<dict>
-  <key>dark</key>
-  <string>#FF00AA</string>
-  <key>light</key>
-  <string>#AA0055</string>
-</dict>
-```
+Colors, including hex colors, named system colors and light/dark mode variants, are defined as strings or dicts. The details have moved to their own page: [Defining Colors](Docs/Colors.md).

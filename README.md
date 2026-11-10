@@ -4,7 +4,7 @@
 
 _"Every Assistant has a Manager"_
 
-![minOS](https://img.shields.io/badge/macOS-13.5%2B-success)
+![minOS](https://img.shields.io/badge/macOS-14.6%2B-success)
 ![GitHub Release](https://img.shields.io/github/v/release/jamf/setup-manager?color=green)
 ![GitHub Pre-Release](https://img.shields.io/github/v/release/jamf/setup-manager?include_prereleases&label=pre-release)
 ![GitHub Downloads total](https://img.shields.io/github/downloads/jamf/setup-manager/total)
@@ -62,7 +62,7 @@ There is also a [custom schema for Jamf Pro](Docs/Extras.md#custom-json-schema-f
 
 ## Requirements
 
-Setup Manager requires macOS 13.5 or higher. It will work only with Jamf Pro or Jamf School.
+Setup Manager requires macOS 14.6 or higher. It will work only with Jamf Pro or Jamf School.
 
 ## Known Issues
 

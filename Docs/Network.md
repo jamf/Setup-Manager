@@ -47,7 +47,7 @@ The connection protocol to test: `tcp` or `udp`.
 
 #### `label`
 
-(string, localizable, optional)
+(string, localized, optional)
 
 A display label for the connection test.
 

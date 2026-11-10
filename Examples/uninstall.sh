@@ -34,12 +34,17 @@ if [ "$(whoami)" != "root" ]; then
 fi
 
 if launchctl list | grep -q "$bundleID.finished" ; then
-    echo "unloading launch daemon"
+    echo "unloading launch daemon for $bundleID.finished"
     launchctl unload /Library/LaunchDaemons/"$bundleID".finished.plist
 fi
 
+if launchctl list | grep -q "$bundleID.loginwindow" ; then
+    echo "unloading launch agent for $bundleID.loginwindow"
+    launchctl unload /Library/LaunchAgents/"$bundleID".loginwindow.plist
+fi
+
 if launchctl list | grep -q "$bundleID" ; then
-    echo "unloading launch daemon"
+    echo "unloading launch daemon for $bundleID"
     launchctl unload /Library/LaunchDaemons/"$bundleID".plist
 fi
 
@@ -47,7 +52,7 @@ echo "removing files"
 rm -rfv "$appPath"
 rm -v /Library/LaunchDaemons/"$bundleID".plist
 rm -v /Library/LaunchAgents/"$bundleID".loginwindow.plist
-rm -v /Library/LaunchAgents/"$bundleID".finished.plist
+rm -v /Library/LaunchDaemons/"$bundleID".finished.plist
 
 echo "forgetting $bundleID pkg receipt"
 pkgutil --forget "$bundleID"

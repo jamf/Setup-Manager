@@ -32,6 +32,10 @@
 				<string>Imposta il fuso orario</string>
 				<key>ja</key>
 				<string>タイムゾーンを設定</string>
+				<key>hi</key>
+				<string>समय क्षेत्र सेट करें</string>
+				<key>uk</key>
+				<string>Налаштувати часовий пояс</string>
 				<key>ko</key>
 				<string>시간대 설정</string>
 				<key>nl</key>
@@ -56,6 +60,8 @@
 				<string>設定時區</string>
 				<key>da</key>
 				<string>Indstil tidszone</string>
+				<key>bg</key>
+				<string>Задаване на часовата зона</string>
 			</dict>
 			<key>requiresRoot</key>
 			<true/>
@@ -101,7 +107,7 @@
 	<integer>30</integer>
 	<key>icon</key>
 	<string>name:AppIcon</string>
-	<key>jssID</key>
+	<key>computerID</key>
 	<string>$JSSID</string>
 	<key>message</key>
 	<dict>
@@ -123,6 +129,10 @@
 		<string>Sii paziente mentre Setup Manager configura il tuo nuovo Mac.</string>
 		<key>ja</key>
 		<string>Setup Managerが新しいMacを構成している間、しばらくお待ちください。</string>
+		<key>hi</key>
+		<string>कृपया धैर्य रखें, Setup Manager आपके नए Mac को कॉन्फ़िगर कर रहा है।</string>
+		<key>uk</key>
+		<string>Будь ласка, зачекайте, поки Setup Manager налаштовує ваш новий Mac.</string>
 		<key>ko</key>
 		<string>Setup Manager가 새 Mac을 구성하는 동안 기다려 주십시오.</string>
 		<key>nl</key>
@@ -147,6 +157,8 @@
 		<string>請稍候，Setup Manager 正在設定你的新 Mac。</string>
 		<key>da</key>
 		<string>Vær tålmodig, mens Setup Manager konfigurerer din nye Mac.</string>
+		<key>bg</key>
+		<string>Моля, бъдете търпеливи, докато Setup Manager конфигурира вашия нов Mac.</string>
 	</dict>
 	<key>title</key>
 	<dict>
@@ -168,6 +180,10 @@
 		<string>^[Benvenuto](inflect: true, inflectionAlternative: &quot;Ciao&quot;)!</string>
 		<key>ja</key>
 		<string>ようこそ!</string>
+		<key>hi</key>
+		<string>स्वागत है!</string>
+		<key>uk</key>
+		<string>Ласкаво просимо!</string>
 		<key>ko</key>
 		<string>환영합니다!</string>
 		<key>nl</key>
@@ -192,18 +208,81 @@
 		<string>歡迎!</string>
 		<key>da</key>
 		<string>Velkommen!</string>
+		<key>bg</key>
+		<string>Добре дошли!</string>
 	</dict>
 	<key>userEntry</key>
-	<dict>
-		<key>assetTag</key>
+	<array>
 		<dict>
+			<key>identifier</key>
+			<string>userID</string>
+			<key>placeholder</key>
+			<dict>
+					<key>de</key>
+					<string>vorname.nachname@example.com</string>
+					<key>en</key>
+					<string>first.last@example.com</string>
+					<key>en-GB</key>
+					<string>first.last@example.com</string>
+					<key>fi</key>
+					<string>etunimi.sukunimi@example.com</string>
+					<key>ja</key>
+					<string>名.姓@example.com</string>
+					<key>ko</key>
+					<string>이름.성@example.com</string>
+					<key>nl</key>
+					<string>voornaam.achternaam@example.com</string>
+					<key>hi</key>
+					<string>नाम.उपनाम@example.com</string>
+					<key>uk</key>
+					<string>імʼя.прізвище@example.com</string>
+					<key>pt-BR</key>
+					<string>nome.sobrenome@example.com</string>
+					<key>pt-PT</key>
+					<string>nome.apelido@example.com</string>
+					<key>tr</key>
+					<string>ad.soyad@example.com</string>
+					<key>zh-Hans</key>
+					<string>名.姓@example.com</string>
+					<key>zh-Hant</key>
+					<string>名.姓@example.com</string>
+					<key>zh-TW</key>
+					<string>名.姓@example.com</string>
+					<key>da</key>
+					<string>fornavn.efternavn@example.com</string>
+					<key>bg</key>
+					<string>име.фамилия@example.com</string>
+					<key>es</key>
+					<string>nombre.apellido@example.com</string>
+					<key>fr</key>
+					<string>prenom.nom@example.com</string>
+					<key>he</key>
+					<string>שם.משפחה@example.com</string>
+					<key>it</key>
+					<string>nome.cognome@example.com</string>
+					<key>nb</key>
+					<string>fornavn.etternavn@example.com</string>
+					<key>pl</key>
+					<string>imie.nazwisko@example.com</string>
+					<key>sv</key>
+					<string>fornamn.efternamn@example.com</string>
+			</dict>
+		</dict>
+		<dict>
+			<key>identifier</key>
+			<string>assetTag</string>
 			<key>placeholder</key>
 			<string>ABC12345</string>
 		</dict>
-		<key>computerName</key>
-		<string>Mac-12345</string>
-		<key>department</key>
 		<dict>
+			<key>identifier</key>
+			<string>computerName</string>
+			<key>default</key>
+			<string>Mac-12345</string>
+		</dict>
+		<dict>
+			<key>identifier</key>
+			<string>department</string>
 			<key>options</key>
 			<array>
 				<string>Sales</string>
@@ -211,40 +290,6 @@
 				<string>IT</string>
 			</array>
 		</dict>
-		<key>userID</key>
-		<dict>
-			<key>placeholder</key>
-			<dict>
-				<key>de</key>
-				<string>vorname.nachname@example.com</string>
-				<key>en</key>
-				<string>first.last@example.com</string>
-				<key>en-GB</key>
-				<string>first.last@example.com</string>
-				<key>fi</key>
-				<string>etunimi.sukunimi@example.com</string>
-				<key>ja</key>
-				<string>名.姓@example.com</string>
-				<key>ko</key>
-				<string>이름.성@example.com</string>
-				<key>nl</key>
-				<string>voornaam.achternaam@example.com</string>
-				<key>pt-BR</key>
-				<string>nome.sobrenome@example.com</string>
-				<key>pt-PT</key>
-				<string>nome.apelido@example.com</string>
-				<key>tr</key>
-				<string>ad.soyad@example.com</string>
-				<key>zh-Hans</key>
-				<string>名.姓@example.com</string>
-				<key>zh-Hant</key>
-				<string>名.姓@example.com</string>
-				<key>zh-TW</key>
-				<string>名.姓@example.com</string>
-				<key>da</key>
-				<string>fornavn.efternavn@example.com</string>
-			</dict>
-		</dict>
-	</dict>
+	</array>
 </dict>
 </plist>

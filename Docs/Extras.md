@@ -27,7 +27,11 @@ Note that the Setup Manager window does not activate to receive keystrokes autom
 - for the ‘Variant’, select ‘Setup Manager.json’
 - fill in your fields!
 
-The custom schema does not contain all keys and options available in the [configuration profile](../ConfigurationProfile.md). Specifically, the `wait` action and the option to [localize values](../ConfigurationProfile.md#localization) are not available.
+The custom schema does not contain all keys and options available in the [configuration profile](../ConfigurationProfile.md). Specifically, the standalone `wait` action is not available. 
+
+Starting with the Setup Manager schema for 1.5:
+
+Localized values *are* supported: keys that accept [localized values](Localization.md) offer a 'Localized Values' option in the schema. Keys that accept dark mode variants offer a 'Dark/Light Mode Values' option.
 
 When you reach the limits of the custom schema, use the XML it generates as a starting to building a custom XML.
 
@@ -38,6 +42,14 @@ While the Jamf Pro interface offers different schemas for different versions of 
 ## iMazing Profile Editor
 
 There is also a manifest for Setup Manager in [iMazing Profile Editor](https://imazing.com/profile-editor).
+
+## The Onboarding Tool and other apps to create profiles
+
+There are a few apps that can help you build the configuration profile for Setup Manager and [Setup Checklist](https://github.com/jamf-concepts/setup-checklist)
+
+- Jamf Concepts: [The Onboarding Tool](https://github.com/Jamf-Concepts/the-onboarding-tool)
+- Yann Marchesseau: [JSMmaker2](https://github.com/YannMarchesseau/JSMmaker2)
+- HCS Technology Group: [HCS Toolkit for Mac](https://hcsonline.com/support/resources/apps/hcs-toolkit-for-mac)
 
 ## Quit
 
@@ -80,7 +92,6 @@ You may also need to remember to remove the [flag file](#flag-file) before launc
 
 You will also be able launch the app as the user, by double-clicking the app in `/Applications/Utilities`. This is useful to test the look and feel of your custom icons, text and localization. When you use this to create screen shots for documentation, also note the `overrideSerialNumber` and `hideDebugLabel` keys.
 
-
 For testing, you can also re-launch Setup Manager from the command line as root with `sudo "/Applications/Utilities/Setup Manager.app/Contents/MacOS/Setup Manager"`
 
 ## Flag file
@@ -122,7 +133,9 @@ duration: 101
 ```
 Start time (`start`) and finish/submission time (`submit`) are given in ISO8601 format, universal time (UTC). Duration is given in seconds.
 
-Fields that were not set in user entry will not be shown at all. You can use this file in scripts or extension attributes. One possible way is to parse it with `awk`, e.g.
+Fields from user entry will be listed here.`computerName` is a special case: it is always written: it shows the name set by Setup Manager, whether from `computerNameTemplate` or a `computerName` field in `userEntry`. `computerName` will show the current computer name of the Mac if Setup Manager did not change it.
+
+You can use this file in scripts or extension attributes. One possible way is to parse it with `awk`, e.g.
 
 ```xml
 duration=$(awk -F ': ' '/duration: / {print $2}' /private/var/db/SetupManagerUserData.txt)
@@ -198,4 +211,5 @@ The SetupManagerFinished daemon logs its output (and the output of the policy an
 | Setup Manager | Minimum macOS | Platforms               |
 |---------------|---------------|-------------------------|
 | up to 1.2.2   | 12.0          | Intel and Apple silicon |
-| 1.3 and later | 13.5          | Intel and Apple silicon |
+| 1.3 to 1.4.7  | 13.5          | Intel and Apple silicon |
+| 1.5 and later | 14.6          | Intel and Apple silicon |

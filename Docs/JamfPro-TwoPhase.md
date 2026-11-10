@@ -7,9 +7,10 @@ In this simple example workflow, we run certain Jamf Pro policies depending on t
 
 ```xml
 <key>userEntry</key>
-<dict>
-  <key>department</key>
+<array>
   <dict>
+    <key>identifier</key>
+    <string>department</string>
     <key>options</key>
     <array>
       <string>Sales</string>
@@ -18,7 +19,7 @@ In this simple example workflow, we run certain Jamf Pro policies depending on t
       <string>Marketing</string>
     </array>
   </dict>
-</dict>
+</array>
 ```
 
 Note that you need to have the matching departments in Jamf Pro.

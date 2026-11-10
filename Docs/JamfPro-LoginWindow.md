@@ -20,7 +20,7 @@ However, this requires the enrollment workflow to be configured so that it will 
 
 - Under 'Configuration Profiles', select the Setup Manager configuration profile. In that profile, set the [`runAt` key](../ConfigurationProfile.md#runAt) to `loginwindow`.
 
-- Upload the Setup Manager installation pkg from the [Releases](https://github.com/jamf-concepts/setup-manager/releases) section to Jamf Pro and add it to the 'Enrollment Packages' section. Ensure you have selected 'Cloud Distribution Point' as the distribution point or setup the manifest for an on-premise deployment.
+- Upload the Setup Manager installation pkg from the [Releases](https://github.com/jamf/Setup-Manager/releases) section to Jamf Pro and add it to the 'Enrollment Packages' section. Ensure you have selected 'Cloud Distribution Point' as the distribution point or setup the manifest for an on-premise deployment.
 
 ## Bind to directory
 
@@ -28,6 +28,6 @@ You will likely need to bind the Mac to a directory service to allow for user lo
 
 ## Auto Advance
 
-The Apple feature to automatically advance through the Setup Assistant screens has a few requirements. The Mac has to be registered in Apple Business Manager or Apple School Manager and assigned to the MDM servier. It also has to be connected with ethernet to a network that can reach the MDM server, all Apple services and other internal services you might configure during enrollment (e.g. directory or IdP server).
+The Apple feature to automatically advance through the Setup Assistant screens has a few requirements. The Mac has to be registered in Apple Business Manager or Apple School Manager and assigned to the MDM server. It also has to be connected with ethernet to a network that can reach the MDM server, all Apple services and other internal services you might configure during enrollment (e.g. directory or IdP server).
 
 Auto Advance doesn't 'kick in' until after Voiceover has introduced itself and if you ever touch any of the controls, AutoAdvance will stop and you have to continue manually.

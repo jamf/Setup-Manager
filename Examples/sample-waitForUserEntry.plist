@@ -30,6 +30,10 @@
 				<string>Imposta il fuso orario</string>
 				<key>ja</key>
 				<string>タイムゾーンを設定</string>
+				<key>hi</key>
+				<string>समय क्षेत्र सेट करें</string>
+				<key>uk</key>
+				<string>Налаштувати часовий пояс</string>
 				<key>ko</key>
 				<string>시간대 설정</string>
 				<key>nl</key>
@@ -48,6 +52,16 @@
 				<string>設定時區</string>
 				<key>da</key>
 				<string>Indstil tidszone</string>
+				<key>bg</key>
+				<string>Задаване на часовата зона</string>
+				<key>he</key>
+				<string>הגדרות אזור זמן</string>
+				<key>nb</key>
+				<string>Angi tidssone</string>
+				<key>pl</key>
+				<string>Ustal strefę czasową</string>
+				<key>sv</key>
+				<string>Ställ in tidszon</string>
 			</dict>
 			<key>requiresRoot</key>
 			<true/>
@@ -103,6 +117,10 @@
 				<string>Soumettre les entrées</string>
 				<key>ja</key>
 				<string>ユーザー入力を送信</string>
+				<key>hi</key>
+				<string>उपयोगकर्ता की जानकारी जमा करें</string>
+				<key>uk</key>
+				<string>Надіслати дані користувача</string>
 				<key>ko</key>
 				<string>사용자 입력 제출</string>
 				<key>nl</key>
@@ -121,6 +139,20 @@
 				<string>提交使用者輸入</string>
 				<key>da</key>
 				<string>Indsend brugerindtastning</string>
+				<key>bg</key>
+				<string>Изпращане на въведените данни</string>
+				<key>es</key>
+				<string>Enviar datos del usuario</string>
+				<key>he</key>
+				<string>שליחת פרטי המשתמש</string>
+				<key>it</key>
+				<string>Invia i dati dell'utente</string>
+				<key>nb</key>
+				<string>Send brukerinndata</string>
+				<key>pl</key>
+				<string>Prześlij dane użytkownika</string>
+				<key>sv</key>
+				<string>Skicka användaruppgifter</string>
 			</dict>
 			<key>waitForUserEntry</key>
 			<string></string>
@@ -142,6 +174,10 @@
 				<string>Extra Apps pour %department%</string>
 				<key>ja</key>
 				<string>%department%用の追加App</string>
+				<key>hi</key>
+				<string>%department% के लिए अतिरिक्त ऐप</string>
+				<key>uk</key>
+				<string>Додаткові програми для %department%</string>
 				<key>ko</key>
 				<string>%department%용 추가 앱</string>
 				<key>nl</key>
@@ -160,6 +196,20 @@
 				<string>%department% 的額外 App</string>
 				<key>da</key>
 				<string>Ekstra apps til %department%</string>
+				<key>bg</key>
+				<string>Допълнителни приложения за %department%</string>
+				<key>es</key>
+				<string>Apps adicionales para %department%</string>
+				<key>he</key>
+				<string>אפליקציות נוספות עבור %department%</string>
+				<key>it</key>
+				<string>App aggiuntive per %department%</string>
+				<key>nb</key>
+				<string>Ekstra apper for %department%</string>
+				<key>pl</key>
+				<string>Dodatkowe aplikacje dla %department%</string>
+				<key>sv</key>
+				<string>Extra appar för %department%</string>
 			</dict>
 			<key>policy</key>
 			<string>install_extra_apps</string>
@@ -169,7 +219,7 @@
 	<integer>30</integer>
 	<key>icon</key>
 	<string>name:AppIcon</string>
-	<key>jssID</key>
+	<key>computerID</key>
 	<string>$JSSID</string>
 	<key>message</key>
 	<dict>
@@ -191,6 +241,10 @@
 		<string>Sii paziente mentre Setup Manager configura il tuo nuovo Mac.</string>
 		<key>ja</key>
 		<string>Setup Managerが新しいMacを構成している間、しばらくお待ちください。</string>
+		<key>hi</key>
+		<string>कृपया धैर्य रखें, Setup Manager आपके नए Mac को कॉन्फ़िगर कर रहा है।</string>
+		<key>uk</key>
+		<string>Будь ласка, зачекайте, поки Setup Manager налаштовує ваш новий Mac.</string>
 		<key>ko</key>
 		<string>Setup Manager가 새 Mac을 구성하는 동안 기다려 주십시오.</string>
 		<key>nl</key>
@@ -209,6 +263,14 @@
 		<string>請稍候，Setup Manager 正在設定你的新 Mac。</string>
 		<key>da</key>
 		<string>Vær tålmodig, mens Setup Manager konfigurerer din nye Mac.</string>
+		<key>bg</key>
+		<string>Моля, бъдете търпеливи, докато Setup Manager конфигурира вашия нов Mac.</string>
+		<key>nb</key>
+		<string>Vær tålmodig mens Setup Manager konfigurerer den nye Mac-en din.</string>
+		<key>pl</key>
+		<string>Prosimy o cierpliwość, podczas gdy Setup Manager konfiguruje Twojego nowego Maca.</string>
+		<key>sv</key>
+		<string>Ha tålamod medan Setup Manager konfigurerar din nya Mac.</string>
 	</dict>
 	<key>title</key>
 	<dict>
@@ -230,6 +292,10 @@
 		<string>Benvenuto!</string>
 		<key>ja</key>
 		<string>ようこそ!</string>
+		<key>hi</key>
+		<string>स्वागत है!</string>
+		<key>uk</key>
+		<string>Ласкаво просимо!</string>
 		<key>ko</key>
 		<string>환영합니다!</string>
 		<key>nl</key>
@@ -248,11 +314,20 @@
 		<string>歡迎!</string>
 		<key>da</key>
 		<string>Velkommen!</string>
+		<key>bg</key>
+		<string>Добре дошли!</string>
+		<key>nb</key>
+		<string>Velkommen</string>
+		<key>pl</key>
+		<string>Witamy!</string>
+		<key>sv</key>
+		<string>Välkommen</string>
 	</dict>
 	<key>userEntry</key>
-	<dict>
-		<key>department</key>
+	<array>
 		<dict>
+			<key>identifier</key>
+			<string>department</string>
 			<key>options</key>
 			<array>
 				<string>Sales</string>
@@ -261,6 +336,6 @@
 				<string>Marketing</string>
 			</array>
 		</dict>
-	</dict>
+	</array>
 </dict>
 </plist>
