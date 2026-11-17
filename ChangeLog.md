@@ -1,5 +1,11 @@
 #  Setup Manager - Change Log
 
+## 1.4.8
+
+(2026-11-17)
+
+- updated built-in Installomator to v10.10
+
 ## 1.4.7
 
 (2026-07-09)
