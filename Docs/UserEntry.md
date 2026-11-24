@@ -1,7 +1,7 @@
 #  User Entry
-When a `userEntry` key is present and configured correctly, a sheet with fields for user entry will be shown when Setup Manager starts processing the `enrollmentAction`. The values of the fields the user enters will be written to the user data file and sent in the userEntry and finished webhooks.
-Setup Manager 1.5 introduces a new schema in the configuration profile to configure the user entry. It uses an ordered `array` of `dicts` to define the user entry fields. Each field has a unique `identifier` value which is used to to identify the value in the user data field and webhooks. There are a list of special identifiers that will be submitted to Jamf Pro on a recon.
+When a `userEntries` key is present and configured correctly, a sheet with fields for user entry will be shown when Setup Manager starts processing the `enrollmentAction`. The values of the fields the user enters will be written to the user data file and sent in the `userEntry` and `finished` webhooks.
 
+Setup Manager 1.5 introduces a new schema in the configuration profile to configure the user entry. It uses an ordered `array` of `dicts` to define the user entry fields. Each field has a unique `identifier` value which is used to to identify the value in the user data field and webhooks. There are a list of special identifiers that will be submitted to Jamf Pro on a recon.
 ### User Data file
 Data from user entry is written, together with  other data to a file when Setup Manager reaches a `waitForUserEntry` action and again when it finishes. The file is stored at `/private/var/db/SetupManagerUserData.txt`. [More details.](Extras.md#user-data-file)
 
@@ -34,7 +34,7 @@ With the top-level [`enrollmentUserID`](../ConfigurationProfile.md#enrollmentuse
 
 ## Keys
 
-#### `userEntry`
+#### `userEntries`
 
 (Array of Dicts (v1.5+), optional)
 
@@ -43,7 +43,7 @@ When this key exists, Setup Manager will prompt for user data while the enrollme
 Example:
 
 ```xml
-<key>userEntry</key>
+<key>userEntries</key>
 <array>
   <dict>
     <key>identifier</key>
@@ -90,9 +90,13 @@ Each field has the following keys:
 (String, required, unique)
 
 Used to identify the value entered or saved into the user field in the text file and webhooks. When more than one user entry field have the same value for `identifier` , only the first one will be used, subsequent items will be ignored.
+
 Certain values for the identifier (`computerName` and the list shown above for Jamf Pro recon backed fields) will have additional behaviors. The `identifier` value is case-sensitive.
-The identifier may not be empty. While the identifier can contain special characters, whitespace and colon `:`, it is recommended to avoid those characters as they might make parsing the user data text file or webhook data difficult.
+
+The identifier may not be empty. While the identifier can contain special characters, whitespace, and colon `:`, it is recommended to avoid those characters as they might make parsing the user data text file or webhook data difficult.
+
 it is also recommended to avoid the following identifiers, as they are used for other values and substitutions:
+
 - `model`
 - `model-short`
 - `enrollmentUserID`
@@ -102,9 +106,11 @@ it is also recommended to avoid the following identifiers, as they are used for 
 
 (String, localized, optional)
 
-Setup Manager contains localized labels for the standard Jamf recon backed fields and `computerName`. You can use this key to override the Setup Manager default or provide a localized label for a custom user entry field.
-
 Many Jamf Pro admins use the standard fields in ways that don't match their built-in label. For this purpose you can override the default label shown for a field in the user entry.
+
+Setup Manager contains localized labels for the standard Jamf Pro recon backed fields and `computerName`. You can use this key to override the Setup Manager default or provide a localized label for a custom user entry field.
+
+When no `label` is given, the value of `identifier` will be used.
 
 The text label in the [User Data file](Extras.md#user-data-file) and the key in the webhook will be the `identifier` not the `label`.
 

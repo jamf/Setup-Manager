@@ -1,5 +1,16 @@
 #  Setup Manager - Change Log
 
+## 1.5beta2
+
+(2026-11-24)
+
+Changes [since 1.5beta](https://github.com/jamf/Setup-Manager/releases/tag/v1.5beta):
+
+- updated built-in Installomator to v10.10
+- changed name of new `userEntry` array to `userEntries` to simplify profile creation with third party tools (#255)
+- user entry field requires just an `identifier` (#257)
+
+
 ## 1.5beta
 
 (2026-11-10)

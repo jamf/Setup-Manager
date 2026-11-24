@@ -129,7 +129,7 @@ Example:
 
 This array contains a list of `Dict`s which describe the individual actions to be performed in order. Actions are described in detail in the [Actions](#actions) section.
 
-#### `userEntry`
+#### `userEntries`
 
 (Array of Dicts (v1.5+), optional)
 
@@ -368,7 +368,7 @@ Note: in Setup Manager v1.4 and earlier, this was the `showForUserIDs` key insid
 
 (String, Jamf Pro only, substitutions)
 
-When this key is set, Setup Manager will generate the computer name from this template and set it automatically. When this key is present, a `computerName` field in `userEntry` will be ignored and not presented to the user.
+When this key is set, Setup Manager will generate the computer name from this template and set it automatically. When this key is present, a `computerName` field in `userEntries` (or a legacy `userEntry`) will be ignored and not presented to the user.
 
 The template uses substitution tokens, which begin and end with `%` character which will be substituted with data at run time. See [Substitutions](#substitution) for details.
 
